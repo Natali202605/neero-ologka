@@ -371,10 +371,18 @@
     letter-spacing: -0.02em;
     line-height: 1.12;
   }
-  /* PNG: размеры берутся с экрана (WYSIWYG), без принудительного масштаба */
-  .capture-overlay {
+  /* PNG: клон 1590×530, пропорции как в превью */
+  #capture-stage .capture-export {
     display: block !important;
     visibility: visible !important;
+  }
+  body.is-capturing .app-header,
+  body.is-capturing .download-row,
+  body.is-capturing .nav-bar,
+  body.is-capturing .slides-preview-note,
+  body.is-capturing .toast {
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
   #slide-1 .slide-tag {
     margin: 0;
@@ -467,113 +475,153 @@
     aspect-ratio: auto !important;
     border-radius: 0;
   }
-  body.is-capturing .service-card,
-  body.is-capturing .adv-card {
+  body.is-capturing #slideContainer .service-card,
+  body.is-capturing #slideContainer .adv-card {
     animation: none !important;
-    border-color: rgba(167,139,250,.45) !important;
-    box-shadow: 0 0 14px rgba(124,58,237,.35), 0 4px 20px rgba(0,0,0,.4) !important;
   }
-  body.is-capturing .services-grid--cover .service-card:nth-child(1) {
+  body.is-capturing #capture-stage .capture-export .services-grid--cover .service-card:nth-child(1) {
     box-shadow: 0 0 12px rgba(34,211,238,.8), 0 0 24px rgba(34,211,238,.45) !important;
   }
-  body.is-capturing .services-grid--cover .service-card:nth-child(2) {
+  body.is-capturing #capture-stage .capture-export .services-grid--cover .service-card:nth-child(2) {
     box-shadow: 0 0 12px rgba(167,139,250,.8), 0 0 24px rgba(167,139,250,.45) !important;
   }
-  body.is-capturing .services-grid--cover .service-card:nth-child(3) {
+  body.is-capturing #capture-stage .capture-export .services-grid--cover .service-card:nth-child(3) {
     box-shadow: 0 0 12px rgba(244,114,182,.8), 0 0 24px rgba(244,114,182,.45) !important;
   }
-  body.is-capturing .services-grid--cover .service-card:nth-child(4) {
+  body.is-capturing #capture-stage .capture-export .services-grid--cover .service-card:nth-child(4) {
     box-shadow: 0 0 12px rgba(232,121,249,.8), 0 0 24px rgba(232,121,249,.45) !important;
   }
-  body.is-capturing .services-grid--cover .service-card:nth-child(5) {
+  body.is-capturing #capture-stage .capture-export .services-grid--cover .service-card:nth-child(5) {
     box-shadow: 0 0 12px rgba(96,165,250,.8), 0 0 24px rgba(96,165,250,.45) !important;
   }
-  body.is-capturing #slide-1 .slide-tag,
+  body.is-capturing #slideContainer .services-grid--cover .service-card:nth-child(1) {
+    box-shadow: 0 0 12px rgba(34,211,238,.8), 0 0 24px rgba(34,211,238,.45) !important;
+  }
+  body.is-capturing #slideContainer .services-grid--cover .service-card:nth-child(2) {
+    box-shadow: 0 0 12px rgba(167,139,250,.8), 0 0 24px rgba(167,139,250,.45) !important;
+  }
+  body.is-capturing #slideContainer .services-grid--cover .service-card:nth-child(3) {
+    box-shadow: 0 0 12px rgba(244,114,182,.8), 0 0 24px rgba(244,114,182,.45) !important;
+  }
+  body.is-capturing #slideContainer .services-grid--cover .service-card:nth-child(4) {
+    box-shadow: 0 0 12px rgba(232,121,249,.8), 0 0 24px rgba(232,121,249,.45) !important;
+  }
+  body.is-capturing #slideContainer .services-grid--cover .service-card:nth-child(5) {
+    box-shadow: 0 0 12px rgba(96,165,250,.8), 0 0 24px rgba(96,165,250,.45) !important;
+  }
+  body.is-capturing #capture-stage .capture-export .slide-tag,
+  body.is-capturing #slideContainer #slide-1 .slide-tag,
   body.is-capturing .capture-clone .slide-tag {
     box-shadow: 0 0 14px rgba(167,139,250,.75), 0 0 28px rgba(124,58,237,.5) !important;
     text-shadow: 0 0 10px rgba(232,121,249,.9), 0 0 22px rgba(167,139,250,.7) !important;
   }
-  body.is-capturing .services-grid.services-grid--cover {
+  body.is-capturing #slideContainer .services-grid.services-grid--cover {
     display: flex !important;
     flex-wrap: nowrap !important;
     justify-content: space-evenly !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    gap: 14px !important;
-    grid-template-columns: unset !important;
   }
-  body.is-capturing .services-grid.services-grid--5 {
+  body.is-capturing #capture-stage .capture-export.services-grid--cover,
+  body.is-capturing #capture-stage .capture-export .services-grid.services-grid--cover {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-evenly !important;
+  }
+  body.is-capturing #slideContainer .services-grid.services-grid--5 {
     display: grid !important;
     grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
     width: 96% !important;
     max-width: 96% !important;
   }
-  body.is-capturing .advantages-grid {
+  body.is-capturing #slideContainer .advantages-grid,
+  body.is-capturing #capture-stage .capture-export .advantages-grid {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
   }
-  body.is-capturing .contacts-row {
+  body.is-capturing #slideContainer .contacts-row,
+  body.is-capturing #capture-stage .capture-export .contacts-row {
     display: flex !important;
     flex-wrap: wrap !important;
     justify-content: center !important;
   }
-  body.is-capturing #slide-1 .slide-tagline,
-  body.is-capturing .capture-overlay.capture-slide-1 .slide-tagline,
-  body.is-capturing .capture-clone.capture-slide-1 .slide-tagline {
+  body.is-capturing #capture-stage .capture-export .slide-tagline,
+  body.is-capturing #slideContainer #slide-1 .slide-tagline {
     display: block !important;
     visibility: visible !important;
     margin: 0 !important;
     color: #faf6ff !important;
     text-shadow: 0 0 16px rgba(221,214,254,.7), 0 0 32px rgba(196,181,253,.5), 0 2px 10px rgba(0,0,0,.4) !important;
   }
-  body.is-capturing .service-card::before { display: none; }
-  body.is-capturing .service-icon,
-  body.is-capturing .adv-icon {
+  body.is-capturing #slideContainer .service-card::before,
+  body.is-capturing #capture-stage .capture-export .service-card::before { display: none; }
+  body.is-capturing #slideContainer .service-icon,
+  body.is-capturing #slideContainer .adv-icon,
+  body.is-capturing #capture-stage .capture-export .service-icon,
+  body.is-capturing #capture-stage .capture-export .adv-icon {
     border-color: rgba(167,139,250,.4) !important;
     box-shadow: 0 0 12px rgba(124,58,237,.35) !important;
   }
-  body.is-capturing .service-icon svg,
-  body.is-capturing .adv-icon svg,
-  body.is-capturing .contact-chip__icon svg {
+  body.is-capturing #slideContainer .service-icon svg,
+  body.is-capturing #slideContainer .adv-icon svg,
+  body.is-capturing #slideContainer .contact-chip__icon svg,
+  body.is-capturing #capture-stage .capture-export .service-icon svg,
+  body.is-capturing #capture-stage .capture-export .adv-icon svg,
+  body.is-capturing #capture-stage .capture-export .contact-chip__icon svg {
     filter: none !important;
     stroke: #c084fc !important;
     fill: none !important;
     overflow: visible !important;
   }
-  body.is-capturing .service-icon svg,
-  body.is-capturing .adv-icon svg,
-  body.is-capturing .contact-chip__icon svg {
+  body.is-capturing #slideContainer .service-icon svg,
+  body.is-capturing #slideContainer .adv-icon svg,
+  body.is-capturing #slideContainer .contact-chip__icon svg,
+  body.is-capturing #capture-stage .capture-export .service-icon svg,
+  body.is-capturing #capture-stage .capture-export .adv-icon svg,
+  body.is-capturing #capture-stage .capture-export .contact-chip__icon svg {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
-  body.is-capturing .service-icon svg path,
-  body.is-capturing .service-icon svg rect,
-  body.is-capturing .service-icon svg circle,
-  body.is-capturing .service-icon svg polygon,
-  body.is-capturing .adv-icon svg path,
-  body.is-capturing .adv-icon svg rect,
-  body.is-capturing .adv-icon svg circle,
-  body.is-capturing .adv-icon svg polygon,
-  body.is-capturing .contact-chip__icon svg path,
-  body.is-capturing .contact-chip__icon svg rect {
+  body.is-capturing #slideContainer .service-icon svg path,
+  body.is-capturing #slideContainer .service-icon svg rect,
+  body.is-capturing #slideContainer .service-icon svg circle,
+  body.is-capturing #slideContainer .service-icon svg polygon,
+  body.is-capturing #slideContainer .adv-icon svg path,
+  body.is-capturing #slideContainer .adv-icon svg rect,
+  body.is-capturing #slideContainer .adv-icon svg circle,
+  body.is-capturing #slideContainer .adv-icon svg polygon,
+  body.is-capturing #slideContainer .contact-chip__icon svg path,
+  body.is-capturing #slideContainer .contact-chip__icon svg rect,
+  body.is-capturing #capture-stage .capture-export .service-icon svg path,
+  body.is-capturing #capture-stage .capture-export .service-icon svg rect,
+  body.is-capturing #capture-stage .capture-export .service-icon svg circle,
+  body.is-capturing #capture-stage .capture-export .service-icon svg polygon,
+  body.is-capturing #capture-stage .capture-export .adv-icon svg path,
+  body.is-capturing #capture-stage .capture-export .adv-icon svg rect,
+  body.is-capturing #capture-stage .capture-export .adv-icon svg circle,
+  body.is-capturing #capture-stage .capture-export .adv-icon svg polygon,
+  body.is-capturing #capture-stage .capture-export .contact-chip__icon svg path,
+  body.is-capturing #capture-stage .capture-export .contact-chip__icon svg rect {
     stroke: #c084fc !important;
     stroke-width: 1.75px !important;
     fill: none !important;
     visibility: visible !important;
   }
-  body.is-capturing .slide-title .highlight,
-  body.is-capturing .cover-author__name {
+  body.is-capturing #slideContainer .slide-title .highlight,
+  body.is-capturing #slideContainer .cover-author__name,
+  body.is-capturing #capture-stage .capture-export .slide-title .highlight,
+  body.is-capturing #capture-stage .capture-export .cover-author__name {
     background: none !important;
     -webkit-text-fill-color: #e879f9 !important;
     color: #e879f9 !important;
     filter: drop-shadow(0 0 12px rgba(232,121,249,.6)) !important;
   }
-  body.is-capturing .icon-svg {
+  body.is-capturing #slideContainer .icon-svg,
+  body.is-capturing #capture-stage .capture-export .icon-svg {
     filter: none !important;
     stroke: #c084fc !important;
   }
-  body.is-capturing .slide-tagline strong {
+  body.is-capturing #slideContainer .slide-tagline strong,
+  body.is-capturing #capture-stage .capture-export .slide-tagline strong {
     color: #ffc4ff !important;
     -webkit-text-fill-color: #ffc4ff !important;
     text-shadow: 0 0 14px rgba(255,180,255,1), 0 0 28px rgba(244,114,182,1), 0 0 44px rgba(232,121,249,.9) !important;
@@ -593,12 +641,14 @@
     opacity: 1 !important;
     visibility: visible !important;
   }
+  #capture-stage .capture-export,
   #capture-stage .capture-clone {
     display: block !important;
     width: 1590px !important;
     height: 530px !important;
     border-radius: 0 !important;
     aspect-ratio: auto !important;
+    overflow: hidden !important;
   }
   #capture-stage .capture-clone .slide-bg {
     position: absolute !important;
@@ -606,63 +656,16 @@
     width: 100% !important;
     height: 100% !important;
   }
-  #capture-stage .capture-clone .slide-content {
+  #capture-stage .capture-export .slide-content {
     position: relative !important;
     z-index: 1 !important;
     width: 100% !important;
     height: 100% !important;
-    justify-content: space-evenly !important;
-    padding-left: 7.5% !important;
-    padding-right: 7.5% !important;
   }
-  #capture-stage .capture-clone .slide-tagline {
-    margin: 0 !important;
-    padding-top: 0 !important;
-    color: #faf6ff !important;
-    text-shadow: 0 0 16px rgba(221,214,254,.7), 0 0 32px rgba(196,181,253,.5), 0 2px 10px rgba(0,0,0,.4) !important;
-  }
-  #capture-stage .capture-clone .service-card,
-  #capture-stage .capture-clone .service-label,
-  #capture-stage .capture-clone .service-desc {
+  #capture-stage .capture-export .service-card,
+  #capture-stage .capture-export .service-label,
+  #capture-stage .capture-export .service-desc {
     overflow: visible !important;
-  }
-  #capture-stage .capture-clone .services-grid--cover .service-label {
-    font-size: 11px !important;
-  }
-  #capture-stage .capture-clone .services-grid--cover .service-desc {
-    font-size: 9px !important;
-    line-height: 1.15 !important;
-  }
-  #capture-stage .capture-clone .services-grid.services-grid--cover {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    justify-content: space-evenly !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    gap: 14px !important;
-    grid-template-columns: unset !important;
-  }
-  #capture-stage .capture-clone .services-grid--cover .service-card {
-    width: 124px !important;
-    max-width: 124px !important;
-    flex: 0 0 auto !important;
-  }
-  #capture-stage .capture-clone .services-grid--cover .service-icon {
-    width: 28px !important;
-    height: 28px !important;
-  }
-  #capture-stage .capture-clone .slide-tag {
-    box-shadow: 0 0 14px rgba(167,139,250,.75), 0 0 28px rgba(124,58,237,.5) !important;
-    text-shadow: 0 0 10px rgba(232,121,249,.9), 0 0 22px rgba(167,139,250,.7) !important;
-  }
-  #capture-stage .capture-clone .slide-tagline {
-    font-size: 14px !important;
-    display: block !important;
-    margin: 0 !important;
-  }
-  #capture-stage .capture-clone .slide-tagline strong {
-    color: #ffc4ff !important;
-    text-shadow: 0 0 14px rgba(255,180,255,1), 0 0 28px rgba(244,114,182,1), 0 0 44px rgba(232,121,249,.9) !important;
   }
 
   /* ===== SERVICES GRID ===== */
@@ -1413,6 +1416,7 @@
 <p class="download-hint" id="downloadHint">PNG сохраняется <strong>как в превью</strong> · 1590×530 (2×). Запуск: <code>start.bat</code> или <code>npm start</code> → <code>http://localhost:8080</code>. Фоны: <code>image/bg-art.jpg</code>, <code>image/bg-gradient.jpg</code>.</p>
 
 <script>
+const SITE_VERSION = '1.2.0';
 const COVER_W = 1590;
 const COVER_H = 530;
 const total = 5;
@@ -1649,18 +1653,75 @@ const CAPTURE_STYLE_PROPS = [
   'boxShadow', 'textShadow', 'filter', 'transform', 'webkitTextFillColor'
 ];
 
-function copyComputedStylesTree(sourceRoot, cloneRoot, skipRootSize) {
+const CAPTURE_SCALE_PROPS = [
+  'fontSize', 'letterSpacing', 'gap', 'rowGap', 'columnGap',
+  'marginTop', 'marginRight', 'marginBottom', 'marginLeft',
+  'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
+  'width', 'height', 'maxWidth', 'minWidth', 'maxHeight', 'minHeight',
+  'borderRadius', 'borderWidth', 'borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth',
+  'top', 'right', 'bottom', 'left', 'flexBasis'
+];
+
+function scaleCssPx(value, factor) {
+  if (!value || value === 'auto' || value === 'normal' || value === 'none') return value;
+  if (String(value).includes('px')) {
+    return String(value).replace(/(-?[\d.]+)px/g, (_, n) => {
+      const v = parseFloat(n) * factor;
+      return (Math.abs(v) < 0.05 ? 0 : Math.round(v * 100) / 100) + 'px';
+    });
+  }
+  return value;
+}
+
+function copyScaledComputedStyles(sourceRoot, cloneRoot, factor) {
   const sourceEls = [sourceRoot, ...sourceRoot.querySelectorAll('*')];
   const cloneEls = [cloneRoot, ...cloneRoot.querySelectorAll('*')];
   const n = Math.min(sourceEls.length, cloneEls.length);
+
   for (let i = 0; i < n; i++) {
     const cs = getComputedStyle(sourceEls[i]);
     const st = cloneEls[i].style;
+
     CAPTURE_STYLE_PROPS.forEach(prop => {
-      if (skipRootSize && i === 0 && (prop === 'width' || prop === 'height')) return;
-      const val = cs[prop];
-      if (val && val !== 'auto' && val !== 'normal') st[prop] = val;
+      if (i === 0 && (prop === 'width' || prop === 'height')) return;
+      let val = cs[prop];
+      if (!val || val === 'auto' || val === 'normal') return;
+      if (CAPTURE_SCALE_PROPS.includes(prop) || prop === 'boxShadow' || prop === 'textShadow' || prop === 'border') {
+        val = scaleCssPx(val, factor);
+      }
+      st[prop] = val;
     });
+
+    if (cs.lineHeight && cs.lineHeight.endsWith('px')) {
+      st.lineHeight = scaleCssPx(cs.lineHeight, factor);
+    }
+  }
+
+  cloneRoot.style.width = COVER_W + 'px';
+  cloneRoot.style.height = COVER_H + 'px';
+  cloneRoot.style.display = 'block';
+  cloneRoot.style.position = 'relative';
+  cloneRoot.style.overflow = 'hidden';
+  cloneRoot.style.margin = '0';
+  cloneRoot.style.borderRadius = '0';
+  cloneRoot.style.aspectRatio = 'auto';
+  cloneRoot.style.boxSizing = 'border-box';
+
+  const bg = cloneRoot.querySelector('.slide-bg');
+  if (bg) {
+    bg.style.position = 'absolute';
+    bg.style.inset = '0';
+    bg.style.width = '100%';
+    bg.style.height = '100%';
+    bg.style.zIndex = '0';
+  }
+  const content = cloneRoot.querySelector('.slide-content');
+  if (content) {
+    content.style.position = 'relative';
+    content.style.zIndex = '1';
+    content.style.width = '100%';
+    content.style.height = '100%';
+    content.style.boxSizing = 'border-box';
   }
 }
 
@@ -1690,45 +1751,31 @@ function applyCaptureFixes(root) {
   fixSvgForCapture(root);
 }
 
-function buildWysiwygCaptureOverlay(source, slideNum) {
+function buildExportClone(source, slideNum) {
   const rect = source.getBoundingClientRect();
   if (rect.width < 20 || rect.height < 20) {
     throw new Error('Слайд не виден на экране — прокрутите к превью');
   }
 
+  const factor = COVER_W / rect.width;
+  const stage = document.getElementById('capture-stage');
+  stage.innerHTML = '';
+
   const clone = source.cloneNode(true);
   clone.removeAttribute('id');
-  clone.classList.add('capture-overlay', 'active', 'slide', 'capture-slide-' + slideNum);
-  clone.setAttribute('data-capture-overlay', '1');
+  clone.className = 'capture-export active slide capture-slide-' + slideNum;
+  clone.setAttribute('data-capture-export', '1');
 
-  const br = parseFloat(getComputedStyle(source).borderRadius) || 0;
-  clone.style.cssText = [
-    'position:fixed',
-    'left:' + rect.left + 'px',
-    'top:' + rect.top + 'px',
-    'width:' + rect.width + 'px',
-    'height:' + rect.height + 'px',
-    'margin:0',
-    'z-index:100000',
-    'pointer-events:none',
-    'display:block',
-    'overflow:hidden',
-    'box-sizing:border-box',
-    'border-radius:' + br + 'px',
-    'transform:none',
-    'opacity:1',
-    'visibility:visible'
-  ].join(';');
-
-  document.body.appendChild(clone);
-  copyComputedStylesTree(source, clone, true);
+  stage.appendChild(clone);
+  copyScaledComputedStyles(source, clone, factor);
   applyCaptureFixes(clone);
 
-  return { clone, rect };
+  return { clone, factor, previewW: rect.width, previewH: rect.height };
 }
 
-function removeCaptureOverlay() {
-  document.querySelectorAll('[data-capture-overlay]').forEach(el => el.remove());
+function clearExportClone() {
+  const stage = document.getElementById('capture-stage');
+  if (stage) stage.innerHTML = '';
 }
 
 let toastTimer;
@@ -1747,7 +1794,7 @@ function updateDownloadHint() {
   const onServer = location.protocol === 'http:' || location.protocol === 'https:';
   const imgsOk = imageCache.art && imageCache.gradient;
   if (onServer && imgsOk) {
-    hint.innerHTML = '✓ Готово · PNG <strong>как в превью</strong> · <strong>3180×1060</strong> (2×) · обложка <strong>1590×530</strong>';
+    hint.innerHTML = '✓ v' + SITE_VERSION + ' · PNG <strong>как в превью</strong> · <strong>3180×1060</strong> (2×) · обложка <strong>1590×530</strong>';
   } else if (onServer) {
     hint.innerHTML = '✓ Сервер OK · PNG как в превью. Добавьте <code>bg-art.jpg</code> и <code>bg-gradient.jpg</code> в <code>image/</code> для фото-фонов.';
   } else {
@@ -1831,7 +1878,9 @@ function saveCanvasAsPng(canvas, filename) {
   });
 }
 
-function canvasToExactVkCover(src, targetW, targetH) {
+function finalizeExportCanvas(src, targetW, targetH) {
+  if (src.width === targetW && src.height === targetH) return src;
+
   const out = document.createElement('canvas');
   out.width = targetW;
   out.height = targetH;
@@ -1839,24 +1888,12 @@ function canvasToExactVkCover(src, targetW, targetH) {
   ctx.fillStyle = '#0a0814';
   ctx.fillRect(0, 0, targetW, targetH);
 
-  const ratio = targetW / targetH;
-  const srcRatio = src.width / src.height;
-  let sx = 0;
-  let sy = 0;
-  let sw = src.width;
-  let sh = src.height;
-
-  if (Math.abs(srcRatio - ratio) > 0.002) {
-    if (srcRatio > ratio) {
-      sw = Math.round(src.height * ratio);
-      sx = Math.round((src.width - sw) / 2);
-    } else {
-      sh = Math.round(src.width / ratio);
-      sy = Math.round((src.height - sh) / 2);
-    }
-  }
-
-  ctx.drawImage(src, sx, sy, sw, sh, 0, 0, targetW, targetH);
+  const scale = Math.min(targetW / src.width, targetH / src.height);
+  const dw = Math.round(src.width * scale);
+  const dh = Math.round(src.height * scale);
+  const dx = Math.round((targetW - dw) / 2);
+  const dy = Math.round((targetH - dh) / 2);
+  ctx.drawImage(src, dx, dy, dw, dh);
   return out;
 }
 
@@ -1886,20 +1923,20 @@ async function captureSlide(num) {
   const targetH = COVER_H * 2;
 
   document.body.classList.add('is-capturing');
-  let overlay = null;
+  let exportInfo = null;
 
   try {
-    overlay = buildWysiwygCaptureOverlay(source, num);
-    const { clone, rect } = overlay;
+    exportInfo = buildExportClone(source, num);
+    const { clone, factor, previewW, previewH } = exportInfo;
 
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
     if (document.fonts?.ready) await document.fonts.ready;
-    await new Promise(r => setTimeout(r, 200));
-
-    const scale = targetW / rect.width;
+    await new Promise(r => setTimeout(r, 280));
 
     const raw = await html2canvas(clone, {
-      scale,
+      scale: 2,
+      width: COVER_W,
+      height: COVER_H,
       useCORS: true,
       allowTaint: !imageCache.art && !imageCache.gradient,
       backgroundColor: '#0a0814',
@@ -1919,11 +1956,16 @@ async function captureSlide(num) {
       }
     });
 
-    const out = canvasToExactVkCover(raw, targetW, targetH);
-    console.info('[PNG] слайд ' + num + ': превью ' + Math.round(rect.width) + '×' + Math.round(rect.height) + ' → файл ' + out.width + '×' + out.height);
+    const out = finalizeExportCanvas(raw, targetW, targetH);
+    console.info(
+      '[PNG] слайд ' + num +
+      ': превью ' + Math.round(previewW) + '×' + Math.round(previewH) +
+      ' ×' + factor.toFixed(3) +
+      ' → ' + out.width + '×' + out.height
+    );
     return out;
   } finally {
-    removeCaptureOverlay();
+    clearExportClone();
     document.body.classList.remove('is-capturing');
     if (prev !== num - 1) goToSlide(prev);
   }
@@ -1941,7 +1983,7 @@ async function downloadSlide(num) {
     const canvas = await captureSlide(num);
     const name = slideFilename(num);
     await saveCanvasAsPng(canvas, name);
-    showToast('✓ Сохранено: ' + name);
+    showToast('✓ Сохранено как в превью: ' + name);
   } catch (err) {
     console.error(err);
     const hint = location.protocol === 'file:'
