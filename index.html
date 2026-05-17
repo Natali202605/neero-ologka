@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Конструктор обложек ВКонтакте 1590×530 — digital-студия, услуги и экспорт PNG">
-<title>Конструктор обложек ВК</title>
+<meta name="description" content="Натали Смирнова — нейро-специалист. Сайты, боты, нейровидео, ИИ-изображение. Обложки ВК 1590×530 и экспорт PNG">
+<title>Натали Смирнова · Обложки ВК</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   /* ===== RESET & BASE ===== */
@@ -147,9 +147,12 @@
     z-index: 0;
   }
   .slide-bg--1 {
+    background-color: #0a0814;
     background-image:
       linear-gradient(100deg, rgba(8,6,18,.78) 0%, rgba(8,6,18,.42) 42%, rgba(8,6,18,.62) 100%),
-      var(--img-art);
+      var(--img-art),
+      radial-gradient(ellipse at 75% 45%, rgba(34,211,238,.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 15% 80%, rgba(124,58,237,.28) 0%, transparent 55%);
     background-size: cover;
     background-position: center;
   }
@@ -161,9 +164,11 @@
     pointer-events: none;
   }
   .slide-bg--2 {
+    background-color: #0c0818;
     background-image:
       linear-gradient(160deg, rgba(8,6,18,.88) 0%, rgba(8,6,18,.72) 100%),
-      var(--img-gradient);
+      var(--img-gradient),
+      radial-gradient(ellipse at 80% 20%, rgba(232,121,249,.15) 0%, transparent 50%);
     background-size: cover;
     background-position: 30% center;
   }
@@ -254,19 +259,76 @@
     font-weight: 700;
     text-shadow: 0 0 20px rgba(232,121,249,.5);
   }
-  .services-grid--cover {
+  .services-grid--cover,
+  .services-grid--5 {
+    grid-template-columns: repeat(5, 1fr);
     margin-bottom: 1.5%;
-    max-width: 88%;
+    max-width: 96%;
+    gap: clamp(6px, 1vw, 12px);
+  }
+  .services-grid--cover .service-card {
+    padding: clamp(8px, 1.1vw, 14px) clamp(6px, .9vw, 10px);
+  }
+  .services-grid--cover .service-label {
+    font-size: clamp(.5rem, 1.05vw, .8rem);
+  }
+  .services-grid--cover .service-desc {
+    font-size: clamp(.4rem, .8vw, .62rem);
+    line-height: 1.2;
+    hyphens: auto;
+  }
+  .services-grid--cover .service-icon {
+    width: clamp(30px, 4vw, 42px);
+    height: clamp(30px, 4vw, 42px);
+    margin-bottom: 6px;
+  }
+  .cover-author {
+    margin: 0 0 1.2%;
+    line-height: 1.1;
+  }
+  .cover-author--compact {
+    margin-bottom: 0.8%;
+  }
+  .cover-author--compact .cover-author__name {
+    font-size: clamp(0.95rem, 2.4vw, 1.55rem);
+  }
+  .cover-author__name {
+    display: inline-block;
+    font-size: clamp(1.05rem, 2.9vw, 1.9rem);
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    background: linear-gradient(120deg, #f0abfc 0%, #c084fc 45%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 18px rgba(232,121,249,.5));
+    text-shadow: 0 2px 20px rgba(0,0,0,.5);
   }
   #slide-1 .slide-content {
-    padding: 4% 7%;
+    padding: 3.5% 7%;
   }
   #slide-1 .slide-title {
-    font-size: clamp(1.2rem, 3.6vw, 2.5rem);
-    margin-bottom: 1.5%;
+    font-size: clamp(1.1rem, 3.2vw, 2.25rem);
+    margin-bottom: 1.2%;
   }
   #slide-1 .slide-tag {
-    margin-bottom: 1.5%;
+    margin-bottom: 1%;
+    font-size: clamp(.55rem, 1.1vw, .78rem);
+    letter-spacing: 2px;
+  }
+  #slide-1 .slide-tagline {
+    margin-top: 0;
+  }
+  #slide-3 .services-grid--5 .service-label {
+    font-size: clamp(.48rem, .95vw, .72rem);
+  }
+  #slide-3 .services-grid--5 .service-desc {
+    font-size: clamp(.4rem, .78vw, .58rem);
+    line-height: 1.25;
+  }
+  #slide-3 .services-grid--5 .service-icon {
+    width: clamp(28px, 3.5vw, 38px);
+    height: clamp(28px, 3.5vw, 38px);
   }
   @media (prefers-reduced-motion: reduce) {
     .service-card,
@@ -301,8 +363,79 @@
     box-shadow: 0 0 12px rgba(124,58,237,.35) !important;
   }
   body.is-capturing .service-icon svg,
-  body.is-capturing .adv-icon svg {
-    filter: drop-shadow(0 0 4px rgba(192,132,252,.6));
+  body.is-capturing .adv-icon svg,
+  body.is-capturing .contact-chip__icon svg {
+    filter: none !important;
+    stroke: #c084fc !important;
+    fill: none !important;
+    overflow: visible !important;
+  }
+  body.is-capturing .service-icon svg,
+  body.is-capturing .adv-icon svg,
+  body.is-capturing .contact-chip__icon svg {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  body.is-capturing .service-icon svg path,
+  body.is-capturing .service-icon svg rect,
+  body.is-capturing .service-icon svg circle,
+  body.is-capturing .service-icon svg polygon,
+  body.is-capturing .adv-icon svg path,
+  body.is-capturing .adv-icon svg rect,
+  body.is-capturing .adv-icon svg circle,
+  body.is-capturing .adv-icon svg polygon,
+  body.is-capturing .contact-chip__icon svg path,
+  body.is-capturing .contact-chip__icon svg rect {
+    stroke: #c084fc !important;
+    stroke-width: 1.75px !important;
+    fill: none !important;
+    visibility: visible !important;
+  }
+  body.is-capturing .slide-title .highlight,
+  body.is-capturing .cover-author__name {
+    background: none !important;
+    -webkit-text-fill-color: #e879f9 !important;
+    color: #e879f9 !important;
+    filter: drop-shadow(0 0 12px rgba(232,121,249,.6)) !important;
+  }
+  body.is-capturing .icon-svg {
+    filter: none !important;
+    stroke: #c084fc !important;
+  }
+  body.is-capturing .slide-tagline strong {
+    color: #e879f9 !important;
+    -webkit-text-fill-color: #e879f9 !important;
+  }
+  #capture-stage {
+    position: fixed;
+    left: -10000px;
+    top: 0;
+    width: 1590px;
+    height: 530px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+  }
+  #capture-stage .capture-clone {
+    display: block !important;
+    width: 1590px !important;
+    height: 530px !important;
+    border-radius: 0 !important;
+    aspect-ratio: auto !important;
+  }
+  #capture-stage .capture-clone .slide-bg {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  #capture-stage .capture-clone .slide-content {
+    position: relative !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 
   /* ===== SERVICES GRID ===== */
@@ -366,6 +499,13 @@
     background-position: center, 85% 55%;
     animation-delay: 1.2s;
   }
+  .services-grid--cover .service-card:nth-child(5),
+  .services-grid--5 .service-card:nth-child(5) {
+    border-color: rgba(96,165,250,.5);
+    box-shadow: 0 0 14px rgba(96,165,250,.35), 0 4px 24px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1);
+    background-position: center, 50% 70%;
+    animation-delay: 1.6s;
+  }
   .service-card:hover {
     transform: translateY(-4px) scale(1.02);
     animation-play-state: paused;
@@ -393,15 +533,23 @@
   .service-card:nth-child(2) .service-icon { border-color: rgba(167,139,250,.45); box-shadow: 0 0 14px rgba(167,139,250,.4); }
   .service-card:nth-child(3) .service-icon { border-color: rgba(244,114,182,.45); box-shadow: 0 0 14px rgba(244,114,182,.4); }
   .service-card:nth-child(4) .service-icon { border-color: rgba(232,121,249,.45); box-shadow: 0 0 14px rgba(232,121,249,.4); }
-  .service-icon svg {
+  .services-grid--cover .service-card:nth-child(5) .service-icon,
+  .services-grid--5 .service-card:nth-child(5) .service-icon { border-color: rgba(96,165,250,.45); box-shadow: 0 0 14px rgba(96,165,250,.4); }
+  .icon-svg {
     width: 58%;
     height: 58%;
-    stroke: url(#icon-grad);
+    stroke: #c084fc;
     fill: none;
     stroke-width: 1.75;
     stroke-linecap: round;
     stroke-linejoin: round;
-    filter: drop-shadow(0 0 6px rgba(192,132,252,.7));
+    filter: drop-shadow(0 0 5px rgba(192,132,252,.65));
+    overflow: visible;
+  }
+  .service-icon .icon-svg,
+  .adv-icon .icon-svg {
+    width: 58%;
+    height: 58%;
   }
   .service-label,
   .service-desc {
@@ -473,15 +621,9 @@
     border: 1px solid rgba(167,139,250,.35);
     box-shadow: 0 0 12px rgba(124,58,237,.28);
   }
-  .adv-icon svg {
+  .adv-icon .icon-svg {
     width: 56%;
     height: 56%;
-    stroke: url(#icon-grad);
-    fill: none;
-    stroke-width: 1.75;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    filter: drop-shadow(0 0 5px rgba(192,132,252,.65));
   }
   .adv-title {
     font-size: clamp(.6rem, 1.4vw, 1rem);
@@ -530,15 +672,11 @@
     height: 22px;
     flex-shrink: 0;
   }
-  .contact-chip__icon svg {
+  .contact-chip__icon .icon-svg {
     width: 100%;
     height: 100%;
-    stroke: url(#icon-grad);
-    fill: none;
-    stroke-width: 1.75;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    filter: drop-shadow(0 0 4px rgba(232,121,249,.6));
+    stroke: #e879f9;
+    filter: drop-shadow(0 0 4px rgba(232,121,249,.5));
   }
 
   /* ===== CTA BUTTON ===== */
@@ -701,6 +839,28 @@
     pointer-events: none;
     opacity: .6;
   }
+  .dl-btn:disabled,
+  .header-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .download-hint {
+    text-align: center;
+    font-size: .75rem;
+    color: var(--text-dim);
+    max-width: 640px;
+    margin: 0 auto 28px;
+    padding: 0 16px;
+    line-height: 1.45;
+  }
+  .download-hint code {
+    font-size: .72rem;
+    color: var(--neon-cyan);
+    background: rgba(34,211,238,.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
 
   /* ===== PRESENTATION MODE ===== */
   body.presentation-mode {
@@ -729,6 +889,8 @@
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
     .services-grid { grid-template-columns: repeat(2, 1fr); max-width: 95%; }
+    .services-grid--cover,
+    .services-grid--5 { grid-template-columns: repeat(5, 1fr); max-width: 98%; }
     .advantages-grid,
     .advantages-grid--6 { grid-template-columns: repeat(2, 1fr); max-width: 95%; }
     .contacts-row { gap: 8px; }
@@ -755,8 +917,8 @@
 </svg>
 
 <header class="app-header">
-  <h1>Конструктор обложек ВК</h1>
-  <p>Создавайте профессиональные обложки для сообщества · 1590×530</p>
+  <h1>Натали Смирнова · Обложки ВК</h1>
+  <p>Нейро-специалист · сайты, боты, нейровидео, ИИ-изображение · PNG 1590×530</p>
   <div class="header-actions">
     <button type="button" class="header-btn header-btn--accent" id="dlCoverBtn">📥 Скачать обложку</button>
     <button type="button" class="header-btn" id="presentBtn">▶ Режим презентации</button>
@@ -772,28 +934,34 @@
     <div class="slide active slide--with-art" id="slide-1" data-label="Обложка">
       <div class="slide-bg slide-bg--1"></div>
       <div class="slide-content">
-        <div class="slide-tag">Digital-Студия</div>
-        <h2 class="slide-title">Упакуем ваш бизнес<br>в <span class="highlight">Digital</span></h2>
+        <div class="slide-tag">Нейро-специалист</div>
+        <p class="cover-author"><span class="cover-author__name">Натали Смирнова</span></p>
+        <h2 class="slide-title">Упакую ваш бизнес<br>в <span class="highlight">Digital</span></h2>
         <div class="services-grid services-grid--cover">
           <div class="service-card">
-            <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 17h.01M12 17h.01"/></svg></div>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 17h.01M12 17h.01"/></svg></div>
             <div class="service-label">Сайты</div>
             <div class="service-desc">Которые продают</div>
           </div>
           <div class="service-card">
-            <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 3v2M8 6l1.5 1.5M16 6l-1.5 1.5"/><rect x="6" y="9" width="12" height="10" rx="2"/><path d="M9 14h.01M12 14h.01M15 14h.01M9 17h6"/><path d="M12 9V7"/></svg></div>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3v2M8 6l1.5 1.5M16 6l-1.5 1.5"/><rect x="6" y="9" width="12" height="10" rx="2"/><path d="M9 14h.01M12 14h.01M15 14h.01M9 17h6"/><path d="M12 9V7"/></svg></div>
             <div class="service-label">Боты</div>
             <div class="service-desc">Работают 24/7</div>
           </div>
           <div class="service-card">
-            <div class="service-icon"><svg viewBox="0 0 24 24"><polygon points="10 8 16 12 10 16"/><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h4"/></svg></div>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="10 8 16 12 10 16"/><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h4"/></svg></div>
             <div class="service-label">Видео</div>
             <div class="service-desc">Нейровидео с ИИ</div>
           </div>
           <div class="service-card">
-            <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 19l2-2M19 19l-2-2M5 5l2 2M19 5l-2 2"/></svg></div>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 19l2-2M19 19l-2-2M5 5l2 2M19 5l-2 2"/></svg></div>
             <div class="service-label">Дизайн</div>
             <div class="service-desc">Запоминающийся</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.5 2.5a4.5 4.5 0 00-6.4 6.4L3 14.5V21h6.5l5.6-5.6a4.5 4.5 0 006.4-6.4l-7-7z"/><path d="M3 21h18"/></svg></div>
+            <div class="service-label">Визуал</div>
+            <div class="service-desc">ИИ-изображение</div>
           </div>
         </div>
         <p class="slide-tagline">Digital, который <strong>продаёт</strong></p>
@@ -804,24 +972,25 @@
       <div class="slide-bg slide-bg--2"></div>
       <div class="slide-content">
         <div class="slide-tag">Обо мне</div>
+        <p class="cover-author cover-author--compact"><span class="cover-author__name">Натали Смирнова</span></p>
         <h2 class="slide-title">Превращаю идеи<br>в <span class="highlight">цифровые решения</span></h2>
         <p class="slide-subtitle">
-          Digital-специалист с опытом в создании сайтов, чат-ботов, нейровидео и визуала.
-          Помогаю бизнесу расти с помощью современных технологий и нейросетей.
+          Нейро-специалист: сайты, чат-боты, нейровидео, ИИ-изображение и визуал.
+          Упакую ваш бизнес в digital с помощью ИИ и современных технологий.
         </p>
         <div class="advantages-grid" style="margin-top:1%;">
           <div class="adv-card">
-            <div class="adv-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4V2M12 22v-2M4 12H2M22 12h-2"/></svg></div>
+            <div class="adv-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4V2M12 22v-2M4 12H2M22 12h-2"/></svg></div>
             <div class="adv-title">Индивидуальный подход</div>
             <div class="adv-text">Каждый проект уникален — подбираю решение под ваши задачи</div>
           </div>
           <div class="adv-card">
-            <div class="adv-icon"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 10-14h-7l1-6z"/></svg></div>
+            <div class="adv-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 10-14h-7l1-6z"/></svg></div>
             <div class="adv-title">Современные технологии</div>
             <div class="adv-text">Использую AI и нейросети для максимального результата</div>
           </div>
           <div class="adv-card">
-            <div class="adv-icon"><svg viewBox="0 0 24 24"><path d="M4 18v-2M8 18V10M12 18V6M16 18v-4M20 18V2"/></svg></div>
+            <div class="adv-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 18v-2M8 18V10M12 18V6M16 18v-4M20 18V2"/></svg></div>
             <div class="adv-title">Результат в цифрах</div>
             <div class="adv-text">Фокус на конверсии, продажах и эффективности</div>
           </div>
@@ -835,26 +1004,31 @@
         <div class="slide-tag">Услуги</div>
         <h2 class="slide-title">Комплексные<br><span class="highlight">digital-решения</span></h2>
         <p class="slide-subtitle" style="margin-bottom:3%;">Всё для продвижения вашего бизнеса — в одном месте</p>
-        <div class="services-grid" style="max-width:90%;margin-bottom:3%;">
+        <div class="services-grid services-grid--5" style="max-width:96%;margin-bottom:3%;">
           <div class="service-card">
-            <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 17h.01M12 17h.01"/></svg></div>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 17h.01M12 17h.01"/></svg></div>
             <div class="service-label">Сайты</div>
             <div class="service-desc">Лендинги, корпоративные сайты, интернет-магазины</div>
           </div>
           <div class="service-card">
-            <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 3v2M8 6l1.5 1.5M16 6l-1.5 1.5"/><rect x="6" y="9" width="12" height="10" rx="2"/><path d="M9 14h.01M12 14h.01M15 14h.01M9 17h6"/><path d="M12 9V7"/></svg></div>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3v2M8 6l1.5 1.5M16 6l-1.5 1.5"/><rect x="6" y="9" width="12" height="10" rx="2"/><path d="M9 14h.01M12 14h.01M15 14h.01M9 17h6"/><path d="M12 9V7"/></svg></div>
             <div class="service-label">Чат-боты</div>
             <div class="service-desc">Telegram, VK — автоматизация продаж и поддержки</div>
           </div>
           <div class="service-card">
-            <div class="service-icon"><svg viewBox="0 0 24 24"><polygon points="10 8 16 12 10 16"/><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h4"/></svg></div>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="10 8 16 12 10 16"/><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h4"/></svg></div>
             <div class="service-label">Нейровидео</div>
             <div class="service-desc">Видеоконтент с ИИ для рекламы и соцсетей</div>
           </div>
           <div class="service-card">
-            <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 19l2-2M19 19l-2-2M5 5l2 2M19 5l-2 2"/></svg></div>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 19l2-2M19 19l-2-2M5 5l2 2M19 5l-2 2"/></svg></div>
+            <div class="service-label">Дизайн</div>
+            <div class="service-desc">Фирменный стиль и креатив</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.5 2.5a4.5 4.5 0 00-6.4 6.4L3 14.5V21h6.5l5.6-5.6a4.5 4.5 0 006.4-6.4l-7-7z"/><path d="M3 21h18"/></svg></div>
             <div class="service-label">Визуал</div>
-            <div class="service-desc">Логотипы, баннеры, оформление, презентации</div>
+            <div class="service-desc">ИИ-изображение</div>
           </div>
         </div>
         <a class="cta-btn" href="#">Заказать услугу</a>
@@ -865,36 +1039,36 @@
       <div class="slide-bg slide-bg--4"></div>
       <div class="slide-content">
         <div class="slide-tag">Преимущества</div>
-        <h2 class="slide-title">Почему выбирают<br><span class="highlight">именно нас</span></h2>
-        <p class="slide-subtitle" style="margin-bottom:3%;">Мы делаем не просто красиво — мы делаем эффективно</p>
+        <h2 class="slide-title">Почему выбирают<br><span class="highlight">именно меня</span></h2>
+        <p class="slide-subtitle" style="margin-bottom:3%;">Делаю не просто красиво — делаю эффективно</p>
         <div class="advantages-grid advantages-grid--6">
           <div class="adv-card">
-            <div class="adv-icon"><svg viewBox="0 0 24 24"><path d="M12 22c4-3 6-6 6-10a6 6 0 10-12 0c0 4 2 7 6 10z"/></svg></div>
+            <div class="adv-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 22c4-3 6-6 6-10a6 6 0 10-12 0c0 4 2 7 6 10z"/></svg></div>
             <div class="adv-title">Быстро</div>
-            <div class="adv-text">Соблюдаем сроки. Первые результаты — за 3–5 дней</div>
+            <div class="adv-text">Соблюдаю сроки. Первые результаты — за 3–5 дней</div>
           </div>
           <div class="adv-card">
-            <div class="adv-icon"><svg viewBox="0 0 24 24"><path d="M12 2l4 6H8l4-6zM6 8h12l2 14H4L6 8z"/></svg></div>
+            <div class="adv-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l4 6H8l4-6zM6 8h12l2 14H4L6 8z"/></svg></div>
             <div class="adv-title">Качественно</div>
             <div class="adv-text">Профессиональный подход на каждом этапе</div>
           </div>
           <div class="adv-card">
-            <div class="adv-icon"><svg viewBox="0 0 24 24"><path d="M8 12h8M4 12a8 8 0 1016 0 8 8 0 00-16 0z"/></svg></div>
+            <div class="adv-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 12h8M4 12a8 8 0 1016 0 8 8 0 00-16 0z"/></svg></div>
             <div class="adv-title">Поддержка</div>
-            <div class="adv-text">Всегда на связи. Помогаем после сдачи проекта</div>
+            <div class="adv-text">Всегда на связи. Помогаю после сдачи проекта</div>
           </div>
           <div class="adv-card">
-            <div class="adv-icon"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 00-6 6v2H4v4h2v6h12v-6h2v-4h-2V9a6 6 0 00-6-6z"/></svg></div>
+            <div class="adv-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3a6 6 0 00-6 6v2H4v4h2v6h12v-6h2v-4h-2V9a6 6 0 00-6-6z"/></svg></div>
             <div class="adv-title">AI-технологии</div>
             <div class="adv-text">Нейросети ускоряют работу и снижают стоимость</div>
           </div>
           <div class="adv-card">
-            <div class="adv-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 12h.01M12 12h.01"/></svg></div>
+            <div class="adv-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 12h.01M12 12h.01"/></svg></div>
             <div class="adv-title">Прозрачные цены</div>
             <div class="adv-text">Без скрытых платежей. Фиксированная стоимость</div>
           </div>
           <div class="adv-card">
-            <div class="adv-icon"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/></svg></div>
+            <div class="adv-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-6M22 20H2"/></svg></div>
             <div class="adv-title">Результат</div>
             <div class="adv-text">Фокус на конверсии и росте вашего бизнеса</div>
           </div>
@@ -907,22 +1081,22 @@
       <div class="slide-content">
         <div class="slide-tag">Контакты</div>
         <h2 class="slide-title">Давайте <span class="highlight">обсудим</span><br>ваш проект</h2>
-        <p class="slide-subtitle" style="margin-bottom:3%;">Свяжитесь удобным способом — отвечу в течение часа</p>
+        <p class="slide-subtitle" style="margin-bottom:3%;">Натали Смирнова · свяжитесь удобным способом — отвечу в течение часа</p>
         <div class="contacts-row">
           <a class="contact-chip" href="#">
-            <span class="contact-chip__icon"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 01-8 8H7l-4 3V12a8 8 0 018-8h4a8 8 0 018 8z"/></svg></span>
+            <span class="contact-chip__icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 12a8 8 0 01-8 8H7l-4 3V12a8 8 0 018-8h4a8 8 0 018 8z"/></svg></span>
             <span>VK Сообщения</span>
           </a>
           <a class="contact-chip" href="#">
-            <span class="contact-chip__icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></span>
+            <span class="contact-chip__icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></span>
             <span>Telegram</span>
           </a>
           <a class="contact-chip" href="#">
-            <span class="contact-chip__icon"><svg viewBox="0 0 24 24"><path d="M6 2h4l2 5-3 2a15 15 0 006 6l2-3 5 2v4a2 2 0 01-2 2A16 16 0 014 4a2 2 0 012-2z"/></svg></span>
+            <span class="contact-chip__icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 2h4l2 5-3 2a15 15 0 006 6l2-3 5 2v4a2 2 0 01-2 2A16 16 0 014 4a2 2 0 012-2z"/></svg></span>
             <span>+7 (XXX) XXX-XX-XX</span>
           </a>
           <a class="contact-chip" href="#">
-            <span class="contact-chip__icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+            <span class="contact-chip__icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
             <span>email@example.com</span>
           </a>
         </div>
@@ -948,6 +1122,8 @@
   <button type="button" class="nav-btn" id="nextBtn" aria-label="Следующий слайд">▶</button>
 </div>
 
+<div id="capture-stage" aria-hidden="true"></div>
+
 <div class="download-row">
   <button type="button" class="dl-btn" onclick="downloadSlide(1)" id="dl-1">📥 Обложка</button>
   <button type="button" class="dl-btn" onclick="downloadSlide(2)" id="dl-2">📥 Обо мне</button>
@@ -956,11 +1132,21 @@
   <button type="button" class="dl-btn" onclick="downloadSlide(5)" id="dl-5">📥 Контакты</button>
   <button type="button" class="dl-btn primary" onclick="downloadAll()" id="dl-all">📦 Скачать все</button>
 </div>
+<p class="download-hint">Для корректных фонов в PNG положите <code>bg-art.jpg</code> и <code>bg-gradient.jpg</code> в папку <code>image/</code> и откройте сайт через <code>npx serve .</code></p>
 
 <script>
 const COVER_W = 1590;
 const COVER_H = 530;
 const total = 5;
+const SLIDE_FILES = {
+  1: 'vk-cover-1590x530.png',
+  2: 'vk-slide-obo-mne.png',
+  3: 'vk-slide-uslugi.png',
+  4: 'vk-slide-preimushchestva.png',
+  5: 'vk-slide-kontakty.png'
+};
+const BG_FALLBACK_ART = 'radial-gradient(ellipse at 75% 45%, rgba(34,211,238,.15), transparent 50%), radial-gradient(ellipse at 15% 80%, rgba(124,58,237,.35), transparent 55%), #0a0814';
+const BG_FALLBACK_GRAD = 'radial-gradient(ellipse at 80% 20%, rgba(232,121,249,.18), transparent 50%), linear-gradient(160deg, #120a22, #0a0814)';
 let current = 0;
 let autoplayTimer = null;
 let isAutoplay = false;
@@ -969,6 +1155,17 @@ const slides = document.querySelectorAll('.slide');
 const dots = document.querySelectorAll('.dot');
 const dlLabels = ['📥 Обложка', '📥 Обо мне', '📥 Услуги', '📥 Преимущества', '📥 Контакты'];
 const imageCache = { art: null, gradient: null };
+let captureBusy = false;
+const dlButtons = () => [
+  document.getElementById('dlCoverBtn'),
+  document.getElementById('dl-all'),
+  ...Array.from({ length: total }, (_, i) => document.getElementById('dl-' + (i + 1)))
+].filter(Boolean);
+
+function setDownloadBusy(busy) {
+  captureBusy = busy;
+  dlButtons().forEach(btn => { btn.disabled = busy; });
+}
 
 function updateUI() {
   slides.forEach((s, i) => s.classList.toggle('active', i === current));
@@ -1059,9 +1256,15 @@ document.getElementById('autoplayBtn').addEventListener('click', toggleAutoplay)
 
 updateUI();
 
+function assetUrl(path) {
+  try { return new URL(path, document.baseURI || location.href).href; }
+  catch { return path; }
+}
+
 function loadImageAsDataUrl(src) {
   return new Promise(resolve => {
     const img = new Image();
+    if (location.protocol !== 'file:') img.crossOrigin = 'anonymous';
     img.onload = () => {
       try {
         const c = document.createElement('canvas');
@@ -1074,36 +1277,126 @@ function loadImageAsDataUrl(src) {
       }
     };
     img.onerror = () => resolve(null);
-    img.src = src;
+    img.src = assetUrl(src);
   });
+}
+
+async function fetchImageDataUrl(src) {
+  try {
+    const res = await fetch(assetUrl(src), { cache: 'force-cache' });
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    return await new Promise(resolve => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result);
+      r.onerror = () => resolve(null);
+      r.readAsDataURL(blob);
+    });
+  } catch {
+    return null;
+  }
 }
 
 async function preloadImages() {
   if (!imageCache.art) {
-    imageCache.art = await loadImageAsDataUrl('image/bg-art.jpg');
-    imageCache.gradient = await loadImageAsDataUrl('image/bg-gradient.jpg');
+    imageCache.art = await fetchImageDataUrl('image/bg-art.jpg')
+      || await loadImageAsDataUrl('image/bg-art.jpg');
+    imageCache.gradient = await fetchImageDataUrl('image/bg-gradient.jpg')
+      || await loadImageAsDataUrl('image/bg-gradient.jpg');
   }
   return imageCache;
+}
+
+function slideFilename(num) {
+  return SLIDE_FILES[num] || 'vk-cover-slide-' + num + '.png';
+}
+
+function bgLayer(dataUrl, fallback) {
+  return dataUrl ? `url("${dataUrl}")` : fallback;
 }
 
 function applyCaptureBackgrounds() {
   const style = document.getElementById('capture-bg-style') || document.createElement('style');
   style.id = 'capture-bg-style';
-  const art = imageCache.art ? `url("${imageCache.art}")` : "url('image/bg-art.jpg')";
-  const grad = imageCache.gradient ? `url("${imageCache.gradient}")` : "url('image/bg-gradient.jpg')";
+  const art = bgLayer(imageCache.art, BG_FALLBACK_ART);
+  const grad = bgLayer(imageCache.gradient, BG_FALLBACK_GRAD);
   style.textContent = `
     body.is-capturing { --img-art: ${art}; --img-gradient: ${grad}; }
     body.is-capturing .service-card,
-    body.is-capturing .adv-card {
+    body.is-capturing .adv-card,
+    #capture-stage .service-card,
+    #capture-stage .adv-card {
       background-image: linear-gradient(165deg, rgba(12,8,28,.5) 0%, rgba(8,6,20,.72) 100%), ${grad} !important;
+      background-size: cover !important;
     }
     body.is-capturing .slide-bg--1,
-    body.is-capturing .slide-bg--5 { background-image: linear-gradient(100deg, rgba(8,6,18,.78), rgba(8,6,18,.62)), ${art} !important; background-size: cover !important; }
+    body.is-capturing .slide-bg--5,
+    #capture-stage .slide-bg--1,
+    #capture-stage .slide-bg--5 {
+      background-image: linear-gradient(100deg, rgba(8,6,18,.78), rgba(8,6,18,.62)), ${art} !important;
+      background-size: cover !important;
+    }
     body.is-capturing .slide-bg--2,
-    body.is-capturing .slide-bg--4 { background-image: linear-gradient(160deg, rgba(8,6,18,.88), rgba(8,6,18,.72)), ${grad} !important; background-size: cover !important; }
-    body.is-capturing .slide-bg--3 { background-image: linear-gradient(160deg, rgba(8,6,18,.86), rgba(8,6,18,.68)), ${art} !important; background-size: cover !important; }
+    body.is-capturing .slide-bg--4,
+    #capture-stage .slide-bg--2,
+    #capture-stage .slide-bg--4 {
+      background-image: linear-gradient(160deg, rgba(8,6,18,.88), rgba(8,6,18,.72)), ${grad} !important;
+      background-size: cover !important;
+    }
+    body.is-capturing .slide-bg--3,
+    #capture-stage .slide-bg--3 {
+      background-image: linear-gradient(160deg, rgba(8,6,18,.86), rgba(8,6,18,.68)), ${art} !important;
+      background-size: cover !important;
+    }
   `;
   if (!style.parentNode) document.head.appendChild(style);
+}
+
+function setInlineBg(el, overlay, dataUrl, fallback) {
+  if (!el) return;
+  el.style.backgroundImage = overlay + ', ' + bgLayer(dataUrl, fallback);
+  el.style.backgroundSize = 'cover';
+  el.style.backgroundPosition = 'center';
+}
+
+function prepareCaptureElement(root) {
+  const art = imageCache.art;
+  const grad = imageCache.gradient;
+
+  setInlineBg(root.querySelector('.slide-bg--1'), 'linear-gradient(100deg, rgba(8,6,18,.78), rgba(8,6,18,.62))', art, BG_FALLBACK_ART);
+  setInlineBg(root.querySelector('.slide-bg--2'), 'linear-gradient(160deg, rgba(8,6,18,.88), rgba(8,6,18,.72))', grad, BG_FALLBACK_GRAD);
+  setInlineBg(root.querySelector('.slide-bg--3'), 'linear-gradient(160deg, rgba(8,6,18,.86), rgba(8,6,18,.68))', art, BG_FALLBACK_ART);
+  setInlineBg(root.querySelector('.slide-bg--4'), 'linear-gradient(160deg, rgba(8,6,18,.88), rgba(8,6,18,.72))', grad, BG_FALLBACK_GRAD);
+  setInlineBg(root.querySelector('.slide-bg--5'), 'linear-gradient(100deg, rgba(8,6,18,.78), rgba(8,6,18,.62))', art, BG_FALLBACK_ART);
+
+  const cardBg = 'linear-gradient(165deg, rgba(12,8,28,.5) 0%, rgba(8,6,20,.72) 100%)';
+  root.querySelectorAll('.service-card, .adv-card').forEach(card => {
+    card.style.backgroundImage = cardBg + ', ' + bgLayer(grad, BG_FALLBACK_GRAD);
+    card.style.backgroundSize = 'cover';
+    card.style.animation = 'none';
+  });
+
+  const bg = root.querySelector('.slide-bg');
+  if (bg) {
+    bg.style.position = 'absolute';
+    bg.style.inset = '0';
+    bg.style.width = '100%';
+    bg.style.height = '100%';
+  }
+  const content = root.querySelector('.slide-content');
+  if (content) {
+    content.style.position = 'relative';
+    content.style.zIndex = '1';
+    content.style.width = '100%';
+    content.style.height = '100%';
+  }
+
+  root.querySelectorAll('.service-card, .adv-card, .cta-btn').forEach(el => {
+    el.style.animation = 'none';
+  });
+
+  fixTextForCapture(root);
+  fixSvgForCapture(root);
 }
 
 let toastTimer;
@@ -1116,28 +1409,68 @@ function showToast(msg, isError) {
   toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
 }
 
-preloadImages();
+preloadImages().then(() => {
+  if (!imageCache.art || !imageCache.gradient) {
+    console.warn('Фоны image/bg-art.jpg или image/bg-gradient.jpg не загружены — в PNG будет неоновый запасной фон.');
+  }
+});
+
+function fixTextForCapture(root) {
+  root.querySelectorAll('.highlight, .cover-author__name, .slide-tagline strong').forEach(node => {
+    node.style.setProperty('background', 'none', 'important');
+    node.style.setProperty('-webkit-background-clip', 'border-box', 'important');
+    node.style.setProperty('-webkit-text-fill-color', '#e879f9', 'important');
+    node.style.setProperty('color', '#e879f9', 'important');
+  });
+}
+
+function fixSvgForCapture(root) {
+  const stroke = '#c084fc';
+  root.querySelectorAll('.service-icon svg, .adv-icon svg, .contact-chip__icon svg').forEach(svg => {
+    svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    svg.setAttribute('stroke', stroke);
+    svg.setAttribute('fill', 'none');
+    svg.style.cssText = 'display:block;visibility:visible;opacity:1;filter:none;overflow:visible;';
+    svg.querySelectorAll('path, rect, circle, polygon, line, polyline').forEach(el => {
+      const fill = el.getAttribute('fill');
+      if (fill && fill !== 'none') return;
+      el.setAttribute('stroke', stroke);
+      el.setAttribute('stroke-width', '1.75');
+      el.setAttribute('fill', 'none');
+      el.removeAttribute('stroke-dasharray');
+    });
+  });
+  root.querySelectorAll('.icon-svg').forEach(svg => {
+    svg.style.filter = 'none';
+    svg.style.stroke = stroke;
+  });
+}
 
 function saveCanvasAsPng(canvas, filename) {
   return new Promise((resolve, reject) => {
+    const save = (href) => {
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = href;
+      link.style.cssText = 'position:fixed;left:-9999px;top:0;';
+      document.body.appendChild(link);
+      requestAnimationFrame(() => {
+        link.click();
+        setTimeout(() => {
+          if (link.parentNode) document.body.removeChild(link);
+          if (href.startsWith('blob:')) URL.revokeObjectURL(href);
+          resolve();
+        }, 400);
+      });
+    };
     if (canvas.toBlob) {
       canvas.toBlob(blob => {
         if (!blob) { reject(new Error('Не удалось создать PNG')); return; }
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.download = filename;
-        link.href = url;
-        link.click();
-        setTimeout(() => URL.revokeObjectURL(url), 500);
-        resolve();
+        save(URL.createObjectURL(blob));
       }, 'image/png', 1);
     } else {
       try {
-        const link = document.createElement('a');
-        link.download = filename;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-        resolve();
+        save(canvas.toDataURL('image/png'));
       } catch (e) {
         reject(e);
       }
@@ -1157,81 +1490,93 @@ function resizeCanvas(src, w, h) {
 }
 
 async function captureSlide(num) {
-  const slide = document.getElementById('slide-' + num);
-  if (!slide) throw new Error('Слайд не найден');
+  const source = document.getElementById('slide-' + num);
+  if (!source) throw new Error('Слайд не найден');
 
-  const prev = current;
   await preloadImages();
   applyCaptureBackgrounds();
-  document.body.classList.add('is-capturing');
 
-  slides.forEach(s => s.classList.remove('active'));
-  slide.classList.add('active');
-  current = num - 1;
+  const stage = document.getElementById('capture-stage');
+  stage.innerHTML = '';
+  const clone = source.cloneNode(true);
+  clone.classList.add('capture-clone', 'active', 'slide');
+  clone.style.width = COVER_W + 'px';
+  clone.style.height = COVER_H + 'px';
+  stage.appendChild(clone);
+
+  document.body.classList.add('is-capturing');
+  prepareCaptureElement(clone);
 
   await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
   await document.fonts?.ready;
-  await new Promise(r => setTimeout(r, 500));
+  await new Promise(r => setTimeout(r, 400));
 
   try {
-    const raw = await html2canvas(slide, {
+    const raw = await html2canvas(clone, {
       scale: 2,
-      useCORS: false,
-      allowTaint: true,
+      useCORS: true,
+      allowTaint: !imageCache.art && !imageCache.gradient,
       backgroundColor: '#0a0a0f',
       logging: false,
-      imageTimeout: 0,
-      onclone: (doc, el) => {
-        doc.body.classList.add('is-capturing');
-        el.style.width = COVER_W + 'px';
-        el.style.height = COVER_H + 'px';
-        el.style.aspectRatio = 'auto';
-        el.style.display = 'block';
+      imageTimeout: 25000,
+      foreignObjectRendering: false,
+      onclone: (_doc, el) => {
+        prepareCaptureElement(el);
+        const capStyle = document.getElementById('capture-bg-style');
+        if (capStyle && _doc.head && !_doc.getElementById('capture-bg-style')) {
+          _doc.head.appendChild(capStyle.cloneNode(true));
+        }
       }
     });
 
     return resizeCanvas(raw, COVER_W * 2, COVER_H * 2);
   } finally {
+    stage.innerHTML = '';
     document.body.classList.remove('is-capturing');
-    slides.forEach(s => s.classList.remove('active'));
-    document.getElementById('slide-' + (prev + 1)).classList.add('active');
-    current = prev;
-    updateUI();
   }
 }
 
 async function downloadSlide(num) {
+  if (captureBusy) return;
   const btn = document.getElementById('dl-' + num);
   const orig = dlLabels[num - 1];
+  setDownloadBusy(true);
   btn.classList.add('loading');
   btn.textContent = '⏳ Генерация...';
 
   try {
     const canvas = await captureSlide(num);
-    const name = num === 1 ? 'vk-cover-1590x530.png' : 'vk-cover-slide-' + num + '.png';
+    const name = slideFilename(num);
     await saveCanvasAsPng(canvas, name);
     showToast('✓ Сохранено: ' + name);
   } catch (err) {
     console.error(err);
-    showToast('Ошибка PNG: ' + (err.message || 'проверьте папку image'), true);
+    const hint = location.protocol === 'file:'
+      ? ' Откройте через локальный сервер (npx serve .) и проверьте папку image.'
+      : ' Проверьте папку image.';
+    showToast('Ошибка PNG: ' + (err.message || 'сбой экспорта') + hint, true);
   }
 
   btn.classList.remove('loading');
   btn.textContent = orig;
+  setDownloadBusy(false);
 }
 
 async function downloadAll() {
+  if (captureBusy) return;
   const btn = document.getElementById('dl-all');
   const orig = '📦 Скачать все';
+  setDownloadBusy(true);
   btn.classList.add('loading');
   btn.textContent = '⏳ Генерация всех...';
 
   let failed = 0;
   for (let i = 1; i <= total; i++) {
-    await new Promise(r => setTimeout(r, 400));
+    btn.textContent = `⏳ Слайд ${i}/${total}...`;
+    await new Promise(r => setTimeout(r, 800));
     try {
       const canvas = await captureSlide(i);
-      await saveCanvasAsPng(canvas, 'vk-cover-slide-' + i + '.png');
+      await saveCanvasAsPng(canvas, slideFilename(i));
     } catch (err) {
       console.error(err);
       failed++;
@@ -1242,6 +1587,7 @@ async function downloadAll() {
 
   btn.classList.remove('loading');
   btn.textContent = orig;
+  setDownloadBusy(false);
 }
 
 document.getElementById('dlCoverBtn').addEventListener('click', () => downloadSlide(1));
