@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Конструктор обложек ВК</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<meta name="description" content="Натали Смирнова — нейро-специалист. Сайты, боты, нейровидео, ИИ-изображение. Обложки ВК 1590×530 и экспорт PNG">
+<title>Натали Смирнова · Обложки ВК</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23120a22'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18' fill='%23e879f9'%3EН%3C/text%3E%3C/svg%3E">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
 <style>
   /* ===== RESET & BASE ===== */
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -16,9 +18,17 @@
     --accent2: #a78bfa;
     --glow: #c084fc;
     --text: #f0f0f5;
-    --text-dim: #8888aa;
+    --text-dim: #c8c0e0;
     --radius: 16px;
     --transition: .35s cubic-bezier(.4,0,.2,1);
+    --img-art: url('image/bg-art.jpg');
+    --img-gradient: url('image/bg-gradient.jpg');
+    --cover-w: 1590;
+    --cover-h: 530;
+    --neon-magenta: #e879f9;
+    --neon-violet: #a78bfa;
+    --neon-cyan: #22d3ee;
+    --neon-pink: #f472b6;
   }
   html { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
   body {
@@ -66,14 +76,58 @@
     transition: var(--transition);
   }
   .header-btn:hover {
-    border-color: var(--accent);
+    border-color: var(--neon-magenta);
     background: rgba(124,58,237,.12);
+    box-shadow: 0 0 16px rgba(232,121,249,.25);
+  }
+  .header-btn--accent {
+    background: linear-gradient(135deg, #7c3aed, #6366f1);
+    border-color: rgba(232,121,249,.45);
+    color: #fff;
+    box-shadow: 0 0 14px rgba(124,58,237,.35);
+  }
+  .header-btn--accent:hover {
+    box-shadow: 0 0 22px rgba(232,121,249,.45);
   }
 
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    padding: 12px 22px;
+    border-radius: 50px;
+    background: rgba(18,18,26,.95);
+    border: 1px solid rgba(167,139,250,.4);
+    color: var(--text);
+    font-size: .85rem;
+    font-weight: 600;
+    box-shadow: 0 8px 32px rgba(0,0,0,.45), 0 0 24px rgba(124,58,237,.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .4s cubic-bezier(.4,0,.2,1), opacity .4s;
+    z-index: 9999;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .toast.error { border-color: rgba(248,113,113,.5); }
+
   /* ===== SLIDE CONTAINER ===== */
+  .slides-preview-note {
+    text-align: center;
+    font-size: .78rem;
+    color: var(--text-dim);
+    margin: 0 auto 8px;
+    max-width: min(1100px, 96vw);
+    padding: 0 12px;
+  }
+  .slides-preview-note strong { color: var(--neon-cyan); font-weight: 600; }
+
   .slides-wrapper {
     position: relative;
-    max-width: 980px;
+    max-width: min(1100px, 96vw);
     margin: 20px auto;
     padding: 0 12px;
   }
@@ -90,7 +144,7 @@
   .slide {
     display: none;
     width: 100%;
-    aspect-ratio: 1920/768;
+    aspect-ratio: 1590/530;
     position: relative;
     overflow: hidden;
     border-radius: var(--radius);
@@ -104,29 +158,52 @@
     z-index: 0;
   }
   .slide-bg--1 {
-    background: radial-gradient(ellipse at 15% 50%, rgba(124,58,237,.35) 0%, transparent 55%),
-                radial-gradient(ellipse at 85% 50%, rgba(59,130,246,.25) 0%, transparent 55%),
-                radial-gradient(ellipse at 50% 50%, rgba(10,10,15,1) 0%, rgba(10,10,15,1) 100%);
+    background-color: #0a0814;
+    background-image:
+      linear-gradient(100deg, rgba(8,6,18,.78) 0%, rgba(8,6,18,.42) 42%, rgba(8,6,18,.62) 100%),
+      var(--img-art),
+      radial-gradient(ellipse at 75% 45%, rgba(34,211,238,.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 15% 80%, rgba(124,58,237,.28) 0%, transparent 55%);
+    background-size: cover;
+    background-position: center;
+  }
+  .slide-bg--1::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(0,210,255,.08) 0%, transparent 45%);
+    pointer-events: none;
   }
   .slide-bg--2 {
-    background: radial-gradient(ellipse at 50% 30%, rgba(124,58,237,.2) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 80%, rgba(192,132,252,.15) 0%, transparent 50%),
-                linear-gradient(160deg, #0a0a0f 0%, #111122 100%);
+    background-color: #0c0818;
+    background-image:
+      linear-gradient(160deg, rgba(8,6,18,.88) 0%, rgba(8,6,18,.72) 100%),
+      var(--img-gradient),
+      radial-gradient(ellipse at 80% 20%, rgba(232,121,249,.15) 0%, transparent 50%);
+    background-size: cover;
+    background-position: 30% center;
   }
-  .slide-bg--3 {
-    background: radial-gradient(ellipse at 20% 50%, rgba(59,130,246,.25) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(124,58,237,.3) 0%, transparent 50%),
-                linear-gradient(160deg, #0a0a0f 0%, #111122 100%);
+  .slide-bg--3,
+  .slide-bg--art-soft {
+    background-image:
+      linear-gradient(160deg, rgba(8,6,18,.86) 0%, rgba(8,6,18,.68) 100%),
+      var(--img-art);
+    background-size: cover;
+    background-position: center;
   }
   .slide-bg--4 {
-    background: radial-gradient(ellipse at 50% 50%, rgba(124,58,237,.18) 0%, transparent 60%),
-                radial-gradient(ellipse at 30% 70%, rgba(192,132,252,.12) 0%, transparent 50%),
-                linear-gradient(160deg, #0a0a0f 0%, #111122 100%);
+    background-image:
+      linear-gradient(165deg, rgba(8,6,18,.9) 0%, rgba(8,6,18,.75) 100%),
+      var(--img-gradient);
+    background-size: cover;
+    background-position: 70% center;
   }
   .slide-bg--5 {
-    background: radial-gradient(ellipse at 50% 50%, rgba(124,58,237,.25) 0%, transparent 55%),
-                radial-gradient(ellipse at 70% 20%, rgba(59,130,246,.2) 0%, transparent 50%),
-                linear-gradient(160deg, #0a0a0f 0%, #111122 100%);
+    background-image:
+      linear-gradient(100deg, rgba(8,6,18,.82) 0%, rgba(8,6,18,.55) 50%, rgba(8,6,18,.78) 100%),
+      var(--img-art);
+    background-size: cover;
+    background-position: center right;
   }
 
   /* ===== SLIDE CONTENT ===== */
@@ -141,6 +218,10 @@
     align-items: center;
     padding: 5% 8%;
     text-align: center;
+  }
+  .slide--with-art .slide-title,
+  .slide--with-art .slide-tag {
+    text-shadow: 0 2px 24px rgba(0,0,0,.65);
   }
 
   .slide-tag {
@@ -178,6 +259,420 @@
     line-height: 1.5;
     margin-bottom: 3%;
   }
+  .slide-tagline {
+    font-size: clamp(.75rem, 1.5vw, 1.05rem);
+    color: var(--text-dim);
+    letter-spacing: .04em;
+    text-shadow: 0 2px 16px rgba(0,0,0,.5);
+  }
+  .slide-tagline strong {
+    color: var(--neon-magenta);
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(232,121,249,.5);
+  }
+  /* flex задаётся ниже после .services-grid — иначе grid перебивает */
+  .services-grid--5 {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    margin-bottom: 0;
+    max-width: 96%;
+    width: 100%;
+    gap: clamp(3px, 0.4vw, 6px);
+  }
+  .services-grid--cover .service-card {
+    flex: 0 0 auto;
+    width: clamp(84px, 10vw, 134px);
+    max-width: 134px;
+    padding: clamp(5px, 0.58vw, 8px) clamp(3px, 0.4vw, 6px);
+    border-radius: 10px;
+    overflow: visible;
+    min-width: 0;
+    box-shadow:
+      0 0 10px rgba(167,139,250,.7),
+      0 0 22px rgba(124,58,237,.5),
+      0 0 36px rgba(124,58,237,.22),
+      inset 0 1px 0 rgba(255,255,255,.14);
+  }
+  .services-grid--cover .service-card:nth-child(1) {
+    border-color: rgba(34,211,238,.7);
+    box-shadow: 0 0 12px rgba(34,211,238,.75), 0 0 26px rgba(34,211,238,.4), inset 0 1px 0 rgba(255,255,255,.14);
+  }
+  .services-grid--cover .service-card:nth-child(2) {
+    border-color: rgba(167,139,250,.7);
+    box-shadow: 0 0 12px rgba(167,139,250,.75), 0 0 26px rgba(167,139,250,.4), inset 0 1px 0 rgba(255,255,255,.14);
+  }
+  .services-grid--cover .service-card:nth-child(3) {
+    border-color: rgba(244,114,182,.7);
+    box-shadow: 0 0 12px rgba(244,114,182,.75), 0 0 26px rgba(244,114,182,.4), inset 0 1px 0 rgba(255,255,255,.14);
+  }
+  .services-grid--cover .service-card:nth-child(4) {
+    border-color: rgba(232,121,249,.7);
+    box-shadow: 0 0 12px rgba(232,121,249,.75), 0 0 26px rgba(232,121,249,.4), inset 0 1px 0 rgba(255,255,255,.14);
+  }
+  .services-grid--cover .service-card:nth-child(5) {
+    border-color: rgba(96,165,250,.7);
+    box-shadow: 0 0 12px rgba(96,165,250,.75), 0 0 26px rgba(96,165,250,.4), inset 0 1px 0 rgba(255,255,255,.14);
+  }
+  .services-grid--cover .service-label {
+    font-size: clamp(.52rem, 1vw, 0.76rem);
+    line-height: 1.1;
+    margin-top: 1px;
+  }
+  .services-grid--cover .service-desc {
+    font-size: clamp(.4rem, 0.72vw, 0.58rem);
+    line-height: 1.15;
+    margin-top: 1px;
+    hyphens: none;
+    overflow: visible;
+    white-space: normal;
+    word-break: keep-all;
+  }
+  .services-grid--cover .service-icon {
+    width: clamp(22px, 2.65vw, 34px);
+    height: clamp(22px, 2.65vw, 34px);
+    margin-bottom: 2px;
+    flex-shrink: 0;
+    box-shadow: 0 0 12px rgba(167,139,250,.55);
+  }
+  .cover-author {
+    margin: 0 0 1.2%;
+    line-height: 1.1;
+  }
+  .cover-author--compact {
+    margin-bottom: 0.8%;
+  }
+  .cover-author--compact .cover-author__name {
+    font-size: clamp(0.95rem, 2.4vw, 1.55rem);
+  }
+  .cover-author__name {
+    display: inline-block;
+    font-size: clamp(1.05rem, 2.9vw, 1.9rem);
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    background: linear-gradient(120deg, #f0abfc 0%, #c084fc 45%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 18px rgba(232,121,249,.5));
+    text-shadow: 0 2px 20px rgba(0,0,0,.5);
+  }
+  #slide-1 .slide-content {
+    padding: 2.2% 7.5% 2%;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 100%;
+    gap: clamp(3px, 0.9vh, 10px);
+  }
+  #slide-1 .slide-title {
+    font-size: clamp(1rem, 2.85vw, 2.25rem);
+    margin: 0;
+    white-space: nowrap;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+  }
+  body.is-capturing #slide-1 .slide-title,
+  body.is-capturing .capture-clone.capture-slide-1 .slide-title,
+  #capture-stage .capture-clone.capture-slide-1 .slide-title {
+    font-size: 38px !important;
+    line-height: 1.12 !important;
+    white-space: nowrap !important;
+  }
+  body.is-capturing .capture-clone.capture-slide-1 .slide-content,
+  body.is-capturing #slide-1 .slide-content {
+    justify-content: space-evenly !important;
+  }
+  #slide-1 .slide-tag {
+    margin: 0;
+    font-size: clamp(.52rem, 1vw, .75rem);
+    letter-spacing: 2px;
+    color: #f0e6ff;
+    border-color: rgba(167,139,250,.75);
+    background: linear-gradient(135deg, rgba(124,58,237,.45), rgba(232,121,249,.2));
+    box-shadow:
+      0 0 14px rgba(167,139,250,.7),
+      0 0 28px rgba(124,58,237,.45),
+      inset 0 0 14px rgba(167,139,250,.18);
+    text-shadow:
+      0 0 10px rgba(232,121,249,.9),
+      0 0 22px rgba(167,139,250,.65),
+      0 0 36px rgba(124,58,237,.35);
+  }
+  #slide-1 .cover-author {
+    margin: 0;
+  }
+  #slide-1 .services-grid.services-grid--cover {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    flex-shrink: 0;
+    align-self: stretch;
+    justify-content: space-evenly;
+    gap: clamp(10px, 1.25vw, 18px);
+    padding: 0 0.5%;
+  }
+  #slide-1 .slide-tagline {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    flex: 0 0 auto;
+    flex-shrink: 0;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative;
+    z-index: 2;
+    font-size: clamp(0.7rem, 1.3vw, 0.95rem);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: #faf6ff;
+    text-shadow:
+      0 0 16px rgba(221,214,254,.7),
+      0 0 32px rgba(196,181,253,.5),
+      0 0 48px rgba(167,139,250,.3),
+      0 2px 10px rgba(0,0,0,.4);
+  }
+  #slide-1 .slide-tagline strong {
+    color: #ffc4ff;
+    font-weight: 700;
+    text-shadow:
+      0 0 14px rgba(255,180,255,1),
+      0 0 28px rgba(244,114,182,1),
+      0 0 44px rgba(232,121,249,.9),
+      0 0 64px rgba(232,121,249,.65),
+      0 0 80px rgba(167,139,250,.4);
+  }
+  #slide-3 .services-grid--5 .service-label {
+    font-size: clamp(.48rem, .95vw, .72rem);
+  }
+  #slide-3 .services-grid--5 .service-desc {
+    font-size: clamp(.4rem, .78vw, .58rem);
+    line-height: 1.25;
+  }
+  #slide-3 .services-grid--5 .service-icon {
+    width: clamp(28px, 3.5vw, 38px);
+    height: clamp(28px, 3.5vw, 38px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .service-card,
+    .cta-btn { animation: none; }
+  }
+
+  /* Стили для html2canvas (без color-mix) */
+  body.is-capturing .slide-container,
+  body.is-capturing .slides-wrapper {
+    width: 1590px !important;
+    max-width: 1590px !important;
+    margin: 0 auto;
+    padding: 0;
+  }
+  body.is-capturing .slide.active {
+    display: block !important;
+    width: 1590px !important;
+    height: 530px !important;
+    aspect-ratio: auto !important;
+    border-radius: 0;
+  }
+  body.is-capturing .service-card,
+  body.is-capturing .adv-card {
+    animation: none !important;
+    border-color: rgba(167,139,250,.45) !important;
+    box-shadow: 0 0 14px rgba(124,58,237,.35), 0 4px 20px rgba(0,0,0,.4) !important;
+  }
+  body.is-capturing .services-grid--cover .service-card:nth-child(1) {
+    box-shadow: 0 0 12px rgba(34,211,238,.8), 0 0 24px rgba(34,211,238,.45) !important;
+  }
+  body.is-capturing .services-grid--cover .service-card:nth-child(2) {
+    box-shadow: 0 0 12px rgba(167,139,250,.8), 0 0 24px rgba(167,139,250,.45) !important;
+  }
+  body.is-capturing .services-grid--cover .service-card:nth-child(3) {
+    box-shadow: 0 0 12px rgba(244,114,182,.8), 0 0 24px rgba(244,114,182,.45) !important;
+  }
+  body.is-capturing .services-grid--cover .service-card:nth-child(4) {
+    box-shadow: 0 0 12px rgba(232,121,249,.8), 0 0 24px rgba(232,121,249,.45) !important;
+  }
+  body.is-capturing .services-grid--cover .service-card:nth-child(5) {
+    box-shadow: 0 0 12px rgba(96,165,250,.8), 0 0 24px rgba(96,165,250,.45) !important;
+  }
+  body.is-capturing #slide-1 .slide-tag,
+  body.is-capturing .capture-clone .slide-tag {
+    box-shadow: 0 0 14px rgba(167,139,250,.75), 0 0 28px rgba(124,58,237,.5) !important;
+    text-shadow: 0 0 10px rgba(232,121,249,.9), 0 0 22px rgba(167,139,250,.7) !important;
+  }
+  body.is-capturing .services-grid.services-grid--cover {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-evenly !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 14px !important;
+    grid-template-columns: unset !important;
+  }
+  body.is-capturing .services-grid.services-grid--5 {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    width: 96% !important;
+    max-width: 96% !important;
+  }
+  body.is-capturing .advantages-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  body.is-capturing .contacts-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+  body.is-capturing #slide-1 .slide-content,
+  body.is-capturing .capture-clone.capture-slide-1 .slide-content {
+    justify-content: space-evenly !important;
+    padding: 12px 119px 11px !important;
+  }
+  body.is-capturing #slide-1 .slide-tagline,
+  body.is-capturing .capture-clone.capture-slide-1 .slide-tagline {
+    display: block !important;
+    visibility: visible !important;
+    margin: 0 !important;
+    color: #faf6ff !important;
+    text-shadow: 0 0 16px rgba(221,214,254,.7), 0 0 32px rgba(196,181,253,.5), 0 2px 10px rgba(0,0,0,.4) !important;
+  }
+  body.is-capturing .service-card::before { display: none; }
+  body.is-capturing .service-icon,
+  body.is-capturing .adv-icon {
+    border-color: rgba(167,139,250,.4) !important;
+    box-shadow: 0 0 12px rgba(124,58,237,.35) !important;
+  }
+  body.is-capturing .service-icon svg,
+  body.is-capturing .adv-icon svg,
+  body.is-capturing .contact-chip__icon svg {
+    filter: none !important;
+    stroke: #c084fc !important;
+    fill: none !important;
+    overflow: visible !important;
+  }
+  body.is-capturing .service-icon svg,
+  body.is-capturing .adv-icon svg,
+  body.is-capturing .contact-chip__icon svg {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  body.is-capturing .service-icon svg path,
+  body.is-capturing .service-icon svg rect,
+  body.is-capturing .service-icon svg circle,
+  body.is-capturing .service-icon svg polygon,
+  body.is-capturing .adv-icon svg path,
+  body.is-capturing .adv-icon svg rect,
+  body.is-capturing .adv-icon svg circle,
+  body.is-capturing .adv-icon svg polygon,
+  body.is-capturing .contact-chip__icon svg path,
+  body.is-capturing .contact-chip__icon svg rect {
+    stroke: #c084fc !important;
+    stroke-width: 1.75px !important;
+    fill: none !important;
+    visibility: visible !important;
+  }
+  body.is-capturing .slide-title .highlight,
+  body.is-capturing .cover-author__name {
+    background: none !important;
+    -webkit-text-fill-color: #e879f9 !important;
+    color: #e879f9 !important;
+    filter: drop-shadow(0 0 12px rgba(232,121,249,.6)) !important;
+  }
+  body.is-capturing .icon-svg {
+    filter: none !important;
+    stroke: #c084fc !important;
+  }
+  body.is-capturing .slide-tagline strong {
+    color: #ffc4ff !important;
+    -webkit-text-fill-color: #ffc4ff !important;
+    text-shadow: 0 0 14px rgba(255,180,255,1), 0 0 28px rgba(244,114,182,1), 0 0 44px rgba(232,121,249,.9) !important;
+  }
+  #capture-stage {
+    position: fixed;
+    left: -10000px;
+    top: 0;
+    width: 1590px;
+    height: 530px;
+    overflow: visible;
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+  }
+  body.is-capturing #capture-stage {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  #capture-stage .capture-clone {
+    display: block !important;
+    width: 1590px !important;
+    height: 530px !important;
+    border-radius: 0 !important;
+    aspect-ratio: auto !important;
+  }
+  #capture-stage .capture-clone .slide-bg {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  #capture-stage .capture-clone .slide-content {
+    position: relative !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    justify-content: space-evenly !important;
+    padding-left: 7.5% !important;
+    padding-right: 7.5% !important;
+  }
+  #capture-stage .capture-clone .slide-tagline {
+    margin: 0 !important;
+    padding-top: 0 !important;
+    color: #faf6ff !important;
+    text-shadow: 0 0 16px rgba(221,214,254,.7), 0 0 32px rgba(196,181,253,.5), 0 2px 10px rgba(0,0,0,.4) !important;
+  }
+  #capture-stage .capture-clone .service-card,
+  #capture-stage .capture-clone .service-label,
+  #capture-stage .capture-clone .service-desc {
+    overflow: visible !important;
+  }
+  #capture-stage .capture-clone .services-grid--cover .service-label {
+    font-size: 11px !important;
+  }
+  #capture-stage .capture-clone .services-grid--cover .service-desc {
+    font-size: 9px !important;
+    line-height: 1.15 !important;
+  }
+  #capture-stage .capture-clone .services-grid.services-grid--cover {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-evenly !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 14px !important;
+    grid-template-columns: unset !important;
+  }
+  #capture-stage .capture-clone .services-grid--cover .service-card {
+    width: 124px !important;
+    max-width: 124px !important;
+    flex: 0 0 auto !important;
+  }
+  #capture-stage .capture-clone .services-grid--cover .service-icon {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  #capture-stage .capture-clone .slide-tag {
+    box-shadow: 0 0 14px rgba(167,139,250,.75), 0 0 28px rgba(124,58,237,.5) !important;
+    text-shadow: 0 0 10px rgba(232,121,249,.9), 0 0 22px rgba(167,139,250,.7) !important;
+  }
+  #capture-stage .capture-clone .slide-tagline {
+    font-size: 14px !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+  #capture-stage .capture-clone .slide-tagline strong {
+    color: #ffc4ff !important;
+    text-shadow: 0 0 14px rgba(255,180,255,1), 0 0 28px rgba(244,114,182,1), 0 0 44px rgba(232,121,249,.9) !important;
+  }
 
   /* ===== SERVICES GRID ===== */
   .services-grid {
@@ -188,33 +683,139 @@
     max-width: 85%;
     margin-bottom: 3%;
   }
+  /* Обложка: один ряд (перебивает display:grid у .services-grid) */
+  .services-grid.services-grid--cover {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+    gap: clamp(10px, 1.25vw, 18px);
+    margin-bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: unset;
+  }
   .service-card {
-    background: rgba(26,26,46,.6);
-    border: 1px solid rgba(124,58,237,.2);
-    border-radius: 12px;
-    padding: clamp(8px, 1.5vw, 18px);
+    position: relative;
+    overflow: hidden;
+    background-image:
+      linear-gradient(165deg, rgba(12,8,28,.45) 0%, rgba(8,6,20,.68) 100%),
+      var(--img-gradient);
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(167,139,250,.45);
+    border-radius: 14px;
+    padding: clamp(10px, 1.6vw, 20px) clamp(8px, 1.2vw, 16px);
     text-align: center;
-    backdrop-filter: blur(10px);
+    box-shadow:
+      0 0 14px rgba(124,58,237,.35),
+      0 0 32px rgba(124,58,237,.18),
+      0 4px 24px rgba(0,0,0,.4),
+      inset 0 1px 0 rgba(255,255,255,.1);
     transition: var(--transition);
+    animation: neon-breathe 3.5s ease-in-out infinite;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(ellipse at 50% 0%, rgba(167,139,250,.2), transparent 70%);
+    pointer-events: none;
+  }
+  .service-card:nth-child(1) {
+    border-color: rgba(34,211,238,.5);
+    box-shadow: 0 0 14px rgba(34,211,238,.35), 0 4px 24px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1);
+    background-position: center, 10% 30%;
+    animation-delay: 0s;
+  }
+  .service-card:nth-child(2) {
+    border-color: rgba(167,139,250,.5);
+    box-shadow: 0 0 14px rgba(167,139,250,.35), 0 4px 24px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1);
+    background-position: center, 35% 50%;
+    animation-delay: .4s;
+  }
+  .service-card:nth-child(3) {
+    border-color: rgba(244,114,182,.5);
+    box-shadow: 0 0 14px rgba(244,114,182,.35), 0 4px 24px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1);
+    background-position: center, 60% 40%;
+    animation-delay: .8s;
+  }
+  .service-card:nth-child(4) {
+    border-color: rgba(232,121,249,.5);
+    box-shadow: 0 0 14px rgba(232,121,249,.35), 0 4px 24px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1);
+    background-position: center, 85% 55%;
+    animation-delay: 1.2s;
+  }
+  .services-grid--5 .service-card:nth-child(5) {
+    border-color: rgba(96,165,250,.5);
+    box-shadow: 0 0 14px rgba(96,165,250,.35), 0 4px 24px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1);
+    background-position: center, 50% 70%;
+    animation-delay: 1.6s;
   }
   .service-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
+    transform: translateY(-4px) scale(1.02);
+    animation-play-state: paused;
+    filter: brightness(1.08);
+  }
+  @keyframes neon-breathe {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.06); }
   }
   .service-icon {
-    font-size: clamp(1.2rem, 2.8vw, 2rem);
-    margin-bottom: 4px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(36px, 5vw, 52px);
+    height: clamp(36px, 5vw, 52px);
+    margin: 0 auto 8px;
+    border-radius: 12px;
+    background: rgba(8,6,20,.45);
+    border: 1px solid rgba(167,139,250,.4);
+    box-shadow: 0 0 16px rgba(124,58,237,.35);
+  }
+  .service-card:nth-child(1) .service-icon { border-color: rgba(34,211,238,.45); box-shadow: 0 0 14px rgba(34,211,238,.4); }
+  .service-card:nth-child(2) .service-icon { border-color: rgba(167,139,250,.45); box-shadow: 0 0 14px rgba(167,139,250,.4); }
+  .service-card:nth-child(3) .service-icon { border-color: rgba(244,114,182,.45); box-shadow: 0 0 14px rgba(244,114,182,.4); }
+  .service-card:nth-child(4) .service-icon { border-color: rgba(232,121,249,.45); box-shadow: 0 0 14px rgba(232,121,249,.4); }
+  .services-grid--cover .service-card:nth-child(5) .service-icon,
+  .services-grid--5 .service-card:nth-child(5) .service-icon { border-color: rgba(96,165,250,.45); box-shadow: 0 0 14px rgba(96,165,250,.4); }
+  .icon-svg {
+    width: 58%;
+    height: 58%;
+    stroke: #c084fc;
+    fill: none;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 5px rgba(192,132,252,.65));
+    overflow: visible;
+  }
+  .service-icon .icon-svg,
+  .adv-icon .icon-svg {
+    width: 58%;
+    height: 58%;
+  }
+  .service-label,
+  .service-desc {
+    position: relative;
+    z-index: 1;
   }
   .service-label {
     font-size: clamp(.55rem, 1.3vw, .9rem);
     font-weight: 700;
-    color: var(--text);
+    color: #fff;
+    text-shadow: 0 1px 8px rgba(0,0,0,.6);
   }
   .service-desc {
     font-size: clamp(.45rem, 1vw, .75rem);
-    color: var(--text-dim);
+    color: rgba(255,255,255,.82);
     margin-top: 3px;
     line-height: 1.3;
+    text-shadow: 0 1px 6px rgba(0,0,0,.5);
   }
 
   /* ===== ADVANTAGES ===== */
@@ -231,25 +832,59 @@
     max-width: 90%;
   }
   .adv-card {
-    background: rgba(26,26,46,.5);
-    border: 1px solid rgba(124,58,237,.15);
+    position: relative;
+    overflow: hidden;
+    background-image:
+      linear-gradient(165deg, rgba(12,8,28,.5) 0%, rgba(8,6,20,.72) 100%),
+      var(--img-gradient);
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(167,139,250,.35);
     border-radius: 12px;
-    padding: clamp(10px, 1.8vw, 22px);
+    padding: clamp(10px, 1.8vw, 20px);
     text-align: center;
+    box-shadow: 0 0 10px rgba(124,58,237,.22), inset 0 1px 0 rgba(255,255,255,.06);
+    transition: var(--transition);
   }
+  .adv-card:hover {
+    border-color: rgba(232,121,249,.6);
+    box-shadow: 0 0 18px rgba(124,58,237,.35);
+    transform: translateY(-2px);
+  }
+  .adv-card:nth-child(1) { border-color: rgba(34,211,238,.35); box-shadow: 0 0 10px rgba(34,211,238,.2); }
+  .adv-card:nth-child(2) { border-color: rgba(167,139,250,.35); }
+  .adv-card:nth-child(3) { border-color: rgba(244,114,182,.35); box-shadow: 0 0 10px rgba(244,114,182,.2); }
+  .adv-card:nth-child(4) { border-color: rgba(232,121,249,.35); }
+  .adv-card:nth-child(5) { border-color: rgba(34,211,238,.35); }
+  .adv-card:nth-child(6) { border-color: rgba(244,114,182,.35); }
   .adv-icon {
-    font-size: clamp(1.3rem, 2.5vw, 2.2rem);
-    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(32px, 4.5vw, 44px);
+    height: clamp(32px, 4.5vw, 44px);
+    margin: 0 auto 8px;
+    border-radius: 10px;
+    background: rgba(8,6,20,.5);
+    border: 1px solid rgba(167,139,250,.35);
+    box-shadow: 0 0 12px rgba(124,58,237,.28);
+  }
+  .adv-icon .icon-svg {
+    width: 56%;
+    height: 56%;
   }
   .adv-title {
     font-size: clamp(.6rem, 1.4vw, 1rem);
     font-weight: 700;
     margin-bottom: 4px;
+    color: #fff;
+    text-shadow: 0 1px 6px rgba(0,0,0,.5);
   }
   .adv-text {
     font-size: clamp(.5rem, 1vw, .8rem);
-    color: var(--text-dim);
+    color: rgba(255,255,255,.78);
     line-height: 1.4;
+    text-shadow: 0 1px 4px rgba(0,0,0,.4);
   }
 
   /* ===== CONTACTS ===== */
@@ -261,23 +896,36 @@
     margin-bottom: 3%;
   }
   .contact-chip {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     padding: 10px 20px;
-    background: rgba(26,26,46,.6);
-    border: 1px solid rgba(124,58,237,.25);
+    background: linear-gradient(165deg, rgba(12,8,28,.65) 0%, rgba(8,6,20,.8) 100%);
+    border: 1px solid rgba(167,139,250,.35);
     border-radius: 50px;
     font-size: clamp(.55rem, 1.2vw, .85rem);
-    color: var(--text);
+    color: #fff;
     text-decoration: none;
     transition: var(--transition);
+    box-shadow: 0 0 14px rgba(124,58,237,.2), inset 0 1px 0 rgba(255,255,255,.08);
   }
   .contact-chip:hover {
-    border-color: var(--accent);
-    background: rgba(124,58,237,.15);
+    border-color: var(--neon-magenta);
+    transform: translateY(-2px);
+    box-shadow: 0 0 22px rgba(232,121,249,.35), 0 0 40px rgba(34,211,238,.15);
   }
-  .contact-chip span:first-child { font-size: 1.1em; }
+  .contact-chip__icon {
+    display: flex;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+  .contact-chip__icon .icon-svg {
+    width: 100%;
+    height: 100%;
+    stroke: #e879f9;
+    filter: drop-shadow(0 0 4px rgba(232,121,249,.5));
+  }
 
   /* ===== CTA BUTTON ===== */
   .cta-btn {
@@ -289,16 +937,30 @@
     font-size: clamp(.6rem, 1.4vw, 1rem);
     font-weight: 700;
     text-decoration: none;
-    border: none;
+    border: 1px solid rgba(232,121,249,.5);
     cursor: pointer;
-    background: linear-gradient(135deg, var(--accent), #6366f1);
+    background: linear-gradient(135deg, #7c3aed 0%, #6366f1 50%, #22d3ee 100%);
+    background-size: 200% 200%;
     color: #fff;
     transition: var(--transition);
-    box-shadow: 0 4px 20px rgba(124,58,237,.35);
+    box-shadow:
+      0 0 18px rgba(124,58,237,.45),
+      0 0 36px rgba(34,211,238,.2),
+      inset 0 1px 0 rgba(255,255,255,.15);
+    animation: cta-glow 4s ease infinite;
   }
   .cta-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 30px rgba(124,58,237,.5);
+    transform: translateY(-3px);
+    background-position: 100% 0;
+    box-shadow:
+      0 0 26px rgba(232,121,249,.55),
+      0 0 48px rgba(34,211,238,.3),
+      inset 0 1px 0 rgba(255,255,255,.2);
+    animation-play-state: paused;
+  }
+  @keyframes cta-glow {
+    0%, 100% { box-shadow: 0 0 16px rgba(124,58,237,.4), 0 0 32px rgba(34,211,238,.15); }
+    50% { box-shadow: 0 0 24px rgba(232,121,249,.5), 0 0 44px rgba(34,211,238,.25); }
   }
 
   /* ===== DECORATIVE ===== */
@@ -345,7 +1007,8 @@
   }
   .nav-btn:hover {
     background: var(--card);
-    border-color: var(--accent);
+    border-color: var(--neon-magenta);
+    box-shadow: 0 0 14px rgba(232,121,249,.3);
   }
   .nav-btn:disabled {
     opacity: .3;
@@ -371,9 +1034,10 @@
     border: none;
   }
   .dot.active {
-    background: var(--accent);
+    background: linear-gradient(90deg, var(--neon-magenta), var(--neon-cyan));
     width: 24px;
     border-radius: 4px;
+    box-shadow: 0 0 12px rgba(232,121,249,.5);
   }
 
   /* ===== DOWNLOAD BUTTONS ===== */
@@ -401,24 +1065,49 @@
     transition: var(--transition);
   }
   .dl-btn:hover {
-    border-color: var(--accent);
+    border-color: var(--neon-magenta);
     background: rgba(124,58,237,.12);
+    box-shadow: 0 0 14px rgba(232,121,249,.2);
   }
   .dl-btn.primary {
-    background: linear-gradient(135deg, var(--accent), #6366f1);
-    border-color: transparent;
+    background: linear-gradient(135deg, #7c3aed, #6366f1, #22d3ee);
+    background-size: 200% auto;
+    border-color: rgba(232,121,249,.4);
     color: #fff;
-    box-shadow: 0 4px 16px rgba(124,58,237,.3);
+    box-shadow: 0 0 18px rgba(124,58,237,.4), 0 0 32px rgba(34,211,238,.15);
   }
   .dl-btn.primary:hover {
-    box-shadow: 0 6px 24px rgba(124,58,237,.45);
-    transform: translateY(-1px);
+    background-position: right center;
+    box-shadow: 0 0 24px rgba(232,121,249,.45), 0 0 40px rgba(34,211,238,.25);
+    transform: translateY(-2px);
   }
 
   /* ===== LOADING ===== */
   .dl-btn.loading {
     pointer-events: none;
     opacity: .6;
+  }
+  .dl-btn:disabled,
+  .header-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .download-hint {
+    text-align: center;
+    font-size: .75rem;
+    color: var(--text-dim);
+    max-width: 640px;
+    margin: 0 auto 28px;
+    padding: 0 16px;
+    line-height: 1.45;
+  }
+  .download-hint code {
+    font-size: .72rem;
+    color: var(--neon-cyan);
+    background: rgba(34,211,238,.08);
+    padding: 2px 6px;
+    border-radius: 4px;
   }
 
   /* ===== PRESENTATION MODE ===== */
@@ -447,15 +1136,51 @@
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
-    .services-grid { grid-template-columns: repeat(2, 1fr); max-width: 95%; }
+    .services-grid:not(.services-grid--cover):not(.services-grid--5) {
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 95%;
+    }
+    .services-grid.services-grid--cover {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-evenly;
+      gap: clamp(6px, 1vw, 10px);
+    }
+    #slide-1 .slide-content {
+      padding: 2.5% 5% 2%;
+      justify-content: space-evenly;
+    }
+    .services-grid--cover .service-card {
+      width: clamp(70px, 16vw, 104px);
+      max-width: 104px;
+    }
+    .services-grid--5 { grid-template-columns: repeat(5, minmax(0, 1fr)); max-width: 99%; gap: 2px; }
     .advantages-grid,
     .advantages-grid--6 { grid-template-columns: repeat(2, 1fr); max-width: 95%; }
     .contacts-row { gap: 8px; }
     .contact-chip { padding: 8px 14px; font-size: .7rem; }
     .slide-content { padding: 8% 5%; }
+    #slide-1 .slide-tagline { margin: 0; }
   }
   @media (max-width: 480px) {
-    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .services-grid.services-grid--cover {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      justify-content: space-evenly !important;
+      gap: 4px !important;
+    }
+    #slide-1 .slide-content {
+      padding-left: 4% !important;
+      padding-right: 4% !important;
+    }
+    .services-grid--cover .service-card {
+      width: 64px !important;
+      max-width: 64px !important;
+    }
+    .services-grid--5 { grid-template-columns: repeat(5, 1fr) !important; max-width: 99%; gap: 3px; }
+    .services-grid:not(.services-grid--cover):not(.services-grid--5) {
+      grid-template-columns: repeat(2, 1fr);
+    }
     .advantages-grid { grid-template-columns: 1fr; max-width: 85%; }
     .advantages-grid--6 { grid-template-columns: 1fr; }
   }
@@ -463,63 +1188,81 @@
 </head>
 <body>
 
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <linearGradient id="icon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e879f9"/>
+      <stop offset="50%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+</svg>
+
 <header class="app-header">
-  <h1>🎨 Конструктор обложек ВК</h1>
-  <p>Создавайте профессиональные обложки для сообщества · 1920×768</p>
-  <motion class="header-actions">
+  <h1>Натали Смирнова · Обложки ВК</h1>
+  <p>Нейро-специалист · digital-услуги · экспорт PNG 1590×530</p>
+  <div class="header-actions">
+    <button type="button" class="header-btn header-btn--accent" id="dlCoverBtn">📥 Скачать обложку</button>
     <button type="button" class="header-btn" id="presentBtn">▶ Режим презентации</button>
     <button type="button" class="header-btn" id="autoplayBtn">⏯ Автопрокрутка</button>
-  </motion>
+  </div>
 </header>
 
-<div class="slides-wrapper">
-  <motion class="slide-container" id="slideContainer">
+<p class="slides-preview-note">Превью слайдов · скачивание <strong>1590×530</strong> px</p>
 
-    <div class="slide active" id="slide-1" data-label="Обложка">
-      <motion class="slide-bg slide-bg--1">
-        <div class="deco-line deco-line--1"></motion>
-        <motion class="deco-line deco-line--2"></motion>
-      </motion>
-      <motion class="slide-content">
-        <div class="slide-tag">Digital-Студия</div>
-        <h2 class="slide-title">Упакуем ваш бизнес<br>в <span class="highlight">Digital</span></h2>
-        <div class="services-grid">
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="slides-wrapper">
+  <div class="slide-container" id="slideContainer">
+
+    <div class="slide active slide--with-art" id="slide-1" data-label="Обложка">
+      <div class="slide-bg slide-bg--1">
+
+      </div>
+      <div class="slide-content">
+        <div class="slide-tag">Нейро-специалист</div>
+        <p class="cover-author"><span class="cover-author__name">Натали Смирнова</span></p>
+        <h2 class="slide-title">Упакую ваш бизнес в <span class="highlight">Digital</span></h2>
+        <div class="services-grid services-grid--cover">
           <div class="service-card">
-            <div class="service-icon">🌐</div>
-            <motion class="service-label">Сайты</motion>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 17h.01M12 17h.01"/></svg></div>
+            <div class="service-label">Сайты</div>
             <div class="service-desc">Которые продают</div>
           </div>
           <div class="service-card">
-            <div class="service-icon">🤖</div>
-            <div class="service-label">Боты</motion>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3v2M8 6l1.5 1.5M16 6l-1.5 1.5"/><rect x="6" y="9" width="12" height="10" rx="2"/><path d="M9 14h.01M12 14h.01M15 14h.01M9 17h6"/><path d="M12 9V7"/></svg></div>
+            <div class="service-label">Боты</div>
             <div class="service-desc">Работают 24/7</div>
           </div>
           <div class="service-card">
-            <div class="service-icon">🎬</div>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="10 8 16 12 10 16"/><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h4"/></svg></div>
             <div class="service-label">Видео</div>
-            <div class="service-desc">Нейровидео с ИИ</motion>
+            <div class="service-desc">Нейровидео с ИИ</div>
           </div>
           <div class="service-card">
-            <div class="service-icon">🎨</div>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 19l2-2M19 19l-2-2M5 5l2 2M19 5l-2 2"/></svg></div>
             <div class="service-label">Дизайн</div>
             <div class="service-desc">Запоминающийся</div>
           </div>
+          <div class="service-card">
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M3 17l4.5-3.5 3 2.5 4.5-4 4 5"/><path d="M17 4l1 1.5 2 1-2 1-1 2-1-2-2-1 2 1z"/></svg></div>
+            <div class="service-label">Визуал</div>
+            <div class="service-desc">ИИ-изображение</div>
+          </div>
         </div>
-        <div style="font-size:clamp(.7rem,1.6vw,1.1rem);color:var(--text-dim);margin-bottom:1.5%;">
-          Digital, который продаёт. <strong style="color:var(--glow);">Пишите!</strong> 👇
-        </div>
-        <a class="cta-btn" href="#">💬 Написать нам</a>
-      </motion>
+        <p class="slide-tagline">Digital, который <strong>продаёт</strong></p>
+      </div>
     </div>
 
-    <motion class="slide" id="slide-2" data-label="Обо мне">
+    <div class="slide slide--with-art" id="slide-2" data-label="Обо мне">
       <div class="slide-bg slide-bg--2"></div>
       <div class="slide-content">
         <div class="slide-tag">Обо мне</div>
+        <p class="cover-author cover-author--compact"><span class="cover-author__name">Натали Смирнова</span></p>
         <h2 class="slide-title">Превращаю идеи<br>в <span class="highlight">цифровые решения</span></h2>
         <p class="slide-subtitle">
-          Digital-специалист с опытом в создании сайтов, чат-ботов, нейровидео и визуала.
-          Помогаю бизнесу расти с помощью современных технологий и нейросетей.
+          Нейро-специалист: сайты, чат-боты, нейровидео, ИИ-изображение и визуал.
+          Упакую ваш бизнес в digital с помощью ИИ и современных технологий.
         </p>
         <div class="advantages-grid" style="margin-top:1%;">
           <div class="adv-card">
@@ -530,7 +1273,7 @@
           <div class="adv-card">
             <div class="adv-icon">⚡</div>
             <div class="adv-title">Современные технологии</div>
-            <motion class="adv-text">Использую AI и нейросети для максимального результата</motion>
+            <div class="adv-text">Использую AI и нейросети для максимального результата</div>
           </div>
           <div class="adv-card">
             <div class="adv-icon">📈</div>
@@ -541,50 +1284,55 @@
       </div>
     </div>
 
-    <div class="slide" id="slide-3" data-label="Услуги">
-      <div class="slide-bg slide-bg--3"></div>
+    <div class="slide slide--with-art" id="slide-3" data-label="Услуги">
+      <div class="slide-bg slide-bg--3 slide-bg--art-soft"></div>
       <div class="slide-content">
         <div class="slide-tag">Услуги</div>
         <h2 class="slide-title">Комплексные<br><span class="highlight">digital-решения</span></h2>
         <p class="slide-subtitle" style="margin-bottom:3%;">Всё для продвижения вашего бизнеса — в одном месте</p>
-        <div class="services-grid" style="max-width:90%;margin-bottom:3%;">
+        <div class="services-grid services-grid--5" style="max-width:96%;margin-bottom:3%;">
           <div class="service-card">
-            <motion class="service-icon">🌐</motion>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 17h.01M12 17h.01"/></svg></div>
             <div class="service-label">Сайты</div>
             <div class="service-desc">Лендинги, корпоративные сайты, интернет-магазины</div>
           </div>
           <div class="service-card">
-            <div class="service-icon">🤖</div>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3v2M8 6l1.5 1.5M16 6l-1.5 1.5"/><rect x="6" y="9" width="12" height="10" rx="2"/><path d="M9 14h.01M12 14h.01M15 14h.01M9 17h6"/><path d="M12 9V7"/></svg></div>
             <div class="service-label">Чат-боты</div>
             <div class="service-desc">Telegram, VK — автоматизация продаж и поддержки</div>
           </div>
           <div class="service-card">
-            <div class="service-icon">🎬</div>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="10 8 16 12 10 16"/><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h4"/></svg></div>
             <div class="service-label">Нейровидео</div>
-            <motion class="service-desc">Видеоконтент с ИИ для рекламы и соцсетей</motion>
+            <div class="service-desc">Видеоконтент с ИИ для рекламы и соцсетей</div>
           </div>
           <div class="service-card">
-            <div class="service-icon">🎨</div>
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/><path d="M5 19l2-2M19 19l-2-2M5 5l2 2M19 5l-2 2"/></svg></div>
+            <div class="service-label">Дизайн</div>
+            <div class="service-desc">Запоминающийся</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M3 17l4.5-3.5 3 2.5 4.5-4 4 5"/><path d="M17 4l1 1.5 2 1-2 1-1 2-1-2-2-1 2 1z"/></svg></div>
             <div class="service-label">Визуал</div>
-            <div class="service-desc">Логотипы, баннеры, оформление, презентации</div>
+            <div class="service-desc">ИИ-изображение</div>
           </div>
         </div>
         <a class="cta-btn" href="#">🚀 Заказать услугу</a>
       </div>
     </div>
 
-    <div class="slide" id="slide-4" data-label="Преимущества">
+    <div class="slide slide--with-art" id="slide-4" data-label="Преимущества">
       <div class="slide-bg slide-bg--4"></div>
       <div class="slide-content">
         <div class="slide-tag">Преимущества</div>
-        <h2 class="slide-title">Почему выбирают<br><span class="highlight">именно нас</span></h2>
-        <p class="slide-subtitle" style="margin-bottom:3%;">Мы делаем не просто красиво — мы делаем эффективно</p>
+        <h2 class="slide-title">Почему выбирают<br><span class="highlight">именно меня</span></h2>
+        <p class="slide-subtitle" style="margin-bottom:3%;">Делаю не просто красиво — делаю эффективно</p>
         <div class="advantages-grid advantages-grid--6">
-          <motion class="adv-card">
+          <div class="adv-card">
             <div class="adv-icon">🔥</div>
             <div class="adv-title">Быстро</div>
-            <div class="adv-text">Соблюдаем сроки. Первые результаты — за 3–5 дней</div>
-          </motion>
+            <div class="adv-text">Соблюдаю сроки. Первые результаты — за 3–5 дней</div>
+          </div>
           <div class="adv-card">
             <div class="adv-icon">💎</div>
             <div class="adv-title">Качественно</div>
@@ -593,7 +1341,7 @@
           <div class="adv-card">
             <div class="adv-icon">🤝</div>
             <div class="adv-title">Поддержка</div>
-            <div class="adv-text">Всегда на связи. Помогаем после сдачи проекта</div>
+            <div class="adv-text">Всегда на связи. Помогаю после сдачи проекта</div>
           </div>
           <div class="adv-card">
             <div class="adv-icon">🧠</div>
@@ -601,12 +1349,12 @@
             <div class="adv-text">Нейросети ускоряют работу и снижают стоимость</div>
           </div>
           <div class="adv-card">
-            <div class="adv-icon">💰</motion>
+            <div class="adv-icon">💰</div>
             <div class="adv-title">Прозрачные цены</div>
             <div class="adv-text">Без скрытых платежей. Фиксированная стоимость</div>
           </div>
           <div class="adv-card">
-            <div class="adv-icon">📊</motion>
+            <div class="adv-icon">📊</div>
             <div class="adv-title">Результат</div>
             <div class="adv-text">Фокус на конверсии и росте вашего бизнеса</div>
           </div>
@@ -614,12 +1362,12 @@
       </div>
     </div>
 
-    <div class="slide" id="slide-5" data-label="Контакты">
+    <div class="slide slide--with-art" id="slide-5" data-label="Контакты">
       <div class="slide-bg slide-bg--5"></div>
       <div class="slide-content">
         <div class="slide-tag">Контакты</div>
         <h2 class="slide-title">Давайте <span class="highlight">обсудим</span><br>ваш проект</h2>
-        <p class="slide-subtitle" style="margin-bottom:3%;">Свяжитесь удобным способом — отвечу в течение часа</p>
+        <p class="slide-subtitle" style="margin-bottom:3%;">Натали Смирнова · свяжитесь удобным способом — отвечу в течение часа</p>
         <div class="contacts-row">
           <a class="contact-chip" href="#">
             <span>💬</span>
@@ -637,14 +1385,14 @@
             <span>📧</span>
             <span>email@example.com</span>
           </a>
-        </motion>
-        <motion style="margin-top:1%;">
+        </div>
+        <div style="margin-top:1%;">
           <a class="cta-btn" href="#">💬 Написать прямо сейчас</a>
-        </motion>
+        </div>
       </div>
     </div>
 
-  </motion>
+  </div>
 </div>
 
 <div class="nav-bar">
@@ -658,27 +1406,53 @@
     <button type="button" class="dot" aria-label="Слайд 5" onclick="goToSlide(4)"></button>
   </div>
   <button type="button" class="nav-btn" id="nextBtn" aria-label="Следующий слайд">▶</button>
-</motion>
-
-<div class="download-row">
-  <button type="button" class="dl-btn" onclick="downloadSlide(1)" id="dl-1">📥 Слайд 1</button>
-  <button type="button" class="dl-btn" onclick="downloadSlide(2)" id="dl-2">📥 Слайд 2</button>
-  <button type="button" class="dl-btn" onclick="downloadSlide(3)" id="dl-3">📥 Слайд 3</button>
-  <button type="button" class="dl-btn" onclick="downloadSlide(4)" id="dl-4">📥 Слайд 4</button>
-  <button type="button" class="dl-btn" onclick="downloadSlide(5)" id="dl-5">📥 Слайд 5</button>
-  <button type="button" class="dl-btn primary" onclick="downloadAll()" id="dl-all">📦 Скачать все</button>
 </div>
 
+<div id="capture-stage" aria-hidden="true"></div>
+
+
+<div class="download-row">
+  <button type="button" class="dl-btn" onclick="downloadSlide(1)" id="dl-1">📥 Обложка</button>
+  <button type="button" class="dl-btn" onclick="downloadSlide(2)" id="dl-2">📥 Обо мне</button>
+  <button type="button" class="dl-btn" onclick="downloadSlide(3)" id="dl-3">📥 Услуги</button>
+  <button type="button" class="dl-btn" onclick="downloadSlide(4)" id="dl-4">📥 Преимущества</button>
+  <button type="button" class="dl-btn" onclick="downloadSlide(5)" id="dl-5">📥 Контакты</button>
+  <button type="button" class="dl-btn primary" onclick="downloadAll()" id="dl-all">📦 Скачать все</button>
+</div>
+<p class="download-hint" id="downloadHint">Для корректных фонов в PNG положите <code>bg-art.jpg</code> и <code>bg-gradient.jpg</code> в папку <code>image/</code> и откройте сайт через <code>npm start</code> (не file://).</p>
+
 <script>
+const COVER_W = 1590;
+const COVER_H = 530;
 const total = 5;
+const SLIDE_FILES = {
+  1: 'vk-cover-1590x530.png',
+  2: 'vk-slide-obo-mne.png',
+  3: 'vk-slide-uslugi.png',
+  4: 'vk-slide-preimushchestva.png',
+  5: 'vk-slide-kontakty.png'
+};
+const BG_FALLBACK_ART = 'radial-gradient(ellipse at 75% 45%, rgba(34,211,238,.15), transparent 50%), radial-gradient(ellipse at 15% 80%, rgba(124,58,237,.35), transparent 55%), #0a0814';
+const BG_FALLBACK_GRAD = 'radial-gradient(ellipse at 80% 20%, rgba(232,121,249,.18), transparent 50%), linear-gradient(160deg, #120a22, #0a0814)';
 let current = 0;
 let autoplayTimer = null;
 let isAutoplay = false;
 
 const slides = document.querySelectorAll('.slide');
 const dots = document.querySelectorAll('.dot');
-const dlLabels = ['📥 Слайд 1', '📥 Слайд 2', '📥 Слайд 3', '📥 Слайд 4', '📥 Слайд 5'];
+const dlLabels = ['📥 Обложка', '📥 Обо мне', '📥 Услуги', '📥 Преимущества', '📥 Контакты'];
+const imageCache = { art: null, gradient: null };
+let captureBusy = false;
+const dlButtons = () => [
+  document.getElementById('dlCoverBtn'),
+  document.getElementById('dl-all'),
+  ...Array.from({ length: total }, (_, i) => document.getElementById('dl-' + (i + 1)))
+].filter(Boolean);
 
+function setDownloadBusy(busy) {
+  captureBusy = busy;
+  dlButtons().forEach(btn => { btn.disabled = busy; });
+}
 function updateUI() {
   slides.forEach((s, i) => s.classList.toggle('active', i === current));
   dots.forEach((d, i) => d.classList.toggle('active', i === current));
@@ -768,74 +1542,514 @@ document.getElementById('autoplayBtn').addEventListener('click', toggleAutoplay)
 
 updateUI();
 
-async function captureSlide(num) {
-  const slide = document.getElementById('slide-' + num);
-  const wasActive = slide.classList.contains('active');
-  const prev = current;
+function assetUrl(path) {
+  try { return new URL(path, document.baseURI || location.href).href; }
+  catch { return path; }
+}
 
-  slides.forEach(s => s.classList.remove('active'));
-  slide.classList.add('active');
-  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+const COVER_CARD_CAPTURE = [
+  { border: 'rgba(34,211,238,.7)', shadow: '0 0 12px rgba(34,211,238,.75), 0 0 26px rgba(34,211,238,.4), inset 0 1px 0 rgba(255,255,255,.14)' },
+  { border: 'rgba(167,139,250,.7)', shadow: '0 0 12px rgba(167,139,250,.75), 0 0 26px rgba(167,139,250,.4), inset 0 1px 0 rgba(255,255,255,.14)' },
+  { border: 'rgba(244,114,182,.7)', shadow: '0 0 12px rgba(244,114,182,.75), 0 0 26px rgba(244,114,182,.4), inset 0 1px 0 rgba(255,255,255,.14)' },
+  { border: 'rgba(232,121,249,.7)', shadow: '0 0 12px rgba(232,121,249,.75), 0 0 26px rgba(232,121,249,.4), inset 0 1px 0 rgba(255,255,255,.14)' },
+  { border: 'rgba(96,165,250,.7)', shadow: '0 0 12px rgba(96,165,250,.75), 0 0 26px rgba(96,165,250,.4), inset 0 1px 0 rgba(255,255,255,.14)' }
+];
 
-  const canvas = await html2canvas(slide, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: '#0a0a0f',
-    width: 1920,
-    height: 768,
-    logging: false
+function injectCaptureStyles(targetDoc) {
+  if (!targetDoc || targetDoc === document) return;
+  targetDoc.querySelectorAll('style[data-capture-injected]').forEach(n => n.remove());
+  document.querySelectorAll('style').forEach(node => {
+    const copy = node.cloneNode(true);
+    copy.setAttribute('data-capture-injected', '1');
+    targetDoc.head.appendChild(copy);
+  });
+  const bgStyle = document.getElementById('capture-bg-style');
+  if (bgStyle && !targetDoc.getElementById('capture-bg-style')) {
+    targetDoc.head.appendChild(bgStyle.cloneNode(true));
+  }
+}
+
+function loadImageAsDataUrl(src) {
+  return new Promise(resolve => {
+    const img = new Image();
+    if (location.protocol !== 'file:') img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      try {
+        const c = document.createElement('canvas');
+        c.width = img.naturalWidth;
+        c.height = img.naturalHeight;
+        c.getContext('2d').drawImage(img, 0, 0);
+        resolve(c.toDataURL('image/jpeg', 0.92));
+      } catch {
+        resolve(null);
+      }
+    };
+    img.onerror = () => resolve(null);
+    img.src = assetUrl(src);
+  });
+}
+
+async function fetchImageDataUrl(src) {
+  try {
+    const res = await fetch(assetUrl(src), { cache: 'force-cache' });
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    return await new Promise(resolve => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result);
+      r.onerror = () => resolve(null);
+      r.readAsDataURL(blob);
+    });
+  } catch {
+    return null;
+  }
+}
+
+async function preloadImages() {
+  if (!imageCache.art) {
+    imageCache.art = await fetchImageDataUrl('image/bg-art.jpg')
+      || await loadImageAsDataUrl('image/bg-art.jpg');
+    imageCache.gradient = await fetchImageDataUrl('image/bg-gradient.jpg')
+      || await loadImageAsDataUrl('image/bg-gradient.jpg');
+  }
+  return imageCache;
+}
+
+function slideFilename(num) {
+  return SLIDE_FILES[num] || 'vk-cover-slide-' + num + '.png';
+}
+
+function bgLayer(dataUrl, fallback) {
+  return dataUrl ? `url("${dataUrl}")` : fallback;
+}
+
+function applyCaptureBackgrounds() {
+  const style = document.getElementById('capture-bg-style') || document.createElement('style');
+  style.id = 'capture-bg-style';
+  const art = bgLayer(imageCache.art, BG_FALLBACK_ART);
+  const grad = bgLayer(imageCache.gradient, BG_FALLBACK_GRAD);
+  style.textContent = `
+    body.is-capturing { --img-art: ${art}; --img-gradient: ${grad}; }
+    body.is-capturing .service-card,
+    body.is-capturing .adv-card,
+    #capture-stage .service-card,
+    #capture-stage .adv-card {
+      background-image: linear-gradient(165deg, rgba(12,8,28,.5) 0%, rgba(8,6,20,.72) 100%), ${grad} !important;
+      background-size: cover !important;
+    }
+    body.is-capturing .slide-bg--1,
+    body.is-capturing .slide-bg--5,
+    #capture-stage .slide-bg--1,
+    #capture-stage .slide-bg--5 {
+      background-image: linear-gradient(100deg, rgba(8,6,18,.78), rgba(8,6,18,.62)), ${art} !important;
+      background-size: cover !important;
+    }
+    body.is-capturing .slide-bg--2,
+    body.is-capturing .slide-bg--4,
+    #capture-stage .slide-bg--2,
+    #capture-stage .slide-bg--4 {
+      background-image: linear-gradient(160deg, rgba(8,6,18,.88), rgba(8,6,18,.72)), ${grad} !important;
+      background-size: cover !important;
+    }
+    body.is-capturing .slide-bg--3,
+    #capture-stage .slide-bg--3 {
+      background-image: linear-gradient(160deg, rgba(8,6,18,.86), rgba(8,6,18,.68)), ${art} !important;
+      background-size: cover !important;
+    }
+  `;
+  if (!style.parentNode) document.head.appendChild(style);
+}
+
+function setInlineBg(el, overlay, dataUrl, fallback) {
+  if (!el) return;
+  el.style.backgroundImage = overlay + ', ' + bgLayer(dataUrl, fallback);
+  el.style.backgroundSize = 'cover';
+  el.style.backgroundPosition = 'center';
+}
+
+function prepareCaptureElement(root, slideNum) {
+  const art = imageCache.art;
+  const grad = imageCache.gradient;
+  const isCover = slideNum === 1;
+
+  setInlineBg(root.querySelector('.slide-bg--1'), 'linear-gradient(100deg, rgba(8,6,18,.78), rgba(8,6,18,.62))', art, BG_FALLBACK_ART);
+  setInlineBg(root.querySelector('.slide-bg--2'), 'linear-gradient(160deg, rgba(8,6,18,.88), rgba(8,6,18,.72))', grad, BG_FALLBACK_GRAD);
+  setInlineBg(root.querySelector('.slide-bg--3'), 'linear-gradient(160deg, rgba(8,6,18,.86), rgba(8,6,18,.68))', art, BG_FALLBACK_ART);
+  setInlineBg(root.querySelector('.slide-bg--4'), 'linear-gradient(160deg, rgba(8,6,18,.88), rgba(8,6,18,.72))', grad, BG_FALLBACK_GRAD);
+  setInlineBg(root.querySelector('.slide-bg--5'), 'linear-gradient(100deg, rgba(8,6,18,.78), rgba(8,6,18,.62))', art, BG_FALLBACK_ART);
+
+  const cardBg = 'linear-gradient(165deg, rgba(12,8,28,.5) 0%, rgba(8,6,20,.72) 100%)';
+  root.querySelectorAll('.service-card, .adv-card').forEach(card => {
+    card.style.backgroundImage = cardBg + ', ' + bgLayer(grad, BG_FALLBACK_GRAD);
+    card.style.backgroundSize = 'cover';
+    card.style.animation = 'none';
+    card.style.overflow = 'visible';
   });
 
-  slides.forEach(s => s.classList.remove('active'));
-  document.getElementById('slide-' + (prev + 1)).classList.add('active');
+  root.style.display = 'block';
+  root.style.position = 'relative';
+  root.style.overflow = 'visible';
+  root.style.width = COVER_W + 'px';
+  root.style.height = COVER_H + 'px';
+  root.style.borderRadius = '0';
+  root.style.aspectRatio = 'auto';
 
-  return canvas;
+  const bg = root.querySelector('.slide-bg');
+  if (bg) {
+    bg.style.position = 'absolute';
+    bg.style.inset = '0';
+    bg.style.width = '100%';
+    bg.style.height = '100%';
+    bg.style.zIndex = '0';
+  }
+
+  const content = root.querySelector('.slide-content');
+  if (content) {
+    content.style.position = 'relative';
+    content.style.zIndex = '1';
+    content.style.width = '100%';
+    content.style.height = '100%';
+    content.style.display = 'flex';
+    content.style.flexDirection = 'column';
+    content.style.alignItems = 'center';
+    content.style.textAlign = 'center';
+    content.style.boxSizing = 'border-box';
+    if (isCover) {
+      content.style.justifyContent = 'space-evenly';
+      content.style.padding = '12px 119px 11px';
+    } else {
+      content.style.justifyContent = 'center';
+      content.style.padding = '40px 64px';
+    }
+  }
+
+  root.querySelectorAll('.service-card, .adv-card, .cta-btn').forEach(el => {
+    el.style.animation = 'none';
+  });
+
+  if (isCover) {
+    const title = root.querySelector('.slide-title');
+    if (title) {
+      title.style.fontSize = '38px';
+      title.style.lineHeight = '1.12';
+      title.style.whiteSpace = 'nowrap';
+      title.style.margin = '0';
+    }
+
+    const neuroTag = root.querySelector('.slide-tag');
+    if (neuroTag) {
+      neuroTag.style.boxShadow = '0 0 14px rgba(167,139,250,.75), 0 0 28px rgba(124,58,237,.5)';
+      neuroTag.style.textShadow = '0 0 10px rgba(232,121,249,.9), 0 0 22px rgba(167,139,250,.7)';
+    }
+
+    const grid = root.querySelector('.services-grid.services-grid--cover');
+    if (grid) {
+      grid.style.display = 'flex';
+      grid.style.flexDirection = 'row';
+      grid.style.flexWrap = 'nowrap';
+      grid.style.justifyContent = 'space-evenly';
+      grid.style.alignItems = 'stretch';
+      grid.style.width = '100%';
+      grid.style.maxWidth = '100%';
+      grid.style.gap = '14px';
+      grid.style.gridTemplateColumns = 'unset';
+      grid.style.margin = '0';
+    }
+
+    root.querySelectorAll('.services-grid--cover .service-card').forEach((card, i) => {
+      const glow = COVER_CARD_CAPTURE[i] || COVER_CARD_CAPTURE[0];
+      card.style.flex = '0 0 auto';
+      card.style.width = '124px';
+      card.style.maxWidth = '124px';
+      card.style.borderColor = glow.border;
+      card.style.boxShadow = glow.shadow;
+    });
+
+    root.querySelectorAll('.services-grid--cover .service-label').forEach(el => {
+      el.style.fontSize = '11px';
+      el.style.lineHeight = '1.1';
+      el.style.overflow = 'visible';
+    });
+    root.querySelectorAll('.services-grid--cover .service-desc').forEach(el => {
+      el.style.fontSize = '9px';
+      el.style.lineHeight = '1.15';
+      el.style.overflow = 'visible';
+    });
+    root.querySelectorAll('.services-grid--cover .service-icon').forEach(el => {
+      el.style.width = '28px';
+      el.style.height = '28px';
+      el.style.marginBottom = '2px';
+    });
+
+    const tagline = root.querySelector('.slide-tagline');
+    if (tagline) {
+      tagline.style.display = 'block';
+      tagline.style.visibility = 'visible';
+      tagline.style.opacity = '1';
+      tagline.style.margin = '0';
+      tagline.style.padding = '0';
+      tagline.style.flexShrink = '0';
+      tagline.style.fontSize = '14px';
+      tagline.style.color = '#faf6ff';
+      tagline.style.textShadow = '0 0 16px rgba(221,214,254,.7), 0 0 32px rgba(196,181,253,.5), 0 2px 10px rgba(0,0,0,.4)';
+    }
+  }
+
+  const grid5 = root.querySelector('.services-grid--5');
+  if (grid5) {
+    grid5.style.display = 'grid';
+    grid5.style.gridTemplateColumns = 'repeat(5, minmax(0, 1fr))';
+    grid5.style.width = '96%';
+    grid5.style.maxWidth = '96%';
+    grid5.style.gap = '8px';
+    grid5.style.margin = '0 auto 12px';
+  }
+
+  const advGrid = root.querySelector('.advantages-grid');
+  if (advGrid) {
+    const six = advGrid.classList.contains('advantages-grid--6');
+    advGrid.style.display = 'grid';
+    advGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+    advGrid.style.width = six ? '90%' : '80%';
+    advGrid.style.maxWidth = six ? '90%' : '80%';
+    advGrid.style.gap = '12px';
+    advGrid.style.margin = '0 auto';
+  }
+
+  const contacts = root.querySelector('.contacts-row');
+  if (contacts) {
+    contacts.style.display = 'flex';
+    contacts.style.flexWrap = 'wrap';
+    contacts.style.justifyContent = 'center';
+    contacts.style.gap = '16px';
+    contacts.style.width = '100%';
+  }
+
+  fixTextForCapture(root);
+  fixSvgForCapture(root);
+}
+
+let toastTimer;
+function showToast(msg, isError) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.toggle('error', !!isError);
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
+}
+
+function updateDownloadHint() {
+  const hint = document.getElementById('downloadHint');
+  if (!hint) return;
+  const onServer = location.protocol === 'http:' || location.protocol === 'https:';
+  const imgsOk = imageCache.art && imageCache.gradient;
+  if (onServer && imgsOk) {
+    hint.innerHTML = '✓ Сайт и фоны готовы · PNG <strong>3180×1060</strong> (масштаб 2×) · обложка <strong>1590×530</strong>';
+  } else if (onServer) {
+    hint.innerHTML = 'Сервер OK. Добавьте <code>bg-art.jpg</code> и <code>bg-gradient.jpg</code> в <code>image/</code> для фото-фонов в PNG.';
+  } else {
+    hint.innerHTML = 'Откройте через <code>npm start</code> → <a href="http://localhost:3000" style="color:var(--neon-cyan)">localhost:3000</a> (file:// ломает PNG). Фоны: <code>image/</code>.';
+  }
+}
+
+preloadImages().then(() => {
+  if (!imageCache.art || !imageCache.gradient) {
+    console.warn('Фоны image/bg-art.jpg или image/bg-gradient.jpg не загружены — в PNG будет неоновый запасной фон.');
+  }
+  updateDownloadHint();
+});
+updateDownloadHint();
+
+function fixTextForCapture(root) {
+  root.querySelectorAll('.highlight, .cover-author__name, .slide-tagline strong').forEach(node => {
+    node.style.setProperty('background', 'none', 'important');
+    node.style.setProperty('-webkit-background-clip', 'border-box', 'important');
+    const taglineAccent = node.matches('.slide-tagline strong');
+    const accent = taglineAccent ? '#ffc4ff' : '#e879f9';
+    node.style.setProperty('-webkit-text-fill-color', accent, 'important');
+    node.style.setProperty('color', accent, 'important');
+    if (taglineAccent) {
+      node.style.setProperty('text-shadow', '0 0 14px rgba(255,180,255,1), 0 0 28px rgba(244,114,182,1), 0 0 44px rgba(232,121,249,.9)', 'important');
+    }
+  });
+}
+
+function fixSvgForCapture(root) {
+  const stroke = '#c084fc';
+  root.querySelectorAll('.service-icon svg, .adv-icon svg, .contact-chip__icon svg').forEach(svg => {
+    svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    svg.setAttribute('stroke', stroke);
+    svg.setAttribute('fill', 'none');
+    svg.style.cssText = 'display:block;visibility:visible;opacity:1;filter:none;overflow:visible;';
+    svg.querySelectorAll('path, rect, circle, polygon, line, polyline').forEach(el => {
+      const fill = el.getAttribute('fill');
+      if (fill && fill !== 'none') return;
+      el.setAttribute('stroke', stroke);
+      el.setAttribute('stroke-width', '1.75');
+      el.setAttribute('fill', 'none');
+      el.removeAttribute('stroke-dasharray');
+    });
+  });
+  root.querySelectorAll('.icon-svg').forEach(svg => {
+    svg.style.filter = 'none';
+    svg.style.stroke = stroke;
+  });
+}
+
+function saveCanvasAsPng(canvas, filename) {
+  return new Promise((resolve, reject) => {
+    const save = (href) => {
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = href;
+      link.style.cssText = 'position:fixed;left:-9999px;top:0;';
+      document.body.appendChild(link);
+      requestAnimationFrame(() => {
+        link.click();
+        setTimeout(() => {
+          if (link.parentNode) document.body.removeChild(link);
+          if (href.startsWith('blob:')) URL.revokeObjectURL(href);
+          resolve();
+        }, 400);
+      });
+    };
+    if (canvas.toBlob) {
+      canvas.toBlob(blob => {
+        if (!blob) { reject(new Error('Не удалось создать PNG')); return; }
+        save(URL.createObjectURL(blob));
+      }, 'image/png', 1);
+    } else {
+      try {
+        save(canvas.toDataURL('image/png'));
+      } catch (e) {
+        reject(e);
+      }
+    }
+  });
+}
+
+function resizeCanvas(src, w, h) {
+  const out = document.createElement('canvas');
+  out.width = w;
+  out.height = h;
+  const ctx = out.getContext('2d');
+  ctx.fillStyle = '#0a0a0f';
+  ctx.fillRect(0, 0, w, h);
+  ctx.drawImage(src, 0, 0, w, h);
+  return out;
+}
+
+async function captureSlide(num) {
+  const source = document.getElementById('slide-' + num);
+  if (!source) throw new Error('Слайд не найден');
+
+  await preloadImages();
+  if (!imageCache.art || !imageCache.gradient) {
+    console.warn('Фоны image/bg-art.jpg или image/bg-gradient.jpg не загружены — в PNG будет неоновый запасной фон.');
+  }
+  applyCaptureBackgrounds();
+
+  const stage = document.getElementById('capture-stage');
+  stage.innerHTML = '';
+  const clone = source.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.classList.add('capture-clone', 'active', 'slide', 'capture-slide-' + num);
+  clone.dataset.captureSlide = String(num);
+  stage.appendChild(clone);
+
+  document.body.classList.add('is-capturing');
+  prepareCaptureElement(clone, num);
+
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  if (document.fonts?.ready) await document.fonts.ready;
+  await new Promise(r => setTimeout(r, 350));
+
+  try {
+    const raw = await html2canvas(clone, {
+      scale: 2,
+      width: COVER_W,
+      height: COVER_H,
+      useCORS: true,
+      allowTaint: !imageCache.art && !imageCache.gradient,
+      backgroundColor: '#0a0814',
+      logging: false,
+      imageTimeout: 30000,
+      foreignObjectRendering: false,
+      removeContainer: true,
+      onclone: (clonedDoc, clonedEl) => {
+        clonedDoc.body.classList.add('is-capturing');
+        clonedDoc.body.style.margin = '0';
+        clonedDoc.body.style.background = '#0a0814';
+        clonedEl.classList.add('capture-clone', 'active', 'slide', 'capture-slide-' + num);
+        applyCaptureBackgrounds();
+        injectCaptureStyles(clonedDoc);
+        prepareCaptureElement(clonedEl, num);
+      }
+    });
+
+    return resizeCanvas(raw, COVER_W * 2, COVER_H * 2);
+  } finally {
+    stage.innerHTML = '';
+    document.body.classList.remove('is-capturing');
+  }
 }
 
 async function downloadSlide(num) {
+  if (captureBusy) return;
   const btn = document.getElementById('dl-' + num);
   const orig = dlLabels[num - 1];
+  setDownloadBusy(true);
   btn.classList.add('loading');
   btn.textContent = '⏳ Генерация...';
 
   try {
     const canvas = await captureSlide(num);
-    const link = document.createElement('a');
-    link.download = 'vk-cover-slide-' + num + '.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
+    const name = slideFilename(num);
+    await saveCanvasAsPng(canvas, name);
+    showToast('✓ Сохранено: ' + name);
   } catch (err) {
     console.error(err);
-    alert('Ошибка при создании PNG. Проверьте подключение к интернету (html2canvas).');
+    const hint = location.protocol === 'file:'
+      ? ' Откройте через локальный сервер (npx serve .) и проверьте папку image.'
+      : ' Проверьте папку image.';
+    showToast('Ошибка PNG: ' + (err.message || 'сбой экспорта') + hint, true);
   }
 
   btn.classList.remove('loading');
   btn.textContent = orig;
+  setDownloadBusy(false);
 }
 
 async function downloadAll() {
+  if (captureBusy) return;
   const btn = document.getElementById('dl-all');
   const orig = '📦 Скачать все';
+  setDownloadBusy(true);
   btn.classList.add('loading');
   btn.textContent = '⏳ Генерация всех...';
 
+  let failed = 0;
   for (let i = 1; i <= total; i++) {
-    await new Promise(r => setTimeout(r, 500));
+    btn.textContent = `⏳ Слайд ${i}/${total}...`;
+    await new Promise(r => setTimeout(r, 800));
     try {
       const canvas = await captureSlide(i);
-      const link = document.createElement('a');
-      link.download = 'vk-cover-slide-' + i + '.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
+      await saveCanvasAsPng(canvas, slideFilename(i));
     } catch (err) {
       console.error(err);
+      failed++;
     }
   }
 
-  updateUI();
+  showToast(failed ? `Сохранено ${total - failed} из ${total}` : `✓ Все ${total} слайдов сохранены`, failed > 0);
+
   btn.classList.remove('loading');
   btn.textContent = orig;
+  setDownloadBusy(false);
 }
+
+document.getElementById('dlCoverBtn').addEventListener('click', () => downloadSlide(1));
 </script>
 </body>
 </html>
