@@ -79,6 +79,39 @@
     background: rgba(124,58,237,.12);
     box-shadow: 0 0 16px rgba(232,121,249,.25);
   }
+  .header-btn--accent {
+    background: linear-gradient(135deg, #7c3aed, #6366f1);
+    border-color: rgba(232,121,249,.45);
+    color: #fff;
+    box-shadow: 0 0 14px rgba(124,58,237,.35);
+  }
+  .header-btn--accent:hover {
+    box-shadow: 0 0 22px rgba(232,121,249,.45);
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    padding: 12px 22px;
+    border-radius: 50px;
+    background: rgba(18,18,26,.95);
+    border: 1px solid rgba(167,139,250,.4);
+    color: var(--text);
+    font-size: .85rem;
+    font-weight: 600;
+    box-shadow: 0 8px 32px rgba(0,0,0,.45), 0 0 24px rgba(124,58,237,.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .4s cubic-bezier(.4,0,.2,1), opacity .4s;
+    z-index: 9999;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .toast.error { border-color: rgba(248,113,113,.5); }
 
   /* ===== SLIDE CONTAINER ===== */
   .slides-wrapper {
@@ -240,6 +273,38 @@
     .cta-btn { animation: none; }
   }
 
+  /* Стили для html2canvas (без color-mix) */
+  body.is-capturing .slide-container,
+  body.is-capturing .slides-wrapper {
+    width: 1590px !important;
+    max-width: 1590px !important;
+    margin: 0 auto;
+    padding: 0;
+  }
+  body.is-capturing .slide.active {
+    display: block !important;
+    width: 1590px !important;
+    height: 530px !important;
+    aspect-ratio: auto !important;
+    border-radius: 0;
+  }
+  body.is-capturing .service-card,
+  body.is-capturing .adv-card {
+    animation: none !important;
+    border-color: rgba(167,139,250,.45) !important;
+    box-shadow: 0 0 14px rgba(124,58,237,.35), 0 4px 20px rgba(0,0,0,.4) !important;
+  }
+  body.is-capturing .service-card::before { display: none; }
+  body.is-capturing .service-icon,
+  body.is-capturing .adv-icon {
+    border-color: rgba(167,139,250,.4) !important;
+    box-shadow: 0 0 12px rgba(124,58,237,.35) !important;
+  }
+  body.is-capturing .service-icon svg,
+  body.is-capturing .adv-icon svg {
+    filter: drop-shadow(0 0 4px rgba(192,132,252,.6));
+  }
+
   /* ===== SERVICES GRID ===== */
   .services-grid {
     display: grid;
@@ -250,7 +315,6 @@
     margin-bottom: 3%;
   }
   .service-card {
-    --card-neon: var(--neon-violet);
     position: relative;
     overflow: hidden;
     background-image:
@@ -258,16 +322,15 @@
       var(--img-gradient);
     background-size: cover;
     background-position: center;
-    border: 1px solid color-mix(in srgb, var(--card-neon) 55%, transparent);
+    border: 1px solid rgba(167,139,250,.45);
     border-radius: 14px;
     padding: clamp(10px, 1.6vw, 20px) clamp(8px, 1.2vw, 16px);
     text-align: center;
     box-shadow:
-      0 0 14px color-mix(in srgb, var(--card-neon) 35%, transparent),
-      0 0 32px color-mix(in srgb, var(--card-neon) 18%, transparent),
+      0 0 14px rgba(124,58,237,.35),
+      0 0 32px rgba(124,58,237,.18),
       0 4px 24px rgba(0,0,0,.4),
-      inset 0 1px 0 rgba(255,255,255,.1),
-      inset 0 0 24px color-mix(in srgb, var(--card-neon) 12%, transparent);
+      inset 0 1px 0 rgba(255,255,255,.1);
     transition: var(--transition);
     animation: neon-breathe 3.5s ease-in-out infinite;
   }
@@ -276,54 +339,41 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--card-neon) 22%, transparent), transparent 70%);
+    background: radial-gradient(ellipse at 50% 0%, rgba(167,139,250,.2), transparent 70%);
     pointer-events: none;
   }
   .service-card:nth-child(1) {
-    --card-neon: var(--neon-cyan);
+    border-color: rgba(34,211,238,.5);
+    box-shadow: 0 0 14px rgba(34,211,238,.35), 0 4px 24px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1);
     background-position: center, 10% 30%;
     animation-delay: 0s;
   }
   .service-card:nth-child(2) {
-    --card-neon: var(--neon-violet);
+    border-color: rgba(167,139,250,.5);
+    box-shadow: 0 0 14px rgba(167,139,250,.35), 0 4px 24px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1);
     background-position: center, 35% 50%;
     animation-delay: .4s;
   }
   .service-card:nth-child(3) {
-    --card-neon: var(--neon-pink);
+    border-color: rgba(244,114,182,.5);
+    box-shadow: 0 0 14px rgba(244,114,182,.35), 0 4px 24px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1);
     background-position: center, 60% 40%;
     animation-delay: .8s;
   }
   .service-card:nth-child(4) {
-    --card-neon: var(--neon-magenta);
+    border-color: rgba(232,121,249,.5);
+    box-shadow: 0 0 14px rgba(232,121,249,.35), 0 4px 24px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.1);
     background-position: center, 85% 55%;
     animation-delay: 1.2s;
   }
   .service-card:hover {
     transform: translateY(-4px) scale(1.02);
-    border-color: color-mix(in srgb, var(--card-neon) 90%, #fff);
-    box-shadow:
-      0 0 22px color-mix(in srgb, var(--card-neon) 55%, transparent),
-      0 0 48px color-mix(in srgb, var(--card-neon) 30%, transparent),
-      0 8px 32px rgba(0,0,0,.45),
-      inset 0 0 32px color-mix(in srgb, var(--card-neon) 18%, transparent);
     animation-play-state: paused;
+    filter: brightness(1.08);
   }
   @keyframes neon-breathe {
-    0%, 100% {
-      box-shadow:
-        0 0 12px color-mix(in srgb, var(--card-neon) 30%, transparent),
-        0 0 28px color-mix(in srgb, var(--card-neon) 14%, transparent),
-        0 4px 20px rgba(0,0,0,.35),
-        inset 0 0 20px color-mix(in srgb, var(--card-neon) 10%, transparent);
-    }
-    50% {
-      box-shadow:
-        0 0 20px color-mix(in srgb, var(--card-neon) 48%, transparent),
-        0 0 40px color-mix(in srgb, var(--card-neon) 24%, transparent),
-        0 6px 28px rgba(0,0,0,.4),
-        inset 0 0 28px color-mix(in srgb, var(--card-neon) 16%, transparent);
-    }
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.06); }
   }
   .service-icon {
     position: relative;
@@ -336,9 +386,13 @@
     margin: 0 auto 8px;
     border-radius: 12px;
     background: rgba(8,6,20,.45);
-    border: 1px solid color-mix(in srgb, var(--card-neon) 40%, transparent);
-    box-shadow: 0 0 16px color-mix(in srgb, var(--card-neon) 35%, transparent);
+    border: 1px solid rgba(167,139,250,.4);
+    box-shadow: 0 0 16px rgba(124,58,237,.35);
   }
+  .service-card:nth-child(1) .service-icon { border-color: rgba(34,211,238,.45); box-shadow: 0 0 14px rgba(34,211,238,.4); }
+  .service-card:nth-child(2) .service-icon { border-color: rgba(167,139,250,.45); box-shadow: 0 0 14px rgba(167,139,250,.4); }
+  .service-card:nth-child(3) .service-icon { border-color: rgba(244,114,182,.45); box-shadow: 0 0 14px rgba(244,114,182,.4); }
+  .service-card:nth-child(4) .service-icon { border-color: rgba(232,121,249,.45); box-shadow: 0 0 14px rgba(232,121,249,.4); }
   .service-icon svg {
     width: 58%;
     height: 58%;
@@ -347,7 +401,7 @@
     stroke-width: 1.75;
     stroke-linecap: round;
     stroke-linejoin: round;
-    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--card-neon) 80%, transparent));
+    filter: drop-shadow(0 0 6px rgba(192,132,252,.7));
   }
   .service-label,
   .service-desc {
@@ -382,7 +436,6 @@
     max-width: 90%;
   }
   .adv-card {
-    --card-neon: var(--neon-violet);
     position: relative;
     overflow: hidden;
     background-image:
@@ -390,26 +443,24 @@
       var(--img-gradient);
     background-size: cover;
     background-position: center;
-    border: 1px solid color-mix(in srgb, var(--card-neon) 40%, transparent);
+    border: 1px solid rgba(167,139,250,.35);
     border-radius: 12px;
     padding: clamp(10px, 1.8vw, 20px);
     text-align: center;
-    box-shadow:
-      0 0 10px color-mix(in srgb, var(--card-neon) 22%, transparent),
-      inset 0 1px 0 rgba(255,255,255,.06);
+    box-shadow: 0 0 10px rgba(124,58,237,.22), inset 0 1px 0 rgba(255,255,255,.06);
     transition: var(--transition);
   }
   .adv-card:hover {
-    border-color: color-mix(in srgb, var(--card-neon) 70%, #fff);
-    box-shadow: 0 0 18px color-mix(in srgb, var(--card-neon) 35%, transparent);
+    border-color: rgba(232,121,249,.6);
+    box-shadow: 0 0 18px rgba(124,58,237,.35);
     transform: translateY(-2px);
   }
-  .adv-card:nth-child(1) { --card-neon: var(--neon-cyan); }
-  .adv-card:nth-child(2) { --card-neon: var(--neon-violet); }
-  .adv-card:nth-child(3) { --card-neon: var(--neon-pink); }
-  .adv-card:nth-child(4) { --card-neon: var(--neon-magenta); }
-  .adv-card:nth-child(5) { --card-neon: var(--neon-cyan); }
-  .adv-card:nth-child(6) { --card-neon: var(--neon-pink); }
+  .adv-card:nth-child(1) { border-color: rgba(34,211,238,.35); box-shadow: 0 0 10px rgba(34,211,238,.2); }
+  .adv-card:nth-child(2) { border-color: rgba(167,139,250,.35); }
+  .adv-card:nth-child(3) { border-color: rgba(244,114,182,.35); box-shadow: 0 0 10px rgba(244,114,182,.2); }
+  .adv-card:nth-child(4) { border-color: rgba(232,121,249,.35); }
+  .adv-card:nth-child(5) { border-color: rgba(34,211,238,.35); }
+  .adv-card:nth-child(6) { border-color: rgba(244,114,182,.35); }
   .adv-icon {
     display: flex;
     align-items: center;
@@ -419,8 +470,8 @@
     margin: 0 auto 8px;
     border-radius: 10px;
     background: rgba(8,6,20,.5);
-    border: 1px solid color-mix(in srgb, var(--card-neon) 35%, transparent);
-    box-shadow: 0 0 12px color-mix(in srgb, var(--card-neon) 28%, transparent);
+    border: 1px solid rgba(167,139,250,.35);
+    box-shadow: 0 0 12px rgba(124,58,237,.28);
   }
   .adv-icon svg {
     width: 56%;
@@ -430,7 +481,7 @@
     stroke-width: 1.75;
     stroke-linecap: round;
     stroke-linejoin: round;
-    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--card-neon) 70%, transparent));
+    filter: drop-shadow(0 0 5px rgba(192,132,252,.65));
   }
   .adv-title {
     font-size: clamp(.6rem, 1.4vw, 1rem);
@@ -707,10 +758,13 @@
   <h1>Конструктор обложек ВК</h1>
   <p>Создавайте профессиональные обложки для сообщества · 1590×530</p>
   <div class="header-actions">
+    <button type="button" class="header-btn header-btn--accent" id="dlCoverBtn">📥 Скачать обложку</button>
     <button type="button" class="header-btn" id="presentBtn">▶ Режим презентации</button>
     <button type="button" class="header-btn" id="autoplayBtn">⏯ Автопрокрутка</button>
   </div>
 </header>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <div class="slides-wrapper">
   <div class="slide-container" id="slideContainer">
@@ -895,11 +949,11 @@
 </div>
 
 <div class="download-row">
-  <button type="button" class="dl-btn" onclick="downloadSlide(1)" id="dl-1">📥 Слайд 1</button>
-  <button type="button" class="dl-btn" onclick="downloadSlide(2)" id="dl-2">📥 Слайд 2</button>
-  <button type="button" class="dl-btn" onclick="downloadSlide(3)" id="dl-3">📥 Слайд 3</button>
-  <button type="button" class="dl-btn" onclick="downloadSlide(4)" id="dl-4">📥 Слайд 4</button>
-  <button type="button" class="dl-btn" onclick="downloadSlide(5)" id="dl-5">📥 Слайд 5</button>
+  <button type="button" class="dl-btn" onclick="downloadSlide(1)" id="dl-1">📥 Обложка</button>
+  <button type="button" class="dl-btn" onclick="downloadSlide(2)" id="dl-2">📥 Обо мне</button>
+  <button type="button" class="dl-btn" onclick="downloadSlide(3)" id="dl-3">📥 Услуги</button>
+  <button type="button" class="dl-btn" onclick="downloadSlide(4)" id="dl-4">📥 Преимущества</button>
+  <button type="button" class="dl-btn" onclick="downloadSlide(5)" id="dl-5">📥 Контакты</button>
   <button type="button" class="dl-btn primary" onclick="downloadAll()" id="dl-all">📦 Скачать все</button>
 </div>
 
@@ -913,7 +967,8 @@ let isAutoplay = false;
 
 const slides = document.querySelectorAll('.slide');
 const dots = document.querySelectorAll('.dot');
-const dlLabels = ['📥 Слайд 1', '📥 Слайд 2', '📥 Слайд 3', '📥 Слайд 4', '📥 Слайд 5'];
+const dlLabels = ['📥 Обложка', '📥 Обо мне', '📥 Услуги', '📥 Преимущества', '📥 Контакты'];
+const imageCache = { art: null, gradient: null };
 
 function updateUI() {
   slides.forEach((s, i) => s.classList.toggle('active', i === current));
@@ -1004,47 +1059,145 @@ document.getElementById('autoplayBtn').addEventListener('click', toggleAutoplay)
 
 updateUI();
 
-function preloadImages() {
-  return Promise.all(['image/bg-art.jpg', 'image/bg-gradient.jpg'].map(src =>
-    new Promise(resolve => {
-      const img = new Image();
-      img.onload = img.onerror = resolve;
-      img.src = src;
-    })
-  ));
+function loadImageAsDataUrl(src) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const c = document.createElement('canvas');
+        c.width = img.naturalWidth;
+        c.height = img.naturalHeight;
+        c.getContext('2d').drawImage(img, 0, 0);
+        resolve(c.toDataURL('image/jpeg', 0.92));
+      } catch {
+        resolve(null);
+      }
+    };
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
+async function preloadImages() {
+  if (!imageCache.art) {
+    imageCache.art = await loadImageAsDataUrl('image/bg-art.jpg');
+    imageCache.gradient = await loadImageAsDataUrl('image/bg-gradient.jpg');
+  }
+  return imageCache;
+}
+
+function applyCaptureBackgrounds() {
+  const style = document.getElementById('capture-bg-style') || document.createElement('style');
+  style.id = 'capture-bg-style';
+  const art = imageCache.art ? `url("${imageCache.art}")` : "url('image/bg-art.jpg')";
+  const grad = imageCache.gradient ? `url("${imageCache.gradient}")` : "url('image/bg-gradient.jpg')";
+  style.textContent = `
+    body.is-capturing { --img-art: ${art}; --img-gradient: ${grad}; }
+    body.is-capturing .service-card,
+    body.is-capturing .adv-card {
+      background-image: linear-gradient(165deg, rgba(12,8,28,.5) 0%, rgba(8,6,20,.72) 100%), ${grad} !important;
+    }
+    body.is-capturing .slide-bg--1,
+    body.is-capturing .slide-bg--5 { background-image: linear-gradient(100deg, rgba(8,6,18,.78), rgba(8,6,18,.62)), ${art} !important; background-size: cover !important; }
+    body.is-capturing .slide-bg--2,
+    body.is-capturing .slide-bg--4 { background-image: linear-gradient(160deg, rgba(8,6,18,.88), rgba(8,6,18,.72)), ${grad} !important; background-size: cover !important; }
+    body.is-capturing .slide-bg--3 { background-image: linear-gradient(160deg, rgba(8,6,18,.86), rgba(8,6,18,.68)), ${art} !important; background-size: cover !important; }
+  `;
+  if (!style.parentNode) document.head.appendChild(style);
+}
+
+let toastTimer;
+function showToast(msg, isError) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.toggle('error', !!isError);
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
 }
 
 preloadImages();
 
+function saveCanvasAsPng(canvas, filename) {
+  return new Promise((resolve, reject) => {
+    if (canvas.toBlob) {
+      canvas.toBlob(blob => {
+        if (!blob) { reject(new Error('Не удалось создать PNG')); return; }
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = filename;
+        link.href = url;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 500);
+        resolve();
+      }, 'image/png', 1);
+    } else {
+      try {
+        const link = document.createElement('a');
+        link.download = filename;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    }
+  });
+}
+
+function resizeCanvas(src, w, h) {
+  const out = document.createElement('canvas');
+  out.width = w;
+  out.height = h;
+  const ctx = out.getContext('2d');
+  ctx.fillStyle = '#0a0a0f';
+  ctx.fillRect(0, 0, w, h);
+  ctx.drawImage(src, 0, 0, w, h);
+  return out;
+}
+
 async function captureSlide(num) {
   const slide = document.getElementById('slide-' + num);
-  const wasActive = slide.classList.contains('active');
+  if (!slide) throw new Error('Слайд не найден');
+
   const prev = current;
+  await preloadImages();
+  applyCaptureBackgrounds();
+  document.body.classList.add('is-capturing');
 
   slides.forEach(s => s.classList.remove('active'));
   slide.classList.add('active');
+  current = num - 1;
+
   await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-
-  await preloadImages();
   await document.fonts?.ready;
-  await new Promise(r => setTimeout(r, 250));
+  await new Promise(r => setTimeout(r, 500));
 
-  const canvas = await html2canvas(slide, {
-    scale: 2,
-    useCORS: true,
-    allowTaint: true,
-    backgroundColor: '#0a0a0f',
-    width: COVER_W,
-    height: COVER_H,
-    windowWidth: COVER_W,
-    windowHeight: COVER_H,
-    logging: false
-  });
+  try {
+    const raw = await html2canvas(slide, {
+      scale: 2,
+      useCORS: false,
+      allowTaint: true,
+      backgroundColor: '#0a0a0f',
+      logging: false,
+      imageTimeout: 0,
+      onclone: (doc, el) => {
+        doc.body.classList.add('is-capturing');
+        el.style.width = COVER_W + 'px';
+        el.style.height = COVER_H + 'px';
+        el.style.aspectRatio = 'auto';
+        el.style.display = 'block';
+      }
+    });
 
-  slides.forEach(s => s.classList.remove('active'));
-  document.getElementById('slide-' + (prev + 1)).classList.add('active');
-
-  return canvas;
+    return resizeCanvas(raw, COVER_W * 2, COVER_H * 2);
+  } finally {
+    document.body.classList.remove('is-capturing');
+    slides.forEach(s => s.classList.remove('active'));
+    document.getElementById('slide-' + (prev + 1)).classList.add('active');
+    current = prev;
+    updateUI();
+  }
 }
 
 async function downloadSlide(num) {
@@ -1055,13 +1208,12 @@ async function downloadSlide(num) {
 
   try {
     const canvas = await captureSlide(num);
-    const link = document.createElement('a');
-    link.download = 'vk-cover-slide-' + num + '.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
+    const name = num === 1 ? 'vk-cover-1590x530.png' : 'vk-cover-slide-' + num + '.png';
+    await saveCanvasAsPng(canvas, name);
+    showToast('✓ Сохранено: ' + name);
   } catch (err) {
     console.error(err);
-    alert('Ошибка при создании PNG. Проверьте подключение к интернету (html2canvas).');
+    showToast('Ошибка PNG: ' + (err.message || 'проверьте папку image'), true);
   }
 
   btn.classList.remove('loading');
@@ -1074,23 +1226,25 @@ async function downloadAll() {
   btn.classList.add('loading');
   btn.textContent = '⏳ Генерация всех...';
 
+  let failed = 0;
   for (let i = 1; i <= total; i++) {
-    await new Promise(r => setTimeout(r, 500));
+    await new Promise(r => setTimeout(r, 400));
     try {
       const canvas = await captureSlide(i);
-      const link = document.createElement('a');
-      link.download = 'vk-cover-slide-' + i + '.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
+      await saveCanvasAsPng(canvas, 'vk-cover-slide-' + i + '.png');
     } catch (err) {
       console.error(err);
+      failed++;
     }
   }
 
-  updateUI();
+  showToast(failed ? `Сохранено ${total - failed} из ${total}` : `✓ Все ${total} слайдов сохранены`, failed > 0);
+
   btn.classList.remove('loading');
   btn.textContent = orig;
 }
+
+document.getElementById('dlCoverBtn').addEventListener('click', () => downloadSlide(1));
 </script>
 </body>
 </html>
