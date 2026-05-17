@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Натали Смирнова — нейро-специалист. Сайты, боты, нейровидео, ИИ-изображение. Обложки ВК 1590×530 и экспорт PNG">
+<meta name="theme-color" content="#0a0814">
 <title>Натали Смирнова · Обложки ВК</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23120a22'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18' fill='%23e879f9'%3EН%3C/text%3E%3C/svg%3E">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
@@ -370,16 +371,10 @@
     letter-spacing: -0.02em;
     line-height: 1.12;
   }
-  body.is-capturing #slide-1 .slide-title,
-  body.is-capturing .capture-clone.capture-slide-1 .slide-title,
-  #capture-stage .capture-clone.capture-slide-1 .slide-title {
-    font-size: 38px !important;
-    line-height: 1.12 !important;
-    white-space: nowrap !important;
-  }
-  body.is-capturing .capture-clone.capture-slide-1 .slide-content,
-  body.is-capturing #slide-1 .slide-content {
-    justify-content: space-evenly !important;
+  /* PNG: размеры берутся с экрана (WYSIWYG), без принудительного масштаба */
+  .capture-overlay {
+    display: block !important;
+    visibility: visible !important;
   }
   #slide-1 .slide-tag {
     margin: 0;
@@ -522,12 +517,8 @@
     flex-wrap: wrap !important;
     justify-content: center !important;
   }
-  body.is-capturing #slide-1 .slide-content,
-  body.is-capturing .capture-clone.capture-slide-1 .slide-content {
-    justify-content: space-evenly !important;
-    padding: 12px 119px 11px !important;
-  }
   body.is-capturing #slide-1 .slide-tagline,
+  body.is-capturing .capture-overlay.capture-slide-1 .slide-tagline,
   body.is-capturing .capture-clone.capture-slide-1 .slide-tagline {
     display: block !important;
     visibility: visible !important;
@@ -1419,7 +1410,7 @@
   <button type="button" class="dl-btn" onclick="downloadSlide(5)" id="dl-5">📥 Контакты</button>
   <button type="button" class="dl-btn primary" onclick="downloadAll()" id="dl-all">📦 Скачать все</button>
 </div>
-<p class="download-hint" id="downloadHint">Для корректных фонов в PNG положите <code>bg-art.jpg</code> и <code>bg-gradient.jpg</code> в папку <code>image/</code> и откройте сайт через <code>npm start</code> (не file://).</p>
+<p class="download-hint" id="downloadHint">PNG сохраняется <strong>как в превью</strong> · 1590×530 (2×). Запуск: <code>start.bat</code> или <code>npm start</code> → <code>http://localhost:8080</code>. Фоны: <code>image/bg-art.jpg</code>, <code>image/bg-gradient.jpg</code>.</p>
 
 <script>
 const COVER_W = 1590;
@@ -1547,28 +1538,6 @@ function assetUrl(path) {
   catch { return path; }
 }
 
-const COVER_CARD_CAPTURE = [
-  { border: 'rgba(34,211,238,.7)', shadow: '0 0 12px rgba(34,211,238,.75), 0 0 26px rgba(34,211,238,.4), inset 0 1px 0 rgba(255,255,255,.14)' },
-  { border: 'rgba(167,139,250,.7)', shadow: '0 0 12px rgba(167,139,250,.75), 0 0 26px rgba(167,139,250,.4), inset 0 1px 0 rgba(255,255,255,.14)' },
-  { border: 'rgba(244,114,182,.7)', shadow: '0 0 12px rgba(244,114,182,.75), 0 0 26px rgba(244,114,182,.4), inset 0 1px 0 rgba(255,255,255,.14)' },
-  { border: 'rgba(232,121,249,.7)', shadow: '0 0 12px rgba(232,121,249,.75), 0 0 26px rgba(232,121,249,.4), inset 0 1px 0 rgba(255,255,255,.14)' },
-  { border: 'rgba(96,165,250,.7)', shadow: '0 0 12px rgba(96,165,250,.75), 0 0 26px rgba(96,165,250,.4), inset 0 1px 0 rgba(255,255,255,.14)' }
-];
-
-function injectCaptureStyles(targetDoc) {
-  if (!targetDoc || targetDoc === document) return;
-  targetDoc.querySelectorAll('style[data-capture-injected]').forEach(n => n.remove());
-  document.querySelectorAll('style').forEach(node => {
-    const copy = node.cloneNode(true);
-    copy.setAttribute('data-capture-injected', '1');
-    targetDoc.head.appendChild(copy);
-  });
-  const bgStyle = document.getElementById('capture-bg-style');
-  if (bgStyle && !targetDoc.getElementById('capture-bg-style')) {
-    targetDoc.head.appendChild(bgStyle.cloneNode(true));
-  }
-}
-
 function loadImageAsDataUrl(src) {
   return new Promise(resolve => {
     const img = new Image();
@@ -1667,10 +1636,37 @@ function setInlineBg(el, overlay, dataUrl, fallback) {
   el.style.backgroundPosition = 'center';
 }
 
-function prepareCaptureElement(root, slideNum) {
+const CAPTURE_STYLE_PROPS = [
+  'display', 'position', 'boxSizing', 'overflow', 'flex', 'flexGrow', 'flexShrink', 'flexBasis',
+  'flexDirection', 'flexWrap', 'alignItems', 'alignSelf', 'justifyContent', 'gap', 'rowGap', 'columnGap',
+  'gridTemplateColumns', 'width', 'height', 'maxWidth', 'minWidth', 'maxHeight', 'minHeight',
+  'marginTop', 'marginRight', 'marginBottom', 'marginLeft',
+  'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
+  'fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'lineHeight', 'letterSpacing', 'textAlign',
+  'whiteSpace', 'color', 'opacity', 'visibility',
+  'backgroundColor', 'backgroundImage', 'backgroundSize', 'backgroundPosition', 'backgroundRepeat',
+  'border', 'borderRadius', 'borderColor', 'borderWidth', 'borderStyle',
+  'boxShadow', 'textShadow', 'filter', 'transform', 'webkitTextFillColor'
+];
+
+function copyComputedStylesTree(sourceRoot, cloneRoot, skipRootSize) {
+  const sourceEls = [sourceRoot, ...sourceRoot.querySelectorAll('*')];
+  const cloneEls = [cloneRoot, ...cloneRoot.querySelectorAll('*')];
+  const n = Math.min(sourceEls.length, cloneEls.length);
+  for (let i = 0; i < n; i++) {
+    const cs = getComputedStyle(sourceEls[i]);
+    const st = cloneEls[i].style;
+    CAPTURE_STYLE_PROPS.forEach(prop => {
+      if (skipRootSize && i === 0 && (prop === 'width' || prop === 'height')) return;
+      const val = cs[prop];
+      if (val && val !== 'auto' && val !== 'normal') st[prop] = val;
+    });
+  }
+}
+
+function applyCaptureFixes(root) {
   const art = imageCache.art;
   const grad = imageCache.gradient;
-  const isCover = slideNum === 1;
 
   setInlineBg(root.querySelector('.slide-bg--1'), 'linear-gradient(100deg, rgba(8,6,18,.78), rgba(8,6,18,.62))', art, BG_FALLBACK_ART);
   setInlineBg(root.querySelector('.slide-bg--2'), 'linear-gradient(160deg, rgba(8,6,18,.88), rgba(8,6,18,.72))', grad, BG_FALLBACK_GRAD);
@@ -1686,147 +1682,53 @@ function prepareCaptureElement(root, slideNum) {
     card.style.overflow = 'visible';
   });
 
-  root.style.display = 'block';
-  root.style.position = 'relative';
-  root.style.overflow = 'visible';
-  root.style.width = COVER_W + 'px';
-  root.style.height = COVER_H + 'px';
-  root.style.borderRadius = '0';
-  root.style.aspectRatio = 'auto';
-
-  const bg = root.querySelector('.slide-bg');
-  if (bg) {
-    bg.style.position = 'absolute';
-    bg.style.inset = '0';
-    bg.style.width = '100%';
-    bg.style.height = '100%';
-    bg.style.zIndex = '0';
-  }
-
-  const content = root.querySelector('.slide-content');
-  if (content) {
-    content.style.position = 'relative';
-    content.style.zIndex = '1';
-    content.style.width = '100%';
-    content.style.height = '100%';
-    content.style.display = 'flex';
-    content.style.flexDirection = 'column';
-    content.style.alignItems = 'center';
-    content.style.textAlign = 'center';
-    content.style.boxSizing = 'border-box';
-    if (isCover) {
-      content.style.justifyContent = 'space-evenly';
-      content.style.padding = '12px 119px 11px';
-    } else {
-      content.style.justifyContent = 'center';
-      content.style.padding = '40px 64px';
-    }
-  }
-
   root.querySelectorAll('.service-card, .adv-card, .cta-btn').forEach(el => {
     el.style.animation = 'none';
   });
 
-  if (isCover) {
-    const title = root.querySelector('.slide-title');
-    if (title) {
-      title.style.fontSize = '38px';
-      title.style.lineHeight = '1.12';
-      title.style.whiteSpace = 'nowrap';
-      title.style.margin = '0';
-    }
-
-    const neuroTag = root.querySelector('.slide-tag');
-    if (neuroTag) {
-      neuroTag.style.boxShadow = '0 0 14px rgba(167,139,250,.75), 0 0 28px rgba(124,58,237,.5)';
-      neuroTag.style.textShadow = '0 0 10px rgba(232,121,249,.9), 0 0 22px rgba(167,139,250,.7)';
-    }
-
-    const grid = root.querySelector('.services-grid.services-grid--cover');
-    if (grid) {
-      grid.style.display = 'flex';
-      grid.style.flexDirection = 'row';
-      grid.style.flexWrap = 'nowrap';
-      grid.style.justifyContent = 'space-evenly';
-      grid.style.alignItems = 'stretch';
-      grid.style.width = '100%';
-      grid.style.maxWidth = '100%';
-      grid.style.gap = '14px';
-      grid.style.gridTemplateColumns = 'unset';
-      grid.style.margin = '0';
-    }
-
-    root.querySelectorAll('.services-grid--cover .service-card').forEach((card, i) => {
-      const glow = COVER_CARD_CAPTURE[i] || COVER_CARD_CAPTURE[0];
-      card.style.flex = '0 0 auto';
-      card.style.width = '124px';
-      card.style.maxWidth = '124px';
-      card.style.borderColor = glow.border;
-      card.style.boxShadow = glow.shadow;
-    });
-
-    root.querySelectorAll('.services-grid--cover .service-label').forEach(el => {
-      el.style.fontSize = '11px';
-      el.style.lineHeight = '1.1';
-      el.style.overflow = 'visible';
-    });
-    root.querySelectorAll('.services-grid--cover .service-desc').forEach(el => {
-      el.style.fontSize = '9px';
-      el.style.lineHeight = '1.15';
-      el.style.overflow = 'visible';
-    });
-    root.querySelectorAll('.services-grid--cover .service-icon').forEach(el => {
-      el.style.width = '28px';
-      el.style.height = '28px';
-      el.style.marginBottom = '2px';
-    });
-
-    const tagline = root.querySelector('.slide-tagline');
-    if (tagline) {
-      tagline.style.display = 'block';
-      tagline.style.visibility = 'visible';
-      tagline.style.opacity = '1';
-      tagline.style.margin = '0';
-      tagline.style.padding = '0';
-      tagline.style.flexShrink = '0';
-      tagline.style.fontSize = '14px';
-      tagline.style.color = '#faf6ff';
-      tagline.style.textShadow = '0 0 16px rgba(221,214,254,.7), 0 0 32px rgba(196,181,253,.5), 0 2px 10px rgba(0,0,0,.4)';
-    }
-  }
-
-  const grid5 = root.querySelector('.services-grid--5');
-  if (grid5) {
-    grid5.style.display = 'grid';
-    grid5.style.gridTemplateColumns = 'repeat(5, minmax(0, 1fr))';
-    grid5.style.width = '96%';
-    grid5.style.maxWidth = '96%';
-    grid5.style.gap = '8px';
-    grid5.style.margin = '0 auto 12px';
-  }
-
-  const advGrid = root.querySelector('.advantages-grid');
-  if (advGrid) {
-    const six = advGrid.classList.contains('advantages-grid--6');
-    advGrid.style.display = 'grid';
-    advGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
-    advGrid.style.width = six ? '90%' : '80%';
-    advGrid.style.maxWidth = six ? '90%' : '80%';
-    advGrid.style.gap = '12px';
-    advGrid.style.margin = '0 auto';
-  }
-
-  const contacts = root.querySelector('.contacts-row');
-  if (contacts) {
-    contacts.style.display = 'flex';
-    contacts.style.flexWrap = 'wrap';
-    contacts.style.justifyContent = 'center';
-    contacts.style.gap = '16px';
-    contacts.style.width = '100%';
-  }
-
   fixTextForCapture(root);
   fixSvgForCapture(root);
+}
+
+function buildWysiwygCaptureOverlay(source, slideNum) {
+  const rect = source.getBoundingClientRect();
+  if (rect.width < 20 || rect.height < 20) {
+    throw new Error('Слайд не виден на экране — прокрутите к превью');
+  }
+
+  const clone = source.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.classList.add('capture-overlay', 'active', 'slide', 'capture-slide-' + slideNum);
+  clone.setAttribute('data-capture-overlay', '1');
+
+  const br = parseFloat(getComputedStyle(source).borderRadius) || 0;
+  clone.style.cssText = [
+    'position:fixed',
+    'left:' + rect.left + 'px',
+    'top:' + rect.top + 'px',
+    'width:' + rect.width + 'px',
+    'height:' + rect.height + 'px',
+    'margin:0',
+    'z-index:100000',
+    'pointer-events:none',
+    'display:block',
+    'overflow:hidden',
+    'box-sizing:border-box',
+    'border-radius:' + br + 'px',
+    'transform:none',
+    'opacity:1',
+    'visibility:visible'
+  ].join(';');
+
+  document.body.appendChild(clone);
+  copyComputedStylesTree(source, clone, true);
+  applyCaptureFixes(clone);
+
+  return { clone, rect };
+}
+
+function removeCaptureOverlay() {
+  document.querySelectorAll('[data-capture-overlay]').forEach(el => el.remove());
 }
 
 let toastTimer;
@@ -1845,11 +1747,11 @@ function updateDownloadHint() {
   const onServer = location.protocol === 'http:' || location.protocol === 'https:';
   const imgsOk = imageCache.art && imageCache.gradient;
   if (onServer && imgsOk) {
-    hint.innerHTML = '✓ Сайт и фоны готовы · PNG <strong>3180×1060</strong> (масштаб 2×) · обложка <strong>1590×530</strong>';
+    hint.innerHTML = '✓ Готово · PNG <strong>как в превью</strong> · <strong>3180×1060</strong> (2×) · обложка <strong>1590×530</strong>';
   } else if (onServer) {
-    hint.innerHTML = 'Сервер OK. Добавьте <code>bg-art.jpg</code> и <code>bg-gradient.jpg</code> в <code>image/</code> для фото-фонов в PNG.';
+    hint.innerHTML = '✓ Сервер OK · PNG как в превью. Добавьте <code>bg-art.jpg</code> и <code>bg-gradient.jpg</code> в <code>image/</code> для фото-фонов.';
   } else {
-    hint.innerHTML = 'Откройте через <code>npm start</code> → <a href="http://localhost:3000" style="color:var(--neon-cyan)">localhost:3000</a> (file:// ломает PNG). Фоны: <code>image/</code>.';
+    hint.innerHTML = 'Запустите <code>start.bat</code> или <code>npm start</code> → <a href="http://localhost:8080" style="color:var(--neon-cyan)">localhost:8080</a> (не открывайте file://). Фоны: <code>image/</code>.';
   }
 }
 
@@ -1929,47 +1831,75 @@ function saveCanvasAsPng(canvas, filename) {
   });
 }
 
-function resizeCanvas(src, w, h) {
+function canvasToExactVkCover(src, targetW, targetH) {
   const out = document.createElement('canvas');
-  out.width = w;
-  out.height = h;
+  out.width = targetW;
+  out.height = targetH;
   const ctx = out.getContext('2d');
-  ctx.fillStyle = '#0a0a0f';
-  ctx.fillRect(0, 0, w, h);
-  ctx.drawImage(src, 0, 0, w, h);
+  ctx.fillStyle = '#0a0814';
+  ctx.fillRect(0, 0, targetW, targetH);
+
+  const ratio = targetW / targetH;
+  const srcRatio = src.width / src.height;
+  let sx = 0;
+  let sy = 0;
+  let sw = src.width;
+  let sh = src.height;
+
+  if (Math.abs(srcRatio - ratio) > 0.002) {
+    if (srcRatio > ratio) {
+      sw = Math.round(src.height * ratio);
+      sx = Math.round((src.width - sw) / 2);
+    } else {
+      sh = Math.round(src.width / ratio);
+      sy = Math.round((src.height - sh) / 2);
+    }
+  }
+
+  ctx.drawImage(src, sx, sy, sw, sh, 0, 0, targetW, targetH);
   return out;
 }
 
-async function captureSlide(num) {
+async function ensureSlideVisible(num) {
+  const prev = current;
+  if (current !== num - 1) {
+    goToSlide(num - 1);
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    await new Promise(r => setTimeout(r, 120));
+  }
   const source = document.getElementById('slide-' + num);
   if (!source) throw new Error('Слайд не найден');
+  source.scrollIntoView({ block: 'center', behavior: 'auto' });
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  return { source, prev };
+}
 
+async function captureSlide(num) {
   await preloadImages();
   if (!imageCache.art || !imageCache.gradient) {
     console.warn('Фоны image/bg-art.jpg или image/bg-gradient.jpg не загружены — в PNG будет неоновый запасной фон.');
   }
   applyCaptureBackgrounds();
 
-  const stage = document.getElementById('capture-stage');
-  stage.innerHTML = '';
-  const clone = source.cloneNode(true);
-  clone.removeAttribute('id');
-  clone.classList.add('capture-clone', 'active', 'slide', 'capture-slide-' + num);
-  clone.dataset.captureSlide = String(num);
-  stage.appendChild(clone);
+  const { source, prev } = await ensureSlideVisible(num);
+  const targetW = COVER_W * 2;
+  const targetH = COVER_H * 2;
 
   document.body.classList.add('is-capturing');
-  prepareCaptureElement(clone, num);
-
-  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-  if (document.fonts?.ready) await document.fonts.ready;
-  await new Promise(r => setTimeout(r, 350));
+  let overlay = null;
 
   try {
+    overlay = buildWysiwygCaptureOverlay(source, num);
+    const { clone, rect } = overlay;
+
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    if (document.fonts?.ready) await document.fonts.ready;
+    await new Promise(r => setTimeout(r, 200));
+
+    const scale = targetW / rect.width;
+
     const raw = await html2canvas(clone, {
-      scale: 2,
-      width: COVER_W,
-      height: COVER_H,
+      scale,
       useCORS: true,
       allowTaint: !imageCache.art && !imageCache.gradient,
       backgroundColor: '#0a0814',
@@ -1981,17 +1911,21 @@ async function captureSlide(num) {
         clonedDoc.body.classList.add('is-capturing');
         clonedDoc.body.style.margin = '0';
         clonedDoc.body.style.background = '#0a0814';
-        clonedEl.classList.add('capture-clone', 'active', 'slide', 'capture-slide-' + num);
-        applyCaptureBackgrounds();
-        injectCaptureStyles(clonedDoc);
-        prepareCaptureElement(clonedEl, num);
+        const bgStyle = document.getElementById('capture-bg-style');
+        if (bgStyle && !clonedDoc.getElementById('capture-bg-style')) {
+          clonedDoc.head.appendChild(bgStyle.cloneNode(true));
+        }
+        applyCaptureFixes(clonedEl);
       }
     });
 
-    return resizeCanvas(raw, COVER_W * 2, COVER_H * 2);
+    const out = canvasToExactVkCover(raw, targetW, targetH);
+    console.info('[PNG] слайд ' + num + ': превью ' + Math.round(rect.width) + '×' + Math.round(rect.height) + ' → файл ' + out.width + '×' + out.height);
+    return out;
   } finally {
-    stage.innerHTML = '';
+    removeCaptureOverlay();
     document.body.classList.remove('is-capturing');
+    if (prev !== num - 1) goToSlide(prev);
   }
 }
 
@@ -2011,8 +1945,8 @@ async function downloadSlide(num) {
   } catch (err) {
     console.error(err);
     const hint = location.protocol === 'file:'
-      ? ' Откройте через локальный сервер (npx serve .) и проверьте папку image.'
-      : ' Проверьте папку image.';
+      ? ' Запустите start.bat или npm start (localhost:8080).'
+      : ' Убедитесь, что слайд виден на экране, и проверьте папку image.';
     showToast('Ошибка PNG: ' + (err.message || 'сбой экспорта') + hint, true);
   }
 
