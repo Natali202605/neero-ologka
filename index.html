@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Конструктор обложек ВК</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --card: #1a1a2e;
+    --accent: #7c3aed;
+    --accent2: #a78bfa;
+    --glow: #c084fc;
+    --text: #f0f0f5;
+    --text-dim: #c8c0e0;
+    --radius: 16px;
+    --transition: .35s cubic-bezier(.4,0,.2,1);
+    --img-art: url('image/bg-art.jpg');
+    --img-gradient: url('image/bg-gradient.jpg');
+  }
+  html { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== HEADER ===== */
+  .app-header {
+    text-align: center;
+    padding: 28px 16px 12px;
+  }
+  .app-header h1 {
+    font-size: clamp(1.3rem, 4vw, 2rem);
+    background: linear-gradient(135deg, var(--accent2), var(--glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+  .app-header p {
+    color: var(--text-dim);
+    font-size: .9rem;
+    margin-top: 4px;
+  }
+  .header-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .header-btn {
+    padding: 8px 16px;
+    border-radius: 50px;
+    border: 1px solid rgba(124,58,237,.35);
+    background: var(--surface);
+    color: var(--text);
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .header-btn:hover {
+    border-color: var(--accent);
+    background: rgba(124,58,237,.12);
+  }
+
+  /* ===== SLIDE CONTAINER ===== */
+  .slides-wrapper {
+    position: relative;
+    max-width: 980px;
+    margin: 20px auto;
+    padding: 0 12px;
+  }
+
+  .slide-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: 0 8px 40px rgba(124,58,237,.15), 0 0 80px rgba(124,58,237,.05);
+    border: 1px solid rgba(124,58,237,.2);
+  }
+
+  .slide {
+    display: none;
+    width: 100%;
+    aspect-ratio: 1920/768;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius);
+  }
+  .slide.active { display: block; }
+
+  /* ===== SLIDE BACKGROUNDS ===== */
+  .slide-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .slide-bg--1 {
+    background-image:
+      linear-gradient(100deg, rgba(8,6,18,.78) 0%, rgba(8,6,18,.42) 42%, rgba(8,6,18,.62) 100%),
+      var(--img-art);
+    background-size: cover;
+    background-position: center;
+  }
+  .slide-bg--1::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(0,210,255,.08) 0%, transparent 45%);
+    pointer-events: none;
+  }
+  .slide-bg--2 {
+    background: radial-gradient(ellipse at 50% 30%, rgba(124,58,237,.2) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(192,132,252,.15) 0%, transparent 50%),
+                linear-gradient(160deg, #0a0a0f 0%, #111122 100%);
+  }
+  .slide-bg--3 {
+    background: radial-gradient(ellipse at 20% 50%, rgba(59,130,246,.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(124,58,237,.3) 0%, transparent 50%),
+                linear-gradient(160deg, #0a0a0f 0%, #111122 100%);
+  }
+  .slide-bg--art-soft {
+    background-image:
+      linear-gradient(160deg, rgba(8,6,18,.85) 0%, rgba(8,6,18,.7) 100%),
+      var(--img-art);
+    background-size: cover;
+    background-position: center;
+  }
+  .slide-bg--4 {
+    background: radial-gradient(ellipse at 50% 50%, rgba(124,58,237,.18) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 70%, rgba(192,132,252,.12) 0%, transparent 50%),
+                linear-gradient(160deg, #0a0a0f 0%, #111122 100%);
+  }
+  .slide-bg--5 {
+    background: radial-gradient(ellipse at 50% 50%, rgba(124,58,237,.25) 0%, transparent 55%),
+                radial-gradient(ellipse at 70% 20%, rgba(59,130,246,.2) 0%, transparent 50%),
+                linear-gradient(160deg, #0a0a0f 0%, #111122 100%);
+  }
+
+  /* ===== SLIDE CONTENT ===== */
+  .slide-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5% 8%;
+    text-align: center;
+  }
+  .slide--with-art .slide-title,
+  .slide--with-art .slide-tag {
+    text-shadow: 0 2px 24px rgba(0,0,0,.65);
+  }
+
+  .slide-tag {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: clamp(.6rem, 1.4vw, .85rem);
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, rgba(124,58,237,.3), rgba(124,58,237,.1));
+    border: 1px solid rgba(124,58,237,.4);
+    color: var(--accent2);
+    margin-bottom: 2%;
+  }
+
+  .slide-title {
+    font-size: clamp(1.4rem, 4.2vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 2%;
+    letter-spacing: -0.5px;
+  }
+  .slide-title .highlight {
+    background: linear-gradient(135deg, var(--glow), #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .slide-subtitle {
+    font-size: clamp(.75rem, 1.8vw, 1.3rem);
+    color: var(--text-dim);
+    max-width: 70%;
+    line-height: 1.5;
+    margin-bottom: 3%;
+  }
+
+  /* ===== SERVICES GRID ===== */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(8px, 1.5vw, 16px);
+    width: 100%;
+    max-width: 85%;
+    margin-bottom: 3%;
+  }
+  .service-card {
+    position: relative;
+    overflow: hidden;
+    background-image:
+      linear-gradient(165deg, rgba(12,8,28,.5) 0%, rgba(8,6,20,.72) 100%),
+      var(--img-gradient);
+    background-size: cover;
+    background-position: center;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 12px;
+    padding: clamp(8px, 1.5vw, 18px);
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08);
+    transition: var(--transition);
+  }
+  .service-card:nth-child(1) { background-position: center, 10% 30%; }
+  .service-card:nth-child(2) { background-position: center, 35% 50%; }
+  .service-card:nth-child(3) { background-position: center, 60% 40%; }
+  .service-card:nth-child(4) { background-position: center, 85% 55%; }
+  .service-card:hover {
+    border-color: rgba(192,132,252,.65);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(124,58,237,.4), inset 0 1px 0 rgba(255,255,255,.12);
+  }
+  .service-icon {
+    font-size: clamp(1.2rem, 2.8vw, 2rem);
+    margin-bottom: 4px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.45));
+  }
+  .service-label {
+    font-size: clamp(.55rem, 1.3vw, .9rem);
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 1px 8px rgba(0,0,0,.6);
+  }
+  .service-desc {
+    font-size: clamp(.45rem, 1vw, .75rem);
+    color: rgba(255,255,255,.82);
+    margin-top: 3px;
+    line-height: 1.3;
+    text-shadow: 0 1px 6px rgba(0,0,0,.5);
+  }
+
+  /* ===== ADVANTAGES ===== */
+  .advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(8px, 1.5vw, 16px);
+    width: 100%;
+    max-width: 80%;
+    margin-bottom: 3%;
+  }
+  .advantages-grid--6 {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 90%;
+  }
+  .adv-card {
+    background: rgba(26,26,46,.5);
+    border: 1px solid rgba(124,58,237,.15);
+    border-radius: 12px;
+    padding: clamp(10px, 1.8vw, 22px);
+    text-align: center;
+  }
+  .adv-icon {
+    font-size: clamp(1.3rem, 2.5vw, 2.2rem);
+    margin-bottom: 6px;
+  }
+  .adv-title {
+    font-size: clamp(.6rem, 1.4vw, 1rem);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .adv-text {
+    font-size: clamp(.5rem, 1vw, .8rem);
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  /* ===== CONTACTS ===== */
+  .contacts-row {
+    display: flex;
+    gap: clamp(10px, 2vw, 24px);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 3%;
+  }
+  .contact-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(26,26,46,.6);
+    border: 1px solid rgba(124,58,237,.25);
+    border-radius: 50px;
+    font-size: clamp(.55rem, 1.2vw, .85rem);
+    color: var(--text);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+  .contact-chip:hover {
+    border-color: var(--accent);
+    background: rgba(124,58,237,.15);
+  }
+  .contact-chip span:first-child { font-size: 1.1em; }
+
+  /* ===== CTA BUTTON ===== */
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: clamp(8px, 1.2vw, 14px) clamp(18px, 2.5vw, 32px);
+    border-radius: 50px;
+    font-size: clamp(.6rem, 1.4vw, 1rem);
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--accent), #6366f1);
+    color: #fff;
+    transition: var(--transition);
+    box-shadow: 0 4px 20px rgba(124,58,237,.35);
+  }
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(124,58,237,.5);
+  }
+
+  /* ===== DECORATIVE ===== */
+  .deco-line {
+    position: absolute;
+    z-index: 0;
+    opacity: .08;
+  }
+  .deco-line--1 {
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    top: -100px; right: -80px;
+  }
+  .deco-line--2 {
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 2px solid var(--glow);
+    bottom: -60px; left: -40px;
+  }
+
+  /* ===== NAVIGATION ===== */
+  .nav-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 16px auto;
+    max-width: 980px;
+    padding: 0 12px;
+  }
+  .nav-btn {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    border: 1px solid rgba(124,58,237,.3);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+  }
+  .nav-btn:hover {
+    background: var(--card);
+    border-color: var(--accent);
+  }
+  .nav-btn:disabled {
+    opacity: .3;
+    cursor: not-allowed;
+  }
+  .slide-counter {
+    font-size: .85rem;
+    color: var(--text-dim);
+    min-width: 48px;
+    text-align: center;
+  }
+  .dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(124,58,237,.25);
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+  }
+  .dot.active {
+    background: var(--accent);
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* ===== DOWNLOAD BUTTONS ===== */
+  .download-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 12px auto 28px;
+    max-width: 980px;
+    padding: 0 12px;
+  }
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(124,58,237,.3);
+    background: var(--surface);
+    color: var(--text);
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .dl-btn:hover {
+    border-color: var(--accent);
+    background: rgba(124,58,237,.12);
+  }
+  .dl-btn.primary {
+    background: linear-gradient(135deg, var(--accent), #6366f1);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(124,58,237,.3);
+  }
+  .dl-btn.primary:hover {
+    box-shadow: 0 6px 24px rgba(124,58,237,.45);
+    transform: translateY(-1px);
+  }
+
+  /* ===== LOADING ===== */
+  .dl-btn.loading {
+    pointer-events: none;
+    opacity: .6;
+  }
+
+  /* ===== PRESENTATION MODE ===== */
+  body.presentation-mode {
+    overflow: hidden;
+  }
+  body.presentation-mode .app-header p,
+  body.presentation-mode .header-actions,
+  body.presentation-mode .download-row {
+    display: none;
+  }
+  body.presentation-mode .app-header {
+    padding: 12px 16px 0;
+  }
+  body.presentation-mode .slides-wrapper {
+    max-width: 100vw;
+    margin: 8px auto;
+    padding: 0 8px;
+  }
+  body.presentation-mode .slide-container {
+    border-radius: 12px;
+  }
+  body.presentation-mode .nav-bar {
+    margin: 10px auto;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); max-width: 95%; }
+    .advantages-grid,
+    .advantages-grid--6 { grid-template-columns: repeat(2, 1fr); max-width: 95%; }
+    .contacts-row { gap: 8px; }
+    .contact-chip { padding: 8px 14px; font-size: .7rem; }
+    .slide-content { padding: 8% 5%; }
+  }
+  @media (max-width: 480px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .advantages-grid { grid-template-columns: 1fr; max-width: 85%; }
+    .advantages-grid--6 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <h1>🎨 Конструктор обложек ВК</h1>
+  <p>Создавайте профессиональные обложки для сообщества · 1920×768</p>
+  <div class="header-actions">
+    <button type="button" class="header-btn" id="presentBtn">▶ Режим презентации</button>
+    <button type="button" class="header-btn" id="autoplayBtn">⏯ Автопрокрутка</button>
+  </div>
+</header>
+
+<div class="slides-wrapper">
+  <div class="slide-container" id="slideContainer">
+
+    <div class="slide active slide--with-art" id="slide-1" data-label="Обложка">
+      <div class="slide-bg slide-bg--1">
+      </div>
+      <div class="slide-content">
+        <div class="slide-tag">Digital-Студия</div>
+        <h2 class="slide-title">Упакуем ваш бизнес<br>в <span class="highlight">Digital</span></h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">🌐</div>
+            <div class="service-label">Сайты</div>
+            <div class="service-desc">Которые продают</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🤖</div>
+            <div class="service-label">Боты</div>
+            <div class="service-desc">Работают 24/7</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎬</div>
+            <div class="service-label">Видео</div>
+            <div class="service-desc">Нейровидео с ИИ</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎨</div>
+            <div class="service-label">Дизайн</div>
+            <div class="service-desc">Запоминающийся</div>
+          </div>
+        </div>
+        <div style="font-size:clamp(.7rem,1.6vw,1.1rem);color:var(--text-dim);margin-bottom:1.5%;">
+          Digital, который продаёт. <strong style="color:var(--glow);">Пишите!</strong> 👇
+        </div>
+        <a class="cta-btn" href="#">💬 Написать нам</a>
+      </div>
+    </div>
+
+    <div class="slide" id="slide-2" data-label="Обо мне">
+      <div class="slide-bg slide-bg--2"></div>
+      <div class="slide-content">
+        <div class="slide-tag">Обо мне</div>
+        <h2 class="slide-title">Превращаю идеи<br>в <span class="highlight">цифровые решения</span></h2>
+        <p class="slide-subtitle">
+          Digital-специалист с опытом в создании сайтов, чат-ботов, нейровидео и визуала.
+          Помогаю бизнесу расти с помощью современных технологий и нейросетей.
+        </p>
+        <div class="advantages-grid" style="margin-top:1%;">
+          <div class="adv-card">
+            <div class="adv-icon">🎯</div>
+            <div class="adv-title">Индивидуальный подход</div>
+            <div class="adv-text">Каждый проект уникален — подбираю решение под ваши задачи</div>
+          </div>
+          <div class="adv-card">
+            <div class="adv-icon">⚡</div>
+            <div class="adv-title">Современные технологии</div>
+            <div class="adv-text">Использую AI и нейросети для максимального результата</div>
+          </div>
+          <div class="adv-card">
+            <div class="adv-icon">📈</div>
+            <div class="adv-title">Результат в цифрах</div>
+            <div class="adv-text">Фокус на конверсии, продажах и эффективности</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide slide--with-art" id="slide-3" data-label="Услуги">
+      <div class="slide-bg slide-bg--3 slide-bg--art-soft"></div>
+      <div class="slide-content">
+        <div class="slide-tag">Услуги</div>
+        <h2 class="slide-title">Комплексные<br><span class="highlight">digital-решения</span></h2>
+        <p class="slide-subtitle" style="margin-bottom:3%;">Всё для продвижения вашего бизнеса — в одном месте</p>
+        <div class="services-grid" style="max-width:90%;margin-bottom:3%;">
+          <div class="service-card">
+            <div class="service-icon">🌐</div>
+            <div class="service-label">Сайты</div>
+            <div class="service-desc">Лендинги, корпоративные сайты, интернет-магазины</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🤖</div>
+            <div class="service-label">Чат-боты</div>
+            <div class="service-desc">Telegram, VK — автоматизация продаж и поддержки</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎬</div>
+            <div class="service-label">Нейровидео</div>
+            <div class="service-desc">Видеоконтент с ИИ для рекламы и соцсетей</div>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎨</div>
+            <div class="service-label">Визуал</div>
+            <div class="service-desc">Логотипы, баннеры, оформление, презентации</div>
+          </div>
+        </div>
+        <a class="cta-btn" href="#">🚀 Заказать услугу</a>
+      </div>
+    </div>
+
+    <div class="slide" id="slide-4" data-label="Преимущества">
+      <div class="slide-bg slide-bg--4"></div>
+      <div class="slide-content">
+        <div class="slide-tag">Преимущества</div>
+        <h2 class="slide-title">Почему выбирают<br><span class="highlight">именно нас</span></h2>
+        <p class="slide-subtitle" style="margin-bottom:3%;">Мы делаем не просто красиво — мы делаем эффективно</p>
+        <div class="advantages-grid advantages-grid--6">
+          <div class="adv-card">
+            <div class="adv-icon">🔥</div>
+            <div class="adv-title">Быстро</div>
+            <div class="adv-text">Соблюдаем сроки. Первые результаты — за 3–5 дней</div>
+          </div>
+          <div class="adv-card">
+            <div class="adv-icon">💎</div>
+            <div class="adv-title">Качественно</div>
+            <div class="adv-text">Профессиональный подход на каждом этапе</div>
+          </div>
+          <div class="adv-card">
+            <div class="adv-icon">🤝</div>
+            <div class="adv-title">Поддержка</div>
+            <div class="adv-text">Всегда на связи. Помогаем после сдачи проекта</div>
+          </div>
+          <div class="adv-card">
+            <div class="adv-icon">🧠</div>
+            <div class="adv-title">AI-технологии</div>
+            <div class="adv-text">Нейросети ускоряют работу и снижают стоимость</div>
+          </div>
+          <div class="adv-card">
+            <div class="adv-icon">💰</div>
+            <div class="adv-title">Прозрачные цены</div>
+            <div class="adv-text">Без скрытых платежей. Фиксированная стоимость</div>
+          </div>
+          <div class="adv-card">
+            <div class="adv-icon">📊</div>
+            <div class="adv-title">Результат</div>
+            <div class="adv-text">Фокус на конверсии и росте вашего бизнеса</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" id="slide-5" data-label="Контакты">
+      <div class="slide-bg slide-bg--5"></div>
+      <div class="slide-content">
+        <div class="slide-tag">Контакты</div>
+        <h2 class="slide-title">Давайте <span class="highlight">обсудим</span><br>ваш проект</h2>
+        <p class="slide-subtitle" style="margin-bottom:3%;">Свяжитесь удобным способом — отвечу в течение часа</p>
+        <div class="contacts-row">
+          <a class="contact-chip" href="#">
+            <span>💬</span>
+            <span>VK Сообщения</span>
+          </a>
+          <a class="contact-chip" href="#">
+            <span>✈️</span>
+            <span>Telegram</span>
+          </a>
+          <a class="contact-chip" href="#">
+            <span>📞</span>
+            <span>+7 (XXX) XXX-XX-XX</span>
+          </a>
+          <a class="contact-chip" href="#">
+            <span>📧</span>
+            <span>email@example.com</span>
+          </a>
+        </div>
+        <div style="margin-top:1%;">
+          <a class="cta-btn" href="#">💬 Написать прямо сейчас</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="nav-bar">
+  <button type="button" class="nav-btn" id="prevBtn" aria-label="Предыдущий слайд">◀</button>
+  <span class="slide-counter" id="slideCounter">1 / 5</span>
+  <div class="dots" id="dots">
+    <button type="button" class="dot active" aria-label="Слайд 1" onclick="goToSlide(0)"></button>
+    <button type="button" class="dot" aria-label="Слайд 2" onclick="goToSlide(1)"></button>
+    <button type="button" class="dot" aria-label="Слайд 3" onclick="goToSlide(2)"></button>
+    <button type="button" class="dot" aria-label="Слайд 4" onclick="goToSlide(3)"></button>
+    <button type="button" class="dot" aria-label="Слайд 5" onclick="goToSlide(4)"></button>
+  </div>
+  <button type="button" class="nav-btn" id="nextBtn" aria-label="Следующий слайд">▶</button>
+</div>
+
+<div class="download-row">
+  <button type="button" class="dl-btn" onclick="downloadSlide(1)" id="dl-1">📥 Слайд 1</button>
+  <button type="button" class="dl-btn" onclick="downloadSlide(2)" id="dl-2">📥 Слайд 2</button>
+  <button type="button" class="dl-btn" onclick="downloadSlide(3)" id="dl-3">📥 Слайд 3</button>
+  <button type="button" class="dl-btn" onclick="downloadSlide(4)" id="dl-4">📥 Слайд 4</button>
+  <button type="button" class="dl-btn" onclick="downloadSlide(5)" id="dl-5">📥 Слайд 5</button>
+  <button type="button" class="dl-btn primary" onclick="downloadAll()" id="dl-all">📦 Скачать все</button>
+</div>
+
+<script>
+const total = 5;
+let current = 0;
+let autoplayTimer = null;
+let isAutoplay = false;
+
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+const dlLabels = ['📥 Слайд 1', '📥 Слайд 2', '📥 Слайд 3', '📥 Слайд 4', '📥 Слайд 5'];
+
+function updateUI() {
+  slides.forEach((s, i) => s.classList.toggle('active', i === current));
+  dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === total - 1;
+  const label = slides[current].dataset.label || '';
+  document.getElementById('slideCounter').textContent =
+    (current + 1) + ' / ' + total + (label ? ' · ' + label : '');
+}
+
+function changeSlide(dir) {
+  const next = current + dir;
+  if (next >= 0 && next < total) {
+    current = next;
+    updateUI();
+  }
+}
+
+function goToSlide(index) {
+  current = index;
+  updateUI();
+}
+
+document.getElementById('prevBtn').addEventListener('click', () => changeSlide(-1));
+document.getElementById('nextBtn').addEventListener('click', () => changeSlide(1));
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+    e.preventDefault();
+    changeSlide(1);
+  }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+  if (e.key === 'Home') goToSlide(0);
+  if (e.key === 'End') goToSlide(total - 1);
+  if (e.key === 'f' || e.key === 'F') togglePresentation();
+  if (e.key === 'Escape' && document.fullscreenElement) document.exitFullscreen();
+});
+
+let touchStartX = 0;
+const container = document.getElementById('slideContainer');
+container.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+container.addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].screenX;
+  if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+}, { passive: true });
+
+function togglePresentation() {
+  const btn = document.getElementById('presentBtn');
+  const on = !document.body.classList.contains('presentation-mode');
+  document.body.classList.toggle('presentation-mode', on);
+  btn.textContent = on ? '✕ Выйти из презентации' : '▶ Режим презентации';
+  if (on && container.requestFullscreen) {
+    container.requestFullscreen().catch(() => {});
+  } else if (!on && document.fullscreenElement) {
+    document.exitFullscreen().catch(() => {});
+  }
+}
+
+document.getElementById('presentBtn').addEventListener('click', togglePresentation);
+
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement) {
+    document.body.classList.remove('presentation-mode');
+    document.getElementById('presentBtn').textContent = '▶ Режим презентации';
+  }
+});
+
+function toggleAutoplay() {
+  const btn = document.getElementById('autoplayBtn');
+  isAutoplay = !isAutoplay;
+  if (isAutoplay) {
+    btn.textContent = '⏹ Стоп';
+    autoplayTimer = setInterval(() => {
+      if (current < total - 1) changeSlide(1);
+      else goToSlide(0);
+    }, 5000);
+  } else {
+    btn.textContent = '⏯ Автопрокрутка';
+    clearInterval(autoplayTimer);
+    autoplayTimer = null;
+  }
+}
+
+document.getElementById('autoplayBtn').addEventListener('click', toggleAutoplay);
+
+updateUI();
+
+['image/bg-art.jpg', 'image/bg-gradient.jpg'].forEach(src => {
+  const img = new Image();
+  img.src = src;
+});
+
+async function captureSlide(num) {
+  const slide = document.getElementById('slide-' + num);
+  const wasActive = slide.classList.contains('active');
+  const prev = current;
+
+  slides.forEach(s => s.classList.remove('active'));
+  slide.classList.add('active');
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+  await document.fonts?.ready;
+  await new Promise(r => setTimeout(r, 120));
+
+  const canvas = await html2canvas(slide, {
+    scale: 2,
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: '#0a0a0f',
+    width: 1920,
+    height: 768,
+    logging: false
+  });
+
+  slides.forEach(s => s.classList.remove('active'));
+  document.getElementById('slide-' + (prev + 1)).classList.add('active');
+
+  return canvas;
+}
+
+async function downloadSlide(num) {
+  const btn = document.getElementById('dl-' + num);
+  const orig = dlLabels[num - 1];
+  btn.classList.add('loading');
+  btn.textContent = '⏳ Генерация...';
+
+  try {
+    const canvas = await captureSlide(num);
+    const link = document.createElement('a');
+    link.download = 'vk-cover-slide-' + num + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch (err) {
+    console.error(err);
+    alert('Ошибка при создании PNG. Проверьте подключение к интернету (html2canvas).');
+  }
+
+  btn.classList.remove('loading');
+  btn.textContent = orig;
+}
+
+async function downloadAll() {
+  const btn = document.getElementById('dl-all');
+  const orig = '📦 Скачать все';
+  btn.classList.add('loading');
+  btn.textContent = '⏳ Генерация всех...';
+
+  for (let i = 1; i <= total; i++) {
+    await new Promise(r => setTimeout(r, 500));
+    try {
+      const canvas = await captureSlide(i);
+      const link = document.createElement('a');
+      link.download = 'vk-cover-slide-' + i + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  updateUI();
+  btn.classList.remove('loading');
+  btn.textContent = orig;
+}
+</script>
+</body>
+</html>
